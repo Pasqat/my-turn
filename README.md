@@ -2,9 +2,7 @@
 
 ![](./img/Desktop-1.png)
 
-## TODO
-
-## Risources
+## Resources
 
 ### Libraries
 
