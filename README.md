@@ -1,17 +1,10 @@
-# Il mio Turno (My Turn)
+# Il mio Turno (My Turn) 📅
 
 ![](./img/Desktop-1.png)
 
 ## TODO
 
-### Preliminaries
-
-- [x] create react app
-- [x] find libraries for calendar view
-- [ ] find resources to create own calendar view
-- [x] Design the App
-
-## Risorse utili
+## Risources
 
 ### Libraries
 
