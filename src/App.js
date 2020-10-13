@@ -1,14 +1,26 @@
-import React from 'react';
-import './index.css'
+import React from "react";
+import "./index.css";
+import { GlobalStyles } from './GlobalStyles'
 
-function App() {
+import Header from "./components/Header";
+import Main from './components/Main';
+
+const StyledApp = ({ children }) => {
   return (
-    <div className="App" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-      <header className="App-header">
-        Il Mio Turno
-      </header>
-    </div>
+    <>
+      <GlobalStyles />
+      {children}
+    </>
   );
-}
+};
+
+const App = () => {
+  return (
+    <StyledApp>
+      <Header />
+      <Main />
+    </StyledApp>
+  );
+};
 
 export default App;
