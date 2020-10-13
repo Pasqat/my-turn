@@ -85,7 +85,7 @@ const Calendar = () => {
       <Body>
         {DAYS_OF_THE_WEEK.map((d) => (
           <Day key={d}>
-            <strong>{d}</strong>
+            {d}
           </Day>
         ))}
         {Array(days[month] + (startDay - 1))

@@ -8,6 +8,7 @@ const StyledMain = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: row;
+
 `
 
 const Main = () => {

@@ -8,7 +8,7 @@ import Main from './components/Main';
 const StyledApp = ({ children }) => {
   return (
     <>
-      <GlobalStyles />
+      <GlobalStyles theme='light'/>
       {children}
     </>
   );
@@ -16,7 +16,7 @@ const StyledApp = ({ children }) => {
 
 const App = () => {
   return (
-    <StyledApp>
+    <StyledApp theme='light'>
       <Header />
       <Main />
     </StyledApp>

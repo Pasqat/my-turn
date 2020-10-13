@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import Calendar from "./Calendar";
 
@@ -9,10 +9,57 @@ const StyledSideBar = styled.div`
   height: 75vh; /* TODO delete me!!! */
 `;
 
+const Legend = styled.div`
+  padding: 20px;
+`;
+
+const LegendItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+`;
+
+const ItemDot = styled.div`
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  border-radius: 50%;
+
+  ${(props) => {
+    if (props.color === "primary") {
+      return css`
+        background-color: var(--color-primary);
+      `;
+    } else if (props.color === "secondary") {
+      return css`
+        background-color: var(--color-secondary);
+      `;
+    } else {
+      return css`
+        background-color: var(--color-terziary);
+      `;
+    }
+  }}
+`;
+
 const Sidebar = () => {
   return (
     <StyledSideBar>
       <Calendar />
+      <Legend>
+        <LegendItem>
+          <ItemDot color="primary" />
+          Mattina
+        </LegendItem>
+        <LegendItem>
+          <ItemDot color="secondary" />
+          Pomeriggio
+        </LegendItem>
+        <LegendItem>
+          <ItemDot color="terziary" />
+          Sera
+        </LegendItem>
+      </Legend>
     </StyledSideBar>
   );
 };

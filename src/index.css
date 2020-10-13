@@ -5,8 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to bottom, #292B3F, #332639);
   height: 100vh;
-  color: #595E77;
   font-family: 'Spinnaker'
 }
