@@ -32,6 +32,7 @@ const Day = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  user-select: none;
 
   ${(props) =>
     props.isToday &&
@@ -42,7 +43,7 @@ const Day = styled.div`
   ${(props) =>
     props.isSelected &&
     css`
-      background-color: var(--background-main);
+      background-color: var(--color-selected);
     `}
 `;
 

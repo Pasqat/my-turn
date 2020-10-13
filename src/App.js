@@ -1,23 +1,37 @@
 import React from "react";
+import { useState } from "react";
 import "./index.css";
-import { GlobalStyles } from './GlobalStyles'
+import { GlobalStyles } from "./GlobalStyles";
 
-import Header from "./components/Header";
-import Main from './components/Main';
+import Header from "./components/Header/Header";
+import Main from "./components/Main";
 
-const StyledApp = ({ children }) => {
+// TODO useLocalStorage from EpicReact to store theme pref
+
+function switchTheme(isLight) {
+  return isLight ? "light" : "";
+}
+
+const StyledApp = ({ children, theme }) => {
   return (
     <>
-      <GlobalStyles theme='light'/>
+      <GlobalStyles theme={theme} />
       {children}
     </>
   );
 };
 
 const App = () => {
+  const [theme, setTheme] = useState("");
+  console.log("app theme", theme);
+
+  function switchTheme(passedTheme) {
+    return passedTheme ? setTheme("light") : setTheme("");
+  }
+
   return (
-    <StyledApp theme='light'>
-      <Header />
+    <StyledApp theme={theme}>
+      <Header switchTheme={switchTheme} />
       <Main />
     </StyledApp>
   );

@@ -2,7 +2,7 @@ import { createGlobalStyle, css } from "styled-components";
 
 // GlobalStyle Component
 // to attach CSS-variables
-// to root node
+// to html
 export const GlobalStyles = createGlobalStyle`
 ${(props) => {
   if (props.theme === "light") {
@@ -17,6 +17,7 @@ ${(props) => {
         --color-secondary: #fcd173;
         --color-terziary: #eb7b52;
         --color-border: 1px solid #c6c9df;
+        --color-selected: #E8EDFF
       }
     `;
   }
@@ -31,10 +32,12 @@ ${(props) => {
       --color-secondary: #b19053;
       --color-terziary: #b16550;
       --color-border: 1px solid rgba(0, 0, 0, 0.2);
+      --color-selected: #3A3A51;
     }
   `;
 }}
   body {
-    background: var(--gradient-background)
+    background: var(--gradient-background);
+    color: var(--color-text)
   }
 `;
