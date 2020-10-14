@@ -38,6 +38,7 @@ ${(props) => {
 }}
   body {
     background: var(--gradient-background);
-    color: var(--color-text)
+    color: var(--color-text);
+    overflow-x: hidden;
   }
 `;

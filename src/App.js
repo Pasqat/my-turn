@@ -7,11 +7,6 @@ import Header from "./components/Header/Header";
 import Main from "./components/Main";
 
 // TODO useLocalStorage from EpicReact to store theme pref
-
-function switchTheme(isLight) {
-  return isLight ? "light" : "";
-}
-
 const StyledApp = ({ children, theme }) => {
   return (
     <>
@@ -23,7 +18,6 @@ const StyledApp = ({ children, theme }) => {
 
 const App = () => {
   const [theme, setTheme] = useState("");
-  console.log("app theme", theme);
 
   function switchTheme(passedTheme) {
     return passedTheme ? setTheme("light") : setTheme("");

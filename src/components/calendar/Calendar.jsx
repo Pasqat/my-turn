@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import dateFns from "date-fns";
 import styled, { css } from "styled-components";
-import { DAYS, DAYS_LEAP, DAYS_OF_THE_WEEK, MONTHS } from "./Constants";
+import { DAYS, DAYS_LEAP, DAYS_OF_THE_WEEK, MONTHS } from "../Constants";
+
+import { getStartDayOfMonth, isLeapYear } from "./utility";
 
 const Frame = styled.div`
   width: 18rem;
@@ -46,14 +48,6 @@ const Day = styled.div`
       background-color: var(--color-selected);
     `}
 `;
-
-function getStartDayOfMonth(date) {
-  return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-}
-
-function isLeapYear(year) {
-  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-}
 
 const Calendar = () => {
   const today = new Date();

@@ -40,7 +40,6 @@ const Header = ({ switchTheme }) => {
 
   useEffect(() => {
     switchTheme(theme);
-    console.log("header theme", theme);
   }, [switchTheme, theme]);
 
   return (
