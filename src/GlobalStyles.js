@@ -37,7 +37,9 @@ ${(props) => {
   `;
 }}
   body {
+    height: 100%;
     background: var(--gradient-background);
+    background-repeat: no-repeat;
     color: var(--color-text);
     overflow-x: hidden;
   }
