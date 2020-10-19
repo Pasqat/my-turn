@@ -9,7 +9,7 @@ const Frame = styled.div`
   display: flex;
   flex-direction: column;
   /* overflow: scroll; */
-  margin-left: 18rem;
+  /* margin-left: 18rem; */
   height: 100%;
   width: 100%;
   background: var(--gradient-background)
