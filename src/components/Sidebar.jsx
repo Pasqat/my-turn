@@ -5,9 +5,10 @@ import Calendar from "./calendar/Calendar";
 
 const StyledSideBar = styled.div`
   max-width: 18rem;
-  border-right: var(--color-border);
-  height: 75vh; /* TODO delete me!!! */
-  position: fixed
+  /* border-right: var(--color-border);
+  height: 75vh; TODO delete me!!! */
+  position: sticky;
+  top:0
 `;
 
 const Legend = styled.div`

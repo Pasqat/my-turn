@@ -8,10 +8,11 @@ import { getStartDayOfMonth, isLeapYear } from "./utility";
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  /* overflow: scroll; */
   margin-left: 18rem;
   height: 100%;
   width: 100%;
+  background: var(--gradient-background)
 `;
 
 const Calendar = styled.div`
@@ -24,6 +25,8 @@ const Header = styled.div`
   padding: 20px 15px;
   color: var(--color-primary);
   letter-spacing: 2px;
+  /* background: var(--background-main); */
+  /* overflow-y: auto; */
 `;
 
 const Button = styled.div`
@@ -33,8 +36,8 @@ const Button = styled.div`
 
 const Day = styled.div`
   /* width: 14.2%; */
-  width: 80px;
-  height: 40px;
+  width: 6rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +60,7 @@ const Day = styled.div`
 
 const Table = styled.table`
   border-collapse: collapse;
-  background: var(--background-main);
+  /* background: var(--background-main); */
 `;
 
 const TableHead = styled.thead`
@@ -71,16 +74,15 @@ const TableRow = styled.tr`
 const TableCell = styled.td`
   border: var(--color-border);
   font-weight: normal;
-      ${(props) =>
-      props.isToday &&
-      css`
-        background-color: var(--color-selected);
-      `};
+  position: sticky;
+  ${(props) =>
+    props.isToday &&
+    css`
+      background-color: var(--color-selected);
+    `};
 `;
 
-const TableContent = styled.div`
-
-`;
+const TableContent = styled.div``;
 
 const Names = styled.div`
   padding: 20px;
@@ -146,7 +148,7 @@ const BigCalendar = () => {
           &gt;
         </Button>
       </Header>
-      <Calendar>
+      <Calendar >
         <Table>
           <TableHead>
             <TableRow>
@@ -155,9 +157,8 @@ const BigCalendar = () => {
                 .map((_, d) => {
                   const isToday = d === today.getDate();
                   return (
-                    <TableCell isToday={isToday}>
+                    <TableCell key={d} isToday={isToday} style={{position: 'sticky', top: 0}}>
                       <Day
-                        key={d}
                         isSelected={d === day}
                         onClick={() => setDate(new Date(year, month, d))}
                       >
@@ -169,27 +170,26 @@ const BigCalendar = () => {
             </TableRow>
           </TableHead>
           <tbody>
-            {TURNISTI.map((t) => {
+            {TURNISTI.map((t,index) => {
               return (
-                <TableRow>
+                <TableRow key={index}>
                   {Array(days[month] + 1)
                     .fill(null)
                     .map((_, d) => {
                       const isToday = d === today.getDate();
                       if (d === 0) {
                         return (
-                          <TableCell>
+                          <TableCell key={d}>
                             <Names>{t}</Names>
                           </TableCell>
                         );
                       }
                       return (
-                        <TableCell isToday={isToday}>
+                        <TableCell key={d} isToday={isToday}>
                           <TableContent
-                            key={d}
                             isToday={d === today.getDate()}
                             isSelected={d === day}
-                            onClich={() => setDate(new Date(year, month, d))}
+                            onClick={() => setDate(new Date(year, month, d))}
                           ></TableContent>
                         </TableCell>
                       );

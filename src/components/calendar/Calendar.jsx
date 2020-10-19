@@ -7,6 +7,9 @@ import { getStartDayOfMonth, isLeapYear } from "./utility";
 
 const Frame = styled.div`
   width: 18rem;
+  position: sticky;
+  top:0;
+  background: var(--color-background)
 `;
 
 const Header = styled.div`
