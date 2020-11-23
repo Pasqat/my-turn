@@ -1,4 +1,3 @@
-import { isToday } from "date-fns";
 import React from "react";
 import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
@@ -8,11 +7,11 @@ import { getStartDayOfMonth, isLeapYear } from "./utility";
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  /* overflow: scroll; */
+  overflow: scroll;
   /* margin-left: 18rem; */
   height: 100%;
   width: 100%;
-  background: var(--gradient-background)
+  background: var(--gradient-background);
 `;
 
 const Calendar = styled.div`
@@ -82,7 +81,14 @@ const TableCell = styled.td`
     `};
 `;
 
-const TableContent = styled.div``;
+const TableContent = styled.div`
+  ${(props) =>
+    props.turn === true && props.isSelected
+      ? css`
+          background-color: var(--color-primary);
+        `
+      : ""}
+`;
 
 const Names = styled.div`
   padding: 20px;
@@ -148,7 +154,7 @@ const BigCalendar = () => {
           &gt;
         </Button>
       </Header>
-      <Calendar >
+      <Calendar>
         <Table>
           <TableHead>
             <TableRow>
@@ -157,7 +163,16 @@ const BigCalendar = () => {
                 .map((_, d) => {
                   const isToday = d === today.getDate();
                   return (
-                    <TableCell key={d} isToday={isToday} style={{position: 'sticky', top: 0}}>
+                    <TableCell
+                      key={d}
+                      isToday={isToday}
+                      style={{
+                        position: "sticky",
+                        top: -2,
+                        backgroundColor: "var(--color-background)",
+                        zIndex: "5",
+                      }}
+                    >
                       <Day
                         isSelected={d === day}
                         onClick={() => setDate(new Date(year, month, d))}
@@ -170,7 +185,7 @@ const BigCalendar = () => {
             </TableRow>
           </TableHead>
           <tbody>
-            {TURNISTI.map((t,index) => {
+            {TURNISTI.map((t, index) => {
               return (
                 <TableRow key={index}>
                   {Array(days[month] + 1)
@@ -189,8 +204,9 @@ const BigCalendar = () => {
                           <TableContent
                             isToday={d === today.getDate()}
                             isSelected={d === day}
-                            onClick={() => setDate(new Date(year, month, d))}
-                          ></TableContent>
+                          >
+                            Genni
+                          </TableContent>
                         </TableCell>
                       );
                     })}
