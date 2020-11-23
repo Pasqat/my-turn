@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 // import dateFns from "date-fns";
 import styled, { css } from "styled-components";
-import { DAYS, DAYS_LEAP, DAYS_OF_THE_WEEK, MONTHS } from "../Constants";
+import {
+  DAYS,
+  DAYS_LEAP,
+  DAYS_OF_THE_WEEK,
+  MONTHS,
+} from "../hooks/useDate/Constants";
 
-import { getStartDayOfMonth, isLeapYear } from "./utility";
+import { getStartDayOfMonth, isLeapYear } from "../hooks/useDate/utility";
 
 const Frame = styled.div`
   width: 18rem;
   position: sticky;
-  top:0;
-  background: var(--color-background)
+  top: 0;
+  background: var(--color-background);
 `;
 
 const Header = styled.div`
@@ -82,9 +87,7 @@ const Calendar = () => {
       </Header>
       <Body>
         {DAYS_OF_THE_WEEK.map((d) => (
-          <Day key={d}>
-            {d}
-          </Day>
+          <Day key={d}>{d}</Day>
         ))}
         {Array(days[month] + (startDay - 1))
           .fill(null)

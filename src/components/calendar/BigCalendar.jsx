@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { DAYS, DAYS_LEAP, MONTHS } from "../Constants";
-import { getStartDayOfMonth, isLeapYear } from "./utility";
+import { DAYS, DAYS_LEAP, MONTHS } from "../hooks/useDate/Constants";
+import { getStartDayOfMonth, isLeapYear } from "../hooks/useDate/utility";
+
+import useDate from "../hooks/useDate/useDate";
 
 const Frame = styled.div`
   display: flex;
@@ -25,7 +27,7 @@ const Header = styled.div`
   color: var(--color-primary);
   letter-spacing: 2px;
   /* background: var(--background-main); */
-  /* overflow-y: auto; */
+  overflow-y: auto;
 `;
 
 const Button = styled.div`
@@ -81,14 +83,8 @@ const TableCell = styled.td`
     `};
 `;
 
-const TableContent = styled.div`
-  ${(props) =>
-    props.turn === true && props.isSelected
-      ? css`
-          background-color: var(--color-primary);
-        `
-      : ""}
-`;
+// FIXME add style for cell content
+const TableContent = styled.div``;
 
 const Names = styled.div`
   padding: 20px;
@@ -112,6 +108,10 @@ const TURNISTI = [
 
 const BigCalendar = () => {
   const today = new Date();
+
+  const { isToday, nextMonth, days } = useDate();
+  // TODO create a custom hook with useReducer, and maybe useContext ?
+  // ? or is it better to just use useContext and Reducer?
   const [date, setDate] = useState(() => today);
   const [day, setDay] = useState(date.getDate());
   const [month, setMonth] = useState(date.getMonth());
@@ -138,7 +138,7 @@ const BigCalendar = () => {
     setStartDay(getStartDayOfMonth(date));
   }, [date]);
 
-  const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
+  // const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
   console.log("days", days);
 
   return (
@@ -150,9 +150,7 @@ const BigCalendar = () => {
         <div>
           {MONTHS[month].toUpperCase()} {year}
         </div>
-        <Button onClick={() => setDate(new Date(year, month + 1, day))}>
-          &gt;
-        </Button>
+        <Button onClick={() => nextMonth()}>&gt;</Button>
       </Header>
       <Calendar>
         <Table>
@@ -161,11 +159,10 @@ const BigCalendar = () => {
               {Array(days[month] + 1)
                 .fill(null)
                 .map((_, d) => {
-                  const isToday = d === today.getDate();
                   return (
                     <TableCell
                       key={d}
-                      isToday={isToday}
+                      isToday={isToday(d)}
                       style={{
                         position: "sticky",
                         top: -2,
@@ -191,7 +188,6 @@ const BigCalendar = () => {
                   {Array(days[month] + 1)
                     .fill(null)
                     .map((_, d) => {
-                      const isToday = d === today.getDate();
                       if (d === 0) {
                         return (
                           <TableCell key={d}>
@@ -200,7 +196,7 @@ const BigCalendar = () => {
                         );
                       }
                       return (
-                        <TableCell key={d} isToday={isToday}>
+                        <TableCell key={d} isToday={isToday(d)}>
                           <TableContent
                             isToday={d === today.getDate()}
                             isSelected={d === day}
