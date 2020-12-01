@@ -1,8 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { DAYS, DAYS_LEAP, MONTHS } from "../hooks/useDate/Constants";
-import { getStartDayOfMonth, isLeapYear } from "../hooks/useDate/utility";
+import { MONTHS } from "../hooks/useDate/Constants";
 
 import useDate from "../hooks/useDate/useDate";
 
@@ -98,55 +96,28 @@ const TURNISTI = [
   "Maria",
   "Giovanni",
   "Ciccio",
-  "Alessia",
-  "Melissa",
-  "Martina",
-  "Maria",
-  "Giovanni",
-  "Ciccio",
 ];
 
 const BigCalendar = () => {
   const today = new Date();
 
-  const { isToday, nextMonth, days } = useDate();
-  // TODO create a custom hook with useReducer, and maybe useContext ?
-  // ? or is it better to just use useContext and Reducer?
-  const [date, setDate] = useState(() => today);
-  const [day, setDay] = useState(date.getDate());
-  const [month, setMonth] = useState(date.getMonth());
-  const [year, setYear] = useState(date.getFullYear());
-  const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
-
-  console.log(
-    "date",
-    startDay,
-    "day",
+  const {
+    isToday,
+    nextMonth,
+    previousMonth,
+    newDate,
+    days,
+    date,
     day,
-    "month",
     month,
-    "year",
     year,
-    "startday",
-    startDay
-  );
-
-  useEffect(() => {
-    setDay(date.getDate());
-    setMonth(date.getMonth());
-    setYear(date.getFullYear());
-    setStartDay(getStartDayOfMonth(date));
-  }, [date]);
-
-  // const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
-  console.log("days", days);
+    startDay,
+  } = useDate();
 
   return (
     <Frame>
       <Header>
-        <Button onClick={() => setDate(new Date(year, month - 1, day))}>
-          &lt;
-        </Button>
+        <Button onClick={() => previousMonth()}>&lt;</Button>
         <div>
           {MONTHS[month].toUpperCase()} {year}
         </div>
@@ -172,7 +143,7 @@ const BigCalendar = () => {
                     >
                       <Day
                         isSelected={d === day}
-                        onClick={() => setDate(new Date(year, month, d))}
+                        onClick={() => newDate(year, month, d)}
                       >
                         {d > 0 ? d : ""}
                       </Day>
@@ -198,7 +169,7 @@ const BigCalendar = () => {
                       return (
                         <TableCell key={d} isToday={isToday(d)}>
                           <TableContent
-                            isToday={d === today.getDate()}
+                            isToday={isToday(d)}
                             isSelected={d === day}
                           >
                             Genni
@@ -217,29 +188,3 @@ const BigCalendar = () => {
 };
 
 export default BigCalendar;
-
-// <Calendar>
-//   <Body>
-//     {Array(days[month] + 1)
-//       .fill(null)
-//       .map((_, index) => {
-//         const d = index ;
-//         return (
-//           <Day
-//             key={index}
-//             isToday={d === today.getDate()}
-//             isSelected={d === day}
-//             onClick={() => setDate(new Date(year, month, d))}
-//           >
-//             {d > 0 ? d : ""}
-//           </Day>
-//         );
-//       })}{" "}
-//   </Body>
-//   <NamesRow>
-//     <br />
-//     {TURNISTI.map((t) => (
-//       <Names>{t}</Names>
-//     ))}
-//   </NamesRow>
-// </Calendar>

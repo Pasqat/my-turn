@@ -2,10 +2,57 @@ import { isLeapYear, getStartDayOfMonth } from "./utility";
 import { DAYS, DAYS_LEAP } from "./Constants";
 import { useReducer } from "react";
 
-function dateReducer(state, { type, initialState }) {
+function updateDate(date) {
+  return {
+    day: date.getDate(),
+    month: date.getMonth(),
+    year: date.getFullYear(),
+    startDay: getStartDayOfMonth(date),
+  };
+}
+
+const actionTypes = {
+  nextMonth: "next_month",
+  previousMonth: "previous_month",
+  update: "update",
+  newDate: "new_date",
+};
+
+function dateReducer(state, { type, initialState, payload }) {
   switch (type) {
-    case "next_month": {
-      return { date: new Date(state.year, state.month + 1, state.day) };
+    case actionTypes.nextMonth: {
+      const newDate = new Date(state.year, state.month + 1, state.day);
+      return {
+        date: newDate,
+        ...updateDate(newDate),
+      };
+    }
+    case actionTypes.previousMonth: {
+      const newDate = new Date(state.year, state.month - 1, state.day);
+      return {
+        ...state,
+        date: newDate,
+        ...updateDate(newDate),
+      };
+    }
+    case actionTypes.update: {
+      return {
+        ...state,
+        day: state.date.getDate(),
+        month: state.date.getMonth(),
+        year: state.date.getFullYear(),
+        setStartday: getStartDayOfMonth(state.date),
+      };
+    }
+    case actionTypes.newDate: {
+      console.log("load", payload);
+      const { year, month, day } = payload;
+      const newDate = new Date(year, month, day);
+      return {
+        ...state,
+        date: newDate,
+        ...updateDate(newDate),
+      };
     }
     default: {
       throw new Error(`Unsupported type: ${type}`);
@@ -29,7 +76,6 @@ function useDate({ reducer = dateReducer } = {}) {
   const { date, day, month, year, startDay } = state;
 
   console.table(state);
-  console.log("date", date, "day", day);
 
   const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
 
@@ -38,14 +84,31 @@ function useDate({ reducer = dateReducer } = {}) {
   }
 
   const nextMonth = () => {
-    console.log("avanti il prossimo");
-    return dispatch({ type: "next_month" });
+    dispatch({ type: actionTypes.nextMonth });
+  };
+
+  const previousMonth = () => {
+    dispatch({ type: actionTypes.previousMonth });
+  };
+
+  const newDate = (year, month, day) => {
+    dispatch({
+      type: actionTypes.newDate,
+      payload: { year, month, day },
+    });
   };
 
   return {
     isToday,
     days,
     nextMonth,
+    previousMonth,
+    newDate,
+    date,
+    day,
+    month,
+    year,
+    startDay,
   };
 }
 

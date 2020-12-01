@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from "react";
-// import dateFns from "date-fns";
+import React from "react";
 import styled, { css } from "styled-components";
-import {
-  DAYS,
-  DAYS_LEAP,
-  DAYS_OF_THE_WEEK,
-  MONTHS,
-} from "../hooks/useDate/Constants";
+import { DAYS_OF_THE_WEEK, MONTHS } from "../hooks/useDate/Constants";
 
-import { getStartDayOfMonth, isLeapYear } from "../hooks/useDate/utility";
+import useDate from "../hooks/useDate/useDate";
 
 const Frame = styled.div`
   width: 18rem;
@@ -59,31 +53,26 @@ const Day = styled.div`
 
 const Calendar = () => {
   const today = new Date();
-  const [date, setDate] = useState(() => today);
-  const [day, setDay] = useState(date.getDate());
-  const [month, setMonth] = useState(date.getMonth());
-  const [year, setYear] = useState(date.getFullYear());
-  const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
 
-  useEffect(() => {
-    setDay(date.getDate());
-    setMonth(date.getMonth());
-    setYear(date.getFullYear());
-    setStartDay(getStartDayOfMonth(date));
-  }, [date]);
-
-  const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
+  const {
+    isToday,
+    nextMonth,
+    previousMonth,
+    newDate,
+    days,
+    date,
+    day,
+    month,
+    year,
+    startDay,
+  } = useDate();
 
   return (
     <Frame>
       <Header>
-        <Button onClick={() => setDate(new Date(year, month - 1, day))}>
-          &lt;
-        </Button>
+        <Button onClick={() => previousMonth()}>&lt;</Button>
         <div>{MONTHS[month].toUpperCase()}</div>
-        <Button onClick={() => setDate(new Date(year, month + 1, day))}>
-          &gt;
-        </Button>
+        <Button onClick={() => nextMonth()}>&gt;</Button>
       </Header>
       <Body>
         {DAYS_OF_THE_WEEK.map((d) => (
@@ -96,9 +85,9 @@ const Calendar = () => {
             return (
               <Day
                 key={index}
-                isToday={d === today.getDate()}
+                isToday={isToday(d)}
                 isSelected={d === day}
-                onClick={() => setDate(new Date(year, month, d))}
+                onClick={() => newDate(year, month, d)}
               >
                 {d > 0 ? d : ""}
               </Day>
