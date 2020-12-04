@@ -172,7 +172,7 @@ const BigCalendar = () => {
                             isToday={isToday(d)}
                             isSelected={d === day}
                           >
-                            Genni
+                            Placeholder
                           </TableContent>
                         </TableCell>
                       );
