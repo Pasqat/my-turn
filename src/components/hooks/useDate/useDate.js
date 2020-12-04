@@ -45,7 +45,6 @@ function dateReducer(state, { type, initialState, payload }) {
       };
     }
     case actionTypes.newDate: {
-      console.log("load", payload);
       const { year, month, day } = payload;
       const newDate = new Date(year, month, day);
       return {
@@ -74,8 +73,6 @@ function useDate({ reducer = dateReducer } = {}) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { date, day, month, year, startDay } = state;
-
-  console.table(state);
 
   const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
 

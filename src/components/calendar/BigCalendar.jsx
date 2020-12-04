@@ -81,8 +81,15 @@ const TableCell = styled.td`
     `};
 `;
 
-// FIXME add style for cell content
-const TableContent = styled.div``;
+const TableContent = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 80%;
+  width: 100%;
+  cursor: pointer;
+  background-color: yellow;
+`;
 
 const Names = styled.div`
   padding: 20px;
@@ -90,12 +97,43 @@ const Names = styled.div`
 `;
 
 const TURNISTI = [
-  "Alessia",
-  "Melissa",
-  "Martina",
-  "Maria",
-  "Giovanni",
-  "Ciccio",
+  {
+    name: "Alessia",
+    id: "alessia_01",
+  },
+  {
+    name: "Melissa",
+    id: "melissa_01",
+  },
+  {
+    name: "Martina",
+    id: "martina_08",
+  },
+  {
+    name: "Maria",
+    id: "maria_04",
+  },
+  {
+    name: "Giavanni",
+    id: "giavanni_01",
+  },
+  {
+    name: "Ciccia",
+    id: "ciccia_23",
+  },
+];
+
+const TURNI = [
+  {
+    nameId: "alessia_01",
+    schedule: {
+      1: "morning",
+      4: "evening",
+      6: "night",
+      9: "morning",
+      10: "morning",
+    },
+  },
 ];
 
 const BigCalendar = () => {
@@ -113,6 +151,44 @@ const BigCalendar = () => {
     year,
     startDay,
   } = useDate();
+
+  const [turns, setTurns] = React.useState(TURNI);
+
+  function renderSquare(rowId, columnIndex) {
+    turns.map((turno) => {
+      if (turno.nameId === rowId) {
+        for (const key in turno.schedule) {
+          if (Number(key) === columnIndex) {
+            console.log("key", key);
+            // FIXME why it does't render TableContent
+            return (
+              <TableContent
+                isToday={isToday(columnIndex)}
+                isSelected={columnIndex === day}
+                onClick={() =>
+                  alert(`This is the cell ${turno.nameId} : ${columnIndex}`)
+                }
+              >
+                {turno.schedule.key}
+              </TableContent>
+            );
+          }
+        }
+      }
+      // TODO: it can return null
+      return (
+        <TableContent
+          isToday={isToday(columnIndex)}
+          isSelected={columnIndex === day}
+          onClick={() =>
+            alert(`This is the cell ${turno.nameId} : ${columnIndex}`)
+          }
+        >
+          🐵🐵🐵
+        </TableContent>
+      );
+    });
+  }
 
   return (
     <Frame>
@@ -153,27 +229,22 @@ const BigCalendar = () => {
             </TableRow>
           </TableHead>
           <tbody>
-            {TURNISTI.map((t, index) => {
+            {TURNISTI.map((turnista, index) => {
               return (
-                <TableRow key={index}>
+                <TableRow key={turnista.id}>
                   {Array(days[month] + 1)
                     .fill(null)
                     .map((_, d) => {
                       if (d === 0) {
                         return (
-                          <TableCell key={d}>
-                            <Names>{t}</Names>
+                          <TableCell key={turnista.id}>
+                            <Names>{turnista.name}</Names>
                           </TableCell>
                         );
                       }
                       return (
                         <TableCell key={d} isToday={isToday(d)}>
-                          <TableContent
-                            isToday={isToday(d)}
-                            isSelected={d === day}
-                          >
-                            Placeholder
-                          </TableContent>
+                          {renderSquare(turnista.id, d)}
                         </TableCell>
                       );
                     })}
