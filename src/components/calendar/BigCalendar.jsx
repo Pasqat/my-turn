@@ -114,12 +114,12 @@ const TURNISTI = [
     id: "maria_04",
   },
   {
-    name: "Giavanni",
-    id: "giavanni_01",
+    name: "Giovanni",
+    id: "giovanni_01",
   },
   {
-    name: "Ciccia",
-    id: "ciccia_23",
+    name: "Ciccio",
+    id: "ciccio_23",
   },
 ];
 
@@ -159,7 +159,7 @@ const BigCalendar = () => {
       if (turno.nameId === rowId) {
         for (const key in turno.schedule) {
           if (Number(key) === columnIndex) {
-            console.log("key", key);
+            console.log("key", key, turno.schedule[key]);
             // FIXME why it does't render TableContent
             return (
               <TableContent
@@ -175,7 +175,7 @@ const BigCalendar = () => {
           }
         }
       }
-      // TODO: it can return null
+      // TODO return null instead
       return (
         <TableContent
           isToday={isToday(columnIndex)}
