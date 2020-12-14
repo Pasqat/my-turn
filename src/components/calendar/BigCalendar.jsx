@@ -89,6 +89,7 @@ const TableContent = styled.div`
   width: 100%;
   cursor: pointer;
   background-color: yellow;
+  cursor: pointer;
 `;
 
 const Names = styled.div`
@@ -154,6 +155,7 @@ const TURNISTI = [
     id: "martina_08",
     schedule: {
       1: "morning",
+      2: null,
       3: "night",
       4: "morning",
       7: "night",
@@ -164,16 +166,21 @@ const TURNISTI = [
   {
     name: "Maria",
     id: "maria_04",
+    schedule: {},
   },
   {
     name: "Giovanni",
     id: "giovanni_01",
+    schedule: {},
   },
   {
     name: "Ciccio",
     id: "ciccio_23",
+    schedule: {},
   },
 ];
+
+const acceptedShift = ["morning", "afternoon", "night", null];
 
 const BigCalendar = () => {
   const today = new Date();
@@ -206,7 +213,12 @@ const BigCalendar = () => {
     }
   };
 
-  const putValuesToTable = (worker, monthLenght) => {
+  /**
+   * @param worker the element containing the name, id
+   * and schedule info
+   * @param monthLenght integer
+   */
+  const putValuesToTable = (worker, monthLenght, workerIndex) => {
     const { id, name, schedule } = worker;
 
     let children = [
@@ -214,20 +226,58 @@ const BigCalendar = () => {
         <Names>{name}</Names>
       </TableCell>,
     ];
-    console.log("putValuesToTable call");
-
-    console.log(worker);
 
     for (let i = 1; i < monthLenght; i++) {
       if (!schedule) {
-        children.push(<TableCell key={i}>Vuoto</TableCell>);
+        children.push(
+          <TableCell
+            key={i}
+            onClick={() => cicleThroughoutShift(workerIndex, i, schedule[i])}
+          />
+        );
       } else if (schedule[i]) {
-        children.push(<TableCell key={i}>{coloredDiv(schedule[i])}</TableCell>);
+        children.push(
+          <TableCell
+            key={i}
+            onClick={() => cicleThroughoutShift(workerIndex, i, schedule[i])}
+          >
+            {coloredDiv(schedule[i])}
+          </TableCell>
+        );
       } else {
-        children.push(<TableCell key={i}></TableCell>);
+        children.push(
+          <TableCell
+            key={i}
+            onClick={() => cicleThroughoutShift(workerIndex, i, schedule[i])}
+          ></TableCell>
+        );
       }
     }
     return children;
+  };
+
+  const cicleThroughoutShift = (workerIndex, scheduleIndex, schedule) => {
+    const acceptedShiftIndex = acceptedShift.findIndex(
+      (shift) => shift === schedule
+    );
+
+    let index = acceptedShiftIndex;
+
+    if (acceptedShiftIndex === 3) {
+      return (index = 0);
+    }
+
+    console.log(turns[workerIndex].schedule[scheduleIndex]);
+    if (!turns[workerIndex].schedule) {
+      return;
+    }
+    // TODO ok change color but add new rows...
+    setTurns([
+      ...turns,
+      (turns[workerIndex].schedule[scheduleIndex] = acceptedShift[index + 1]),
+    ]);
+
+    console.log(turns);
   };
 
   return (
@@ -269,10 +319,10 @@ const BigCalendar = () => {
             </TableRow>
           </TableHead>
           <tbody>
-            {TURNISTI.map((turnista, index) => {
+            {turns.map((worker, index) => {
               return (
-                <TableRow key={turnista.id}>
-                  {putValuesToTable(turnista, days[month] + 1)}
+                <TableRow key={worker.id}>
+                  {putValuesToTable(worker, days[month] + 1, index)}
                 </TableRow>
               );
             })}
