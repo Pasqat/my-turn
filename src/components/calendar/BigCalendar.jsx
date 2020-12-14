@@ -1,13 +1,14 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import { MONTHS } from "../hooks/useDate/Constants";
+import styled, {css} from "styled-components";
+import {MONTHS} from "../hooks/useDate/Constants";
 
 import useDate from "../hooks/useDate/useDate";
 
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow-y: none;
+  overflow-x: scroll;
   /* margin-left: 18rem; */
   height: 100%;
   width: 100%;
@@ -219,7 +220,7 @@ const BigCalendar = () => {
    * @param monthLenght integer
    */
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
-    const { id, name, schedule } = worker;
+    const {id, name, schedule} = worker;
 
     let children = [
       <TableCell key={id}>
