@@ -154,41 +154,11 @@ const BigCalendar = () => {
 
   const [turns, setTurns] = React.useState(TURNI);
 
-  function renderSquare(rowId, columnIndex) {
-    turns.map((turno) => {
-      if (turno.nameId === rowId) {
-        for (const key in turno.schedule) {
-          if (Number(key) === columnIndex) {
-            console.log("key", key, turno.schedule[key]);
-            // FIXME why it does't render TableContent
-            return (
-              <TableContent
-                isToday={isToday(columnIndex)}
-                isSelected={columnIndex === day}
-                onClick={() =>
-                  alert(`This is the cell ${turno.nameId} : ${columnIndex}`)
-                }
-              >
-                {turno.schedule.key}
-              </TableContent>
-            );
-          }
-        }
-      }
-      // TODO return null instead
-      return (
-        <TableContent
-          isToday={isToday(columnIndex)}
-          isSelected={columnIndex === day}
-          onClick={() =>
-            alert(`This is the cell ${turno.nameId} : ${columnIndex}`)
-          }
-        >
-          🐵🐵🐵
-        </TableContent>
-      );
-    });
-  }
+  const putValuesToTable = () => {
+    let children = [];
+
+    for (let i = 0; i < month.lenght; i++) {}
+  };
 
   return (
     <Frame>
