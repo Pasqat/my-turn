@@ -96,18 +96,70 @@ const Names = styled.div`
   font-size: 1.5rem;
 `;
 
+const MorningDiv = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  cursor: pointer;
+  background-color: var(--color-primary);
+`;
+
+const AfternoonDiv = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  cursor: pointer;
+  background-color: var(--color-secondary);
+`;
+
+const NightDiv = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  cursor: pointer;
+  background-color: var(--color-terziary);
+`;
+
 const TURNISTI = [
   {
     name: "Alessia",
     id: "alessia_01",
+    schedule: {
+      1: "morning",
+      4: "afternoon",
+      6: "night",
+      9: "morning",
+      10: "morning",
+    },
   },
   {
     name: "Melissa",
     id: "melissa_01",
+    schedule: {
+      1: "afternoon",
+      5: "morning",
+      6: "morning",
+      8: "afternoon",
+      10: "night",
+    },
   },
   {
     name: "Martina",
     id: "martina_08",
+    schedule: {
+      1: "morning",
+      3: "night",
+      4: "morning",
+      7: "night",
+      9: "afternoon",
+      12: "night",
+    },
   },
   {
     name: "Maria",
@@ -120,19 +172,6 @@ const TURNISTI = [
   {
     name: "Ciccio",
     id: "ciccio_23",
-  },
-];
-
-const TURNI = [
-  {
-    nameId: "alessia_01",
-    schedule: {
-      1: "morning",
-      4: "evening",
-      6: "night",
-      9: "morning",
-      10: "morning",
-    },
   },
 ];
 
@@ -152,12 +191,43 @@ const BigCalendar = () => {
     startDay,
   } = useDate();
 
-  const [turns, setTurns] = React.useState(TURNI);
+  const [turns, setTurns] = React.useState(TURNISTI);
 
-  const putValuesToTable = () => {
-    let children = [];
+  const coloredDiv = (turns) => {
+    switch (turns) {
+      case "morning":
+        return <MorningDiv></MorningDiv>;
+      case "afternoon":
+        return <AfternoonDiv></AfternoonDiv>;
+      case "night":
+        return <NightDiv></NightDiv>;
+      default:
+        throw new Error(`Only 'morning', 'afternoon' or 'night' are supported`);
+    }
+  };
 
-    for (let i = 0; i < month.lenght; i++) {}
+  const putValuesToTable = (worker, monthLenght) => {
+    const { id, name, schedule } = worker;
+
+    let children = [
+      <TableCell key={id}>
+        <Names>{name}</Names>
+      </TableCell>,
+    ];
+    console.log("putValuesToTable call");
+
+    console.log(worker);
+
+    for (let i = 1; i < monthLenght; i++) {
+      if (!schedule) {
+        children.push(<TableCell key={i}>Vuoto</TableCell>);
+      } else if (schedule[i]) {
+        children.push(<TableCell key={i}>{coloredDiv(schedule[i])}</TableCell>);
+      } else {
+        children.push(<TableCell key={i}></TableCell>);
+      }
+    }
+    return children;
   };
 
   return (
@@ -202,22 +272,7 @@ const BigCalendar = () => {
             {TURNISTI.map((turnista, index) => {
               return (
                 <TableRow key={turnista.id}>
-                  {Array(days[month] + 1)
-                    .fill(null)
-                    .map((_, d) => {
-                      if (d === 0) {
-                        return (
-                          <TableCell key={turnista.id}>
-                            <Names>{turnista.name}</Names>
-                          </TableCell>
-                        );
-                      }
-                      return (
-                        <TableCell key={d} isToday={isToday(d)}>
-                          {renderSquare(turnista.id, d)}
-                        </TableCell>
-                      );
-                    })}
+                  {putValuesToTable(turnista, days[month] + 1)}
                 </TableRow>
               );
             })}
