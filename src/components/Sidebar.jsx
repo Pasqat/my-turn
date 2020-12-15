@@ -8,7 +8,7 @@ const StyledSideBar = styled.div`
   /* border-right: var(--color-border);
   height: 75vh; TODO delete me!!! */
   position: sticky;
-  top:0
+  top: 0;
 `;
 
 const Legend = styled.div`

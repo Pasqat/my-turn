@@ -1,6 +1,6 @@
 import React from "react";
-import styled, {css} from "styled-components";
-import {MONTHS} from "../hooks/useDate/Constants";
+import styled, { css } from "styled-components";
+import { MONTHS } from "../hooks/useDate/Constants";
 
 import useDate from "../hooks/useDate/useDate";
 
@@ -156,7 +156,7 @@ const TURNISTI = [
     id: "martina_08",
     schedule: {
       1: "morning",
-      2: null,
+      2: "",
       3: "night",
       4: "morning",
       7: "night",
@@ -181,7 +181,7 @@ const TURNISTI = [
   },
 ];
 
-const acceptedShift = ["morning", "afternoon", "night", null];
+const acceptedShift = ["morning", "afternoon", "night", ""];
 
 const BigCalendar = () => {
   const today = new Date();
@@ -220,7 +220,7 @@ const BigCalendar = () => {
    * @param monthLenght integer
    */
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
-    const {id, name, schedule} = worker;
+    const { id, name, schedule } = worker;
 
     let children = [
       <TableCell key={id}>
@@ -265,7 +265,11 @@ const BigCalendar = () => {
     let index = acceptedShiftIndex;
 
     if (acceptedShiftIndex === 3) {
-      return (index = 0);
+      setTurns([
+        ...turns,
+        (turns[workerIndex].schedule[scheduleIndex] = acceptedShift[index + 1]),
+      ]);
+      index = 0;
     }
 
     console.log(turns[workerIndex].schedule[scheduleIndex]);
@@ -277,8 +281,6 @@ const BigCalendar = () => {
       ...turns,
       (turns[workerIndex].schedule[scheduleIndex] = acceptedShift[index + 1]),
     ]);
-
-    console.log(turns);
   };
 
   return (
