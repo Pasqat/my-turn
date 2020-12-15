@@ -233,14 +233,14 @@ const BigCalendar = () => {
         children.push(
           <TableCell
             key={i}
-            onClick={() => cicleThroughoutShift(workerIndex, i, schedule[i])}
+            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
           />
         );
       } else if (schedule[i]) {
         children.push(
           <TableCell
             key={i}
-            onClick={() => cicleThroughoutShift(workerIndex, i, schedule[i])}
+            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
           >
             {coloredDiv(schedule[i])}
           </TableCell>
@@ -249,7 +249,7 @@ const BigCalendar = () => {
         children.push(
           <TableCell
             key={i}
-            onClick={() => cicleThroughoutShift(workerIndex, i, schedule[i])}
+            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
           ></TableCell>
         );
       }
@@ -257,7 +257,7 @@ const BigCalendar = () => {
     return children;
   };
 
-  const cicleThroughoutShift = (workerIndex, scheduleIndex, schedule) => {
+  const cycleThrougShifts = (workerIndex, scheduleIndex, schedule) => {
     const acceptedShiftIndex = acceptedShift.findIndex(
       (shift) => shift === schedule
     );
@@ -265,10 +265,6 @@ const BigCalendar = () => {
     let index = acceptedShiftIndex;
 
     if (acceptedShiftIndex === 3) {
-      setTurns([
-        ...turns,
-        (turns[workerIndex].schedule[scheduleIndex] = acceptedShift[index + 1]),
-      ]);
       index = 0;
     }
 
@@ -276,11 +272,14 @@ const BigCalendar = () => {
     if (!turns[workerIndex].schedule) {
       return;
     }
+
+    let newSchedule = turns[workerIndex];
+    newSchedule.schedule[scheduleIndex] = acceptedShift[index + 1];
+
     // TODO ok change color but add new rows...
-    setTurns([
-      ...turns,
-      (turns[workerIndex].schedule[scheduleIndex] = acceptedShift[index + 1]),
-    ]);
+    setTurns([...turns, (turns[workerIndex] = newSchedule)]);
+
+    console.log(turns);
   };
 
   return (
