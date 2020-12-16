@@ -118,36 +118,6 @@ const Names = styled.div`
   font-size: 1.5rem;
 `;
 
-const MorningDiv = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80%;
-  cursor: pointer;
-  background-color: var(--color-primary);
-`;
-
-const AfternoonDiv = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80%;
-  cursor: pointer;
-  background-color: var(--color-secondary);
-`;
-
-const NightDiv = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80%;
-  cursor: pointer;
-  background-color: var(--color-terziary);
-`;
-
 const TURNISTI = [
   {
     name: "Alessia",
