@@ -146,7 +146,6 @@ const TURNISTI = [
     id: "martina_08",
     schedule: {
       1: "morning",
-      2: "",
       3: "night",
       4: "morning",
       7: "night",
@@ -218,8 +217,7 @@ const BigCalendar = () => {
   };
 
   /**
-   * @param worker the element containing the name, id
-   * and schedule info
+   * @param worker the element containing the name, id and schedule info
    * @param monthLenght integer
    */
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
@@ -268,21 +266,17 @@ const BigCalendar = () => {
     let index = acceptedShiftIndex;
 
     if (acceptedShiftIndex === 3) {
-      index = 0;
+      index = -1;
     }
 
-    console.log(turns[workerIndex].schedule[scheduleIndex]);
     if (!turns[workerIndex].schedule) {
       return;
     }
 
-    let newSchedule = turns[workerIndex];
-    newSchedule.schedule[scheduleIndex] = acceptedShift[index + 1];
+    let newSchedule = turns[workerIndex].schedule;
+    newSchedule[scheduleIndex] = acceptedShift[index + 1];
 
-    // TODO ok change color but add new rows...
-    setTurns([...turns, (turns[workerIndex] = newSchedule)]);
-
-    console.log(turns);
+    setTurns([...turns]);
   };
 
   return (
