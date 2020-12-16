@@ -91,6 +91,26 @@ const TableContent = styled.div`
   cursor: pointer;
   background-color: yellow;
   cursor: pointer;
+  ${(props) => {
+    switch (props.workshift) {
+      case workshiftItem.morning:
+        return css`
+          background-color: var(--color-primary);
+        `;
+      case workshiftItem.afternoon:
+        return css`
+          background-color: var(--color-secondary);
+        `;
+      case workshiftItem.night:
+        return css`
+          background-color: var(--color-terziary);
+        `;
+      default:
+        throw new Error(
+          `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
+        );
+    }
+  }}
 `;
 
 const Names = styled.div`
@@ -181,7 +201,18 @@ const TURNISTI = [
   },
 ];
 
-const acceptedShift = ["morning", "afternoon", "night", ""];
+const workshiftItem = {
+  morning: "morning",
+  afternoon: "afternoon",
+  night: "night",
+};
+
+const acceptedShift = [
+  workshiftItem.morning,
+  workshiftItem.afternoon,
+  workshiftItem.night,
+  "",
+];
 
 const BigCalendar = () => {
   const today = new Date();
@@ -203,12 +234,14 @@ const BigCalendar = () => {
 
   const coloredDiv = (turns) => {
     switch (turns) {
-      case "morning":
-        return <MorningDiv></MorningDiv>;
-      case "afternoon":
-        return <AfternoonDiv></AfternoonDiv>;
-      case "night":
-        return <NightDiv></NightDiv>;
+      case workshiftItem.morning:
+        return <TableContent workshift={workshiftItem.morning}></TableContent>;
+      case workshiftItem.afternoon:
+        return (
+          <TableContent workshift={workshiftItem.afternoon}></TableContent>
+        );
+      case workshiftItem.night:
+        return <TableContent workshift={workshiftItem.night}></TableContent>;
       default:
         throw new Error(`Only 'morning', 'afternoon' or 'night' are supported`);
     }
