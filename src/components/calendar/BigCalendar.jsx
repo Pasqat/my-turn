@@ -145,6 +145,13 @@ const TURNISTI = [
     schedule: {
       2020: {
         11: {
+          1: "night",
+          3: "morning",
+          4: "afternoon",
+          6: "night",
+          7: "morning",
+          9: "morning",
+          10: "morning",
           29: "morning",
         },
         12: {
