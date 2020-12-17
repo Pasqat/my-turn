@@ -226,51 +226,39 @@ const BigCalendar = () => {
     startDay,
   } = useDate();
 
-  const [turns, setTurns] = React.useState(
-    TURNISTI.map((worker) => {
+  // const [thisMonth, setThisMonth] = React.useState(month);
+  // const [thisYear, setThisYear] = React.useState(year);
+  console.log(month, year);
+
+  const [turns, setTurns] = React.useState(TURNISTI);
+
+  // normalize data. Update state if year or month change. So the schedule in
+  // state has only the days and not year or month as origiral data
+  React.useEffect(() => {
+    const newState = TURNISTI.map((worker) => {
       console.log(worker);
       let newSchedule = {};
 
       if (
         !worker.schedule ||
         !worker.schedule[year] ||
-        !worker.schedule[year][month]
+        !worker.schedule[year][month + 1]
       ) {
         newSchedule = {};
-      } else if (!worker.schedule[year]) {
-        newSchedule = { ...worker.schedule[year][month] };
+      } else {
+        newSchedule = { ...worker.schedule[year][month + 1] };
       }
 
       return { ...worker, schedule: newSchedule };
-    })
-  );
+    });
 
-  // TODO I think I will use something like this when I will fetch data from db
-  // ! this is not working
-  // normalize data. Update state if year or month change. So the schedule in
-  // state has only the days and not year or month as origiral data
-  // React.useEffect(() => {
-  //   console.log(turns);
-  //   const newState = turns.map((worker) => {
-  //     console.log(worker);
-  //     let newSchedule = {};
+    console.log(newState);
+    setTurns(newState);
+  }, [year, month]);
 
-  //     if (
-  //       !worker.schedule ||
-  //       !worker.schedule[year] ||
-  //       !worker.schedule[year][month]
-  //     ) {
-  //       newSchedule = {};
-  //     } else if (!worker.schedule[year]) {
-  //       newSchedule = { ...worker.schedule[year][month] };
-  //     }
-
-  //     return { ...worker, schedule: newSchedule };
-  //   });
-
-  //   console.log(newState);
-  //   setTurns(newState);
-  // }, [month, turns, year]);
+  const handleNextMonth = () => {
+    nextMonth();
+  };
 
   const coloredDiv = (turns) => {
     switch (turns) {
@@ -357,7 +345,7 @@ const BigCalendar = () => {
         <div>
           {MONTHS[month].toUpperCase()} {year}
         </div>
-        <Button onClick={() => nextMonth()}>&gt;</Button>
+        <Button onClick={handleNextMonth}>&gt;</Button>
       </Header>
       <Calendar>
         <Table>
