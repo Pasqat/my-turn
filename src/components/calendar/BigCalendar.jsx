@@ -118,16 +118,43 @@ const Names = styled.div`
   font-size: 1.5rem;
 `;
 
+// TODO the app work, but you need to store year and month for the schedule as well
+// like
+// {
+//    name: "Alessia",
+//    id: "alessia_01",
+//    schedule: {
+//      2011: {},
+//      2020: {
+//        11: {},
+//        12: {
+//             1: "morning",
+//             4: "afternoon",
+//             6: "night",
+//             9: "morning",
+//             10: "morning",
+//        }
+//      }
+//    }
+// }
+
 const TURNISTI = [
   {
     name: "Alessia",
     id: "alessia_01",
     schedule: {
-      1: "morning",
-      4: "afternoon",
-      6: "night",
-      9: "morning",
-      10: "morning",
+      2020: {
+        11: {
+          29: "morning",
+        },
+        12: {
+          1: "morning",
+          4: "afternoon",
+          6: "night",
+          9: "morning",
+          10: "morning",
+        },
+      },
     },
   },
   {
@@ -199,7 +226,51 @@ const BigCalendar = () => {
     startDay,
   } = useDate();
 
-  const [turns, setTurns] = React.useState(TURNISTI);
+  const [turns, setTurns] = React.useState(
+    TURNISTI.map((worker) => {
+      console.log(worker);
+      let newSchedule = {};
+
+      if (
+        !worker.schedule ||
+        !worker.schedule[year] ||
+        !worker.schedule[year][month]
+      ) {
+        newSchedule = {};
+      } else if (!worker.schedule[year]) {
+        newSchedule = { ...worker.schedule[year][month] };
+      }
+
+      return { ...worker, schedule: newSchedule };
+    })
+  );
+
+  // TODO I think I will use something like this when I will fetch data from db
+  // ! this is not working
+  // normalize data. Update state if year or month change. So the schedule in
+  // state has only the days and not year or month as origiral data
+  // React.useEffect(() => {
+  //   console.log(turns);
+  //   const newState = turns.map((worker) => {
+  //     console.log(worker);
+  //     let newSchedule = {};
+
+  //     if (
+  //       !worker.schedule ||
+  //       !worker.schedule[year] ||
+  //       !worker.schedule[year][month]
+  //     ) {
+  //       newSchedule = {};
+  //     } else if (!worker.schedule[year]) {
+  //       newSchedule = { ...worker.schedule[year][month] };
+  //     }
+
+  //     return { ...worker, schedule: newSchedule };
+  //   });
+
+  //   console.log(newState);
+  //   setTurns(newState);
+  // }, [month, turns, year]);
 
   const coloredDiv = (turns) => {
     switch (turns) {
