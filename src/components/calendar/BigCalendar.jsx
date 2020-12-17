@@ -7,7 +7,8 @@ import useDate from "../hooks/useDate/useDate";
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow-y: none;
+  overflow-x: scroll;
   /* margin-left: 18rem; */
   height: 100%;
   width: 100%;
@@ -89,6 +90,27 @@ const TableContent = styled.div`
   width: 100%;
   cursor: pointer;
   background-color: yellow;
+  cursor: pointer;
+  ${(props) => {
+    switch (props.workshift) {
+      case workshiftItem.morning:
+        return css`
+          background-color: var(--color-primary);
+        `;
+      case workshiftItem.afternoon:
+        return css`
+          background-color: var(--color-secondary);
+        `;
+      case workshiftItem.night:
+        return css`
+          background-color: var(--color-terziary);
+        `;
+      default:
+        throw new Error(
+          `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
+        );
+    }
+  }}
 `;
 
 const Names = styled.div`
@@ -96,44 +118,96 @@ const Names = styled.div`
   font-size: 1.5rem;
 `;
 
+// TODO the app work, but you need to store year and month for the schedule as well
+// like
+// {
+//    name: "Alessia",
+//    id: "alessia_01",
+//    schedule: {
+//      2011: {},
+//      2020: {
+//        11: {},
+//        12: {
+//             1: "morning",
+//             4: "afternoon",
+//             6: "night",
+//             9: "morning",
+//             10: "morning",
+//        }
+//      }
+//    }
+// }
+
 const TURNISTI = [
   {
     name: "Alessia",
     id: "alessia_01",
+    schedule: {
+      2020: {
+        11: {
+          29: "morning",
+        },
+        12: {
+          1: "morning",
+          4: "afternoon",
+          6: "night",
+          9: "morning",
+          10: "morning",
+        },
+      },
+    },
   },
   {
     name: "Melissa",
     id: "melissa_01",
+    schedule: {
+      1: "afternoon",
+      5: "morning",
+      6: "morning",
+      8: "afternoon",
+      10: "night",
+    },
   },
   {
     name: "Martina",
     id: "martina_08",
+    schedule: {
+      1: "morning",
+      3: "night",
+      4: "morning",
+      7: "night",
+      9: "afternoon",
+      12: "night",
+    },
   },
   {
     name: "Maria",
     id: "maria_04",
+    schedule: {},
   },
   {
     name: "Giovanni",
     id: "giovanni_01",
+    schedule: {},
   },
   {
     name: "Ciccio",
     id: "ciccio_23",
+    schedule: {},
   },
 ];
 
-const TURNI = [
-  {
-    nameId: "alessia_01",
-    schedule: {
-      1: "morning",
-      4: "evening",
-      6: "night",
-      9: "morning",
-      10: "morning",
-    },
-  },
+const workshiftItem = {
+  morning: "morning",
+  afternoon: "afternoon",
+  night: "night",
+};
+
+const acceptedShift = [
+  workshiftItem.morning,
+  workshiftItem.afternoon,
+  workshiftItem.night,
+  "",
 ];
 
 const BigCalendar = () => {
@@ -152,43 +226,129 @@ const BigCalendar = () => {
     startDay,
   } = useDate();
 
-  const [turns, setTurns] = React.useState(TURNI);
+  const [turns, setTurns] = React.useState(
+    TURNISTI.map((worker) => {
+      console.log(worker);
+      let newSchedule = {};
 
-  function renderSquare(rowId, columnIndex) {
-    turns.map((turno) => {
-      if (turno.nameId === rowId) {
-        for (const key in turno.schedule) {
-          if (Number(key) === columnIndex) {
-            console.log("key", key, turno.schedule[key]);
-            // FIXME why it does't render TableContent
-            return (
-              <TableContent
-                isToday={isToday(columnIndex)}
-                isSelected={columnIndex === day}
-                onClick={() =>
-                  alert(`This is the cell ${turno.nameId} : ${columnIndex}`)
-                }
-              >
-                {turno.schedule.key}
-              </TableContent>
-            );
-          }
-        }
+      if (
+        !worker.schedule ||
+        !worker.schedule[year] ||
+        !worker.schedule[year][month]
+      ) {
+        newSchedule = {};
+      } else if (!worker.schedule[year]) {
+        newSchedule = { ...worker.schedule[year][month] };
       }
-      // TODO return null instead
-      return (
-        <TableContent
-          isToday={isToday(columnIndex)}
-          isSelected={columnIndex === day}
-          onClick={() =>
-            alert(`This is the cell ${turno.nameId} : ${columnIndex}`)
-          }
-        >
-          🐵🐵🐵
-        </TableContent>
-      );
-    });
-  }
+
+      return { ...worker, schedule: newSchedule };
+    })
+  );
+
+  // TODO I think I will use something like this when I will fetch data from db
+  // ! this is not working
+  // normalize data. Update state if year or month change. So the schedule in
+  // state has only the days and not year or month as origiral data
+  // React.useEffect(() => {
+  //   console.log(turns);
+  //   const newState = turns.map((worker) => {
+  //     console.log(worker);
+  //     let newSchedule = {};
+
+  //     if (
+  //       !worker.schedule ||
+  //       !worker.schedule[year] ||
+  //       !worker.schedule[year][month]
+  //     ) {
+  //       newSchedule = {};
+  //     } else if (!worker.schedule[year]) {
+  //       newSchedule = { ...worker.schedule[year][month] };
+  //     }
+
+  //     return { ...worker, schedule: newSchedule };
+  //   });
+
+  //   console.log(newState);
+  //   setTurns(newState);
+  // }, [month, turns, year]);
+
+  const coloredDiv = (turns) => {
+    switch (turns) {
+      case workshiftItem.morning:
+        return <TableContent workshift={workshiftItem.morning}></TableContent>;
+      case workshiftItem.afternoon:
+        return (
+          <TableContent workshift={workshiftItem.afternoon}></TableContent>
+        );
+      case workshiftItem.night:
+        return <TableContent workshift={workshiftItem.night}></TableContent>;
+      default:
+        throw new Error(`Only 'morning', 'afternoon' or 'night' are supported`);
+    }
+  };
+
+  /**
+   * @param worker the element containing the name, id and schedule info
+   * @param monthLenght integer
+   */
+  const putValuesToTable = (worker, monthLenght, workerIndex) => {
+    const { id, name, schedule } = worker;
+
+    let children = [
+      <TableCell key={id}>
+        <Names>{name}</Names>
+      </TableCell>,
+    ];
+
+    for (let i = 1; i < monthLenght; i++) {
+      if (!schedule) {
+        children.push(
+          <TableCell
+            key={i}
+            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
+          />
+        );
+      } else if (schedule[i]) {
+        children.push(
+          <TableCell
+            key={i}
+            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
+          >
+            {coloredDiv(schedule[i])}
+          </TableCell>
+        );
+      } else {
+        children.push(
+          <TableCell
+            key={i}
+            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
+          ></TableCell>
+        );
+      }
+    }
+    return children;
+  };
+
+  const cycleThrougShifts = (workerIndex, scheduleIndex, schedule) => {
+    const acceptedShiftIndex = acceptedShift.findIndex(
+      (shift) => shift === schedule
+    );
+
+    let index = acceptedShiftIndex;
+
+    if (acceptedShiftIndex === 3) {
+      index = -1;
+    }
+
+    if (!turns[workerIndex].schedule) {
+      return;
+    }
+
+    let newSchedule = turns[workerIndex].schedule;
+    newSchedule[scheduleIndex] = acceptedShift[index + 1];
+
+    setTurns([...turns]);
+  };
 
   return (
     <Frame>
@@ -229,25 +389,10 @@ const BigCalendar = () => {
             </TableRow>
           </TableHead>
           <tbody>
-            {TURNISTI.map((turnista, index) => {
+            {turns.map((worker, index) => {
               return (
-                <TableRow key={turnista.id}>
-                  {Array(days[month] + 1)
-                    .fill(null)
-                    .map((_, d) => {
-                      if (d === 0) {
-                        return (
-                          <TableCell key={turnista.id}>
-                            <Names>{turnista.name}</Names>
-                          </TableCell>
-                        );
-                      }
-                      return (
-                        <TableCell key={d} isToday={isToday(d)}>
-                          {renderSquare(turnista.id, d)}
-                        </TableCell>
-                      );
-                    })}
+                <TableRow key={worker.id}>
+                  {putValuesToTable(worker, days[month] + 1, index)}
                 </TableRow>
               );
             })}
