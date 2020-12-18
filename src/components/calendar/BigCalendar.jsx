@@ -118,26 +118,6 @@ const Names = styled.div`
   font-size: 1.5rem;
 `;
 
-// TODO the app work, but you need to store year and month for the schedule as well
-// like
-// {
-//    name: "Alessia",
-//    id: "alessia_01",
-//    schedule: {
-//      2011: {},
-//      2020: {
-//        11: {},
-//        12: {
-//             1: "morning",
-//             4: "afternoon",
-//             6: "night",
-//             9: "morning",
-//             10: "morning",
-//        }
-//      }
-//    }
-// }
-
 const TURNISTI = [
   {
     name: "Alessia",
@@ -233,14 +213,12 @@ const BigCalendar = () => {
     startDay,
   } = useDate();
 
-  // const [thisMonth, setThisMonth] = React.useState(month);
-  // const [thisYear, setThisYear] = React.useState(year);
-  console.log(month, year);
-
   const [turns, setTurns] = React.useState(TURNISTI);
 
-  // normalize data. Update state if year or month change. So the schedule in
-  // state has only the days and not year or month as origiral data
+  /**
+   * Update state if year or month change. So the schedule in
+   * state has only the days and not year or month as original data
+   */
   React.useEffect(() => {
     const newState = TURNISTI.map((worker) => {
       console.log(worker);
@@ -331,6 +309,7 @@ const BigCalendar = () => {
 
     let index = acceptedShiftIndex;
 
+    // -1 so when update newSchedule the index became 0
     if (acceptedShiftIndex === 3) {
       index = -1;
     }
@@ -345,6 +324,7 @@ const BigCalendar = () => {
     setTurns([...turns]);
   };
 
+  // TODO refactor this mess!
   return (
     <Frame>
       <Header>
