@@ -36,8 +36,7 @@ const Button = styled.div`
 
 const Day = styled.div`
   /* width: 14.2%; */
-  width: 6rem;
-  height: 3rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,6 +59,7 @@ const Day = styled.div`
 
 const Table = styled.table`
   border-collapse: collapse;
+  width: 100%;
   /* background: var(--background-main); */
 `;
 
@@ -74,12 +74,26 @@ const TableRow = styled.tr`
 const TableCell = styled.td`
   border: var(--color-border);
   font-weight: normal;
-  position: sticky;
+  position: relative;
   ${(props) =>
     props.isToday &&
     css`
       background-color: var(--color-selected);
     `};
+`;
+
+const TableCellHeader = styled.td`
+  width: 2.8%;
+  border: var(--color-border);
+  ${(props) =>
+    props.isToday &&
+    css`
+      background-color: var(--color-selected);
+    `};
+  position: sticky;
+  top: -2;
+  background-color: var(--color-background);
+  zindex: 5;
 `;
 
 const TableContent = styled.div`
@@ -342,23 +356,14 @@ const BigCalendar = () => {
                 .fill(null)
                 .map((_, d) => {
                   return (
-                    <TableCell
-                      key={d}
-                      isToday={isToday(d)}
-                      style={{
-                        position: "sticky",
-                        top: -2,
-                        backgroundColor: "var(--color-background)",
-                        zIndex: "5",
-                      }}
-                    >
+                    <TableCellHeader key={d} isToday={isToday(d)}>
                       <Day
                         isSelected={d === day}
                         onClick={() => newDate(year, month, d)}
                       >
                         {d > 0 ? d : ""}
                       </Day>
-                    </TableCell>
+                    </TableCellHeader>
                   );
                 })}
             </TableRow>
