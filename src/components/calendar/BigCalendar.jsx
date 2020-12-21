@@ -255,10 +255,6 @@ const BigCalendar = () => {
     setTurns(newState);
   }, [year, month]);
 
-  const handleNextMonth = () => {
-    nextMonth();
-  };
-
   const coloredDiv = (turns) => {
     switch (turns) {
       case workshiftItem.morning:
@@ -338,6 +334,13 @@ const BigCalendar = () => {
     setTurns([...turns]);
   };
 
+  const addNewRow = () => {
+    alert(
+      "It will be better create a new page to manage team and team members"
+    );
+    alert("...or maybe it is not necessary at all");
+  };
+
   // TODO refactor this mess!
   return (
     <Frame>
@@ -346,7 +349,7 @@ const BigCalendar = () => {
         <div>
           {MONTHS[month].toUpperCase()} {year}
         </div>
-        <Button onClick={handleNextMonth}>&gt;</Button>
+        <Button onClick={() => nextMonth()}>&gt;</Button>
       </Header>
       <Calendar>
         <Table>
@@ -376,6 +379,18 @@ const BigCalendar = () => {
                 </TableRow>
               );
             })}
+            <TableRow key="addNewRow">
+              <TableCell>
+                <Names
+                  onClick={() => addNewRow()}
+                  style={{ cursor: "pointer" }}
+                >
+                  <span role="img" aria-label="add new worker">
+                    ➕
+                  </span>
+                </Names>
+              </TableCell>
+            </TableRow>
           </tbody>
         </Table>
       </Calendar>
