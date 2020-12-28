@@ -7,12 +7,11 @@ import useDate from "../hooks/useDate/useDate";
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: none;
-  overflow-x: scroll;
+  // overflow-y: none;
+  // overflow-x: scroll;
   /* margin-left: 18rem; */
   height: 100%;
   width: 100%;
-  background: var(--gradient-background);
 `;
 
 const Calendar = styled.div`

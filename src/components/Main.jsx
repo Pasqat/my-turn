@@ -14,7 +14,12 @@ const Main = () => {
   return (
     <StyledMain>
       <SideBar />
-      <BigCalendar />
+      <BigCalendar
+        style={{
+          backgroundColor: "var(--gradient-background)",
+          height: "100%",
+        }}
+      />
     </StyledMain>
   );
 };
