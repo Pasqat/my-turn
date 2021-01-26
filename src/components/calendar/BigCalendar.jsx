@@ -1,8 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import { MONTHS } from "../hooks/useDate/Constants";
 
 import useDate from "../hooks/useDate/useDate";
+
+import { TURNISTI } from "../../datamock";
 
 const Frame = styled.div`
   display: flex;
@@ -131,71 +134,13 @@ const Names = styled.div`
   font-size: 1.5rem;
 `;
 
-const TURNISTI = [
-  {
-    name: "Alessia",
-    id: "alessia_01",
-    schedule: {
-      2020: {
-        11: {
-          1: "night",
-          3: "morning",
-          4: "afternoon",
-          6: "night",
-          7: "morning",
-          9: "morning",
-          10: "morning",
-          29: "morning",
-        },
-        12: {
-          1: "morning",
-          4: "afternoon",
-          6: "night",
-          9: "morning",
-          10: "morning",
-        },
-      },
-    },
-  },
-  {
-    name: "Melissa",
-    id: "melissa_01",
-    schedule: {
-      1: "afternoon",
-      5: "morning",
-      6: "morning",
-      8: "afternoon",
-      10: "night",
-    },
-  },
-  {
-    name: "Martina",
-    id: "martina_08",
-    schedule: {
-      1: "morning",
-      3: "night",
-      4: "morning",
-      7: "night",
-      9: "afternoon",
-      12: "night",
-    },
-  },
-  {
-    name: "Maria",
-    id: "maria_04",
-    schedule: {},
-  },
-  {
-    name: "Giovanni",
-    id: "giovanni_01",
-    schedule: {},
-  },
-  {
-    name: "Ciccio",
-    id: "ciccio_23",
-    schedule: {},
-  },
-];
+const DeleteButton = styled.div`
+  display: none;
+  color: red;
+  ${Names}:hover & {
+    display: block;
+  }
+`;
 
 const workshiftItem = {
   morning: "morning",
@@ -224,7 +169,7 @@ const BigCalendar = () => {
     month,
     year,
     startDay,
-  } = useDate();
+  } = useDate(); //custom hook
 
   const [turns, setTurns] = React.useState(TURNISTI);
 
@@ -278,7 +223,10 @@ const BigCalendar = () => {
 
     let children = [
       <TableCell key={id}>
-        <Names>{name}</Names>
+        <Names>
+          {name}
+          <DeleteButton>delete</DeleteButton>
+        </Names>
       </TableCell>,
     ];
 
