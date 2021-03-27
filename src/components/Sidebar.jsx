@@ -46,19 +46,21 @@ const ItemDot = styled.div`
 const Sidebar = () => {
   return (
     <StyledSideBar>
-      <Calendar />
+      {/* <Calendar /> */}
+      {/* TODO the div is just a placeholder, REMOVE */}
+      <div style={{height: 59, borderBottom: "var(--color-border)"}}></div>
       <Legend>
         <LegendItem>
           <ItemDot color="primary" />
-          Mattina
+          Morning
         </LegendItem>
         <LegendItem>
           <ItemDot color="secondary" />
-          Pomeriggio
+          Evening
         </LegendItem>
         <LegendItem>
           <ItemDot color="terziary" />
-          Sera
+          Night
         </LegendItem>
       </Legend>
     </StyledSideBar>

@@ -102,7 +102,7 @@ const TableContent = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 80%;
+  height: 100%;
   width: 100%;
   cursor: pointer;
   background-color: yellow;
@@ -130,7 +130,7 @@ const TableContent = styled.div`
 `;
 
 const Names = styled.div`
-  padding: 20px;
+  padding: 10px 20px;
   font-size: 1.5rem;
 `;
 
@@ -139,6 +139,7 @@ const DeleteButton = styled.div`
   color: red;
   ${Names}:hover & {
     display: block;
+    cursor: pointer;
   }
 `;
 
@@ -214,6 +215,12 @@ const BigCalendar = () => {
     }
   };
 
+    function deletePerson(idToDelete) {
+      // I think there are better ways to write this
+      let newWorkerTeam = turns.filter(worker => worker.id !== idToDelete)
+      setTurns([...newWorkerTeam])
+    }
+
   /**
    * @param worker the element containing the name, id and schedule info
    * @param monthLenght integer
@@ -221,11 +228,12 @@ const BigCalendar = () => {
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
     const { id, name, schedule } = worker;
 
+
     let children = [
       <TableCell key={id}>
         <Names>
           {name}
-          <DeleteButton>delete</DeleteButton>
+          <DeleteButton onClick={() => deletePerson(id)}>delete</DeleteButton>
         </Names>
       </TableCell>,
     ];
@@ -282,13 +290,11 @@ const BigCalendar = () => {
   };
 
   const addNewRow = () => {
-    alert(
-      "It will be better create a new page to manage team and team members"
-    );
-    alert("...or maybe it is not necessary at all");
+    let name = prompt("Insert name")
+    setTurns([...turns, {name, id: uuidv4(), schedule: {}}])
   };
 
-  // TODO refactor this mess!
+  // TODO refactor please
   return (
     <Frame>
       <Header>

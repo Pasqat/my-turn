@@ -9,8 +9,9 @@ const StyledHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: var(--color-header-background);
-  padding: 0px 2rem;
+  background: var(--color-background);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
+  padding: 10px 2rem;
   color: var(--color-primary);
   font-family: "Raleway", sans-serif;
 `;
@@ -18,6 +19,7 @@ const StyledHeader = styled.div`
 const H2 = styled.h2`
   font-weight: 400;
   font-size: 2rem;
+  margin: 0;
 `;
 
 const Link = styled.a`
@@ -44,7 +46,7 @@ const Header = ({ switchTheme }) => {
 
   return (
     <StyledHeader>
-      <H2>Firstname</H2>
+      <H2>Team Name</H2>
       <Button onClick={() => setTheme(!theme)}>
         {theme ? <Moon /> : <Sun />}
       </Button>
