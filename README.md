@@ -1,11 +1,31 @@
-# Il mio Turno (My Turn) 📅
+# My Turn 📅
 
 ![](./img/Desktop-1.png)
 
+A simple app to manage workshift of people.
+
+The beta version will have the following functionality:
+
++ **Login** as a Team;
++ **Add/remove people** from the team directly in the calendar view;
++ The team composition can have different worker from month to month;
++ Manage workshifts just by clicking on the calendar;
++ An **overview of the scheduled workshifts** per worker in shift (or maybe hours);
++ Ligth and dark **themes**;
+
+
+## Why My turn?
+
+This is my first own made project to test my competence on react and web dev in general.
+I tried to not use external library where possible.
+The project will be keeped intentionally as simple as possible, hoping to reach a working version anytime soon.
+
 ## TODO
 
-- [] Team Page, to add o remove people;
-- [] Weekly summury in the side bar, for the logged in user, that track total workshift or hours;
-- [] Weekly view in the BigCalendar?
-- [] Toggle button for compact and large view of BigCalendar component;
-- [] Edit toggle button to avoid accidental edit of the schedule of only view user;
+- [ ] Weekly view?
+- [ ] Not User login but **Team** login
+- [ ] Add/delete worker
+- [ ] local starage for theme and login
+- [ ] backend to store workshift and team data
+- [ ] Edit toggle button to avoid accidental edit of the schedule of only view user;
+- [ ] Print button???
