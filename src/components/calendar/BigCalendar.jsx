@@ -1,11 +1,11 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { v4 as uuidv4 } from "uuid";
-import { MONTHS } from "../hooks/useDate/Constants";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+import { MONTHS } from '../hooks/useDate/Constants';
 
-import useDate from "../hooks/useDate/useDate";
+import useDate from '../hooks/useDate/useDate';
 
-import { TURNISTI } from "../../datamock";
+import { TURNISTI } from '../../datamock';
 
 const Frame = styled.div`
   display: flex;
@@ -135,6 +135,7 @@ const Names = styled.div`
 `;
 
 const DeleteButton = styled.div`
+  font-size: 1rem;
   display: none;
   color: red;
   ${Names}:hover & {
@@ -144,16 +145,16 @@ const DeleteButton = styled.div`
 `;
 
 const workshiftItem = {
-  morning: "morning",
-  afternoon: "afternoon",
-  night: "night",
+  morning: 'morning',
+  afternoon: 'afternoon',
+  night: 'night'
 };
 
 const acceptedShift = [
   workshiftItem.morning,
   workshiftItem.afternoon,
   workshiftItem.night,
-  "",
+  ''
 ];
 
 const BigCalendar = () => {
@@ -169,7 +170,7 @@ const BigCalendar = () => {
     day,
     month,
     year,
-    startDay,
+    startDay
   } = useDate(); //custom hook
 
   const [turns, setTurns] = React.useState(TURNISTI);
@@ -215,11 +216,11 @@ const BigCalendar = () => {
     }
   };
 
-    function deletePerson(idToDelete) {
-      // I think there are better ways to write this
-      let newWorkerTeam = turns.filter(worker => worker.id !== idToDelete)
-      setTurns([...newWorkerTeam])
-    }
+  function deletePerson(idToDelete) {
+    // I think there are better ways to write this
+    let newWorkerTeam = turns.filter((worker) => worker.id !== idToDelete);
+    setTurns([...newWorkerTeam]);
+  }
 
   /**
    * @param worker the element containing the name, id and schedule info
@@ -228,14 +229,13 @@ const BigCalendar = () => {
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
     const { id, name, schedule } = worker;
 
-
     let children = [
       <TableCell key={id}>
         <Names>
           {name}
           <DeleteButton onClick={() => deletePerson(id)}>delete</DeleteButton>
         </Names>
-      </TableCell>,
+      </TableCell>
     ];
 
     for (let i = 1; i < monthLenght; i++) {
@@ -290,8 +290,8 @@ const BigCalendar = () => {
   };
 
   const addNewRow = () => {
-    let name = prompt("Insert name")
-    setTurns([...turns, {name, id: uuidv4(), schedule: {}}])
+    let name = prompt('Insert name');
+    setTurns([...turns, { name, id: uuidv4(), schedule: {} }]);
   };
 
   // TODO refactor please
@@ -317,7 +317,7 @@ const BigCalendar = () => {
                         isSelected={d === day}
                         onClick={() => newDate(year, month, d)}
                       >
-                        {d > 0 ? d : ""}
+                        {d > 0 ? d : ''}
                       </Day>
                     </TableCellHeader>
                   );
@@ -336,7 +336,7 @@ const BigCalendar = () => {
               <TableCell>
                 <Names
                   onClick={() => addNewRow()}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: 'pointer' }}
                 >
                   <span role="img" aria-label="add new worker">
                     ➕
