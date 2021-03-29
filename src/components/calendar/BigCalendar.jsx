@@ -339,7 +339,12 @@ const BigCalendar = () => {
               <TableCell>
                 <Names
                   onClick={() => addNewRow()}
-                  style={{ cursor: 'pointer' }}
+                  style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignContent: 'center',
+                    justifyContent: 'center'
+                  }}
                 >
                   <span
                     style={{ fontSize: '1rem' }}
