@@ -291,7 +291,10 @@ const BigCalendar = () => {
 
   const addNewRow = () => {
     let name = prompt('Insert name');
-    setTurns([...turns, { name, id: uuidv4(), schedule: {} }]);
+    console.log('name', name);
+    if (name === null) return;
+    if (name.length === 0) return alert("Name can't be empty");
+    return setTurns([...turns, { name, id: uuidv4(), schedule: {} }]);
   };
 
   // TODO refactor please
@@ -338,7 +341,11 @@ const BigCalendar = () => {
                   onClick={() => addNewRow()}
                   style={{ cursor: 'pointer' }}
                 >
-                  <span role="img" aria-label="add new worker">
+                  <span
+                    style={{ fontSize: '1rem' }}
+                    role="img"
+                    aria-label="add new worker"
+                  >
                     ➕
                   </span>
                 </Names>
