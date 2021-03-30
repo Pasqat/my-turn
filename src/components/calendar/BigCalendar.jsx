@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MONTHS } from '../hooks/useDate/Constants';
 
 import useDate from '../hooks/useDate/useDate';
+import useLocalStorageState from '../hooks/useLocalStorageState';
 
 import { TURNISTI } from '../../datamock';
 
@@ -173,7 +174,7 @@ const BigCalendar = () => {
     startDay
   } = useDate(); //custom hook
 
-  const [turns, setTurns] = React.useState(TURNISTI);
+  const [turns, setTurns] = useLocalStorageState('turns', TURNISTI);
 
   /**
    * Update state if year or month change. So the schedule in
@@ -181,7 +182,7 @@ const BigCalendar = () => {
    */
   React.useEffect(() => {
     const newState = TURNISTI.map((worker) => {
-      console.log(worker);
+      console.log('worker in useEffect -> ', worker);
       let newSchedule = {};
 
       if (
@@ -198,8 +199,9 @@ const BigCalendar = () => {
     });
 
     console.log(newState);
+    if (turns) return;
     setTurns(newState);
-  }, [year, month]);
+  }, [year, month, setTurns]);
 
   const coloredDiv = (turns) => {
     switch (turns) {
