@@ -18,7 +18,7 @@ const StyledApp = ({ children, theme }) => {
 };
 
 const App = () => {
-  const [theme, setTheme] = useLocalStorageState('theme');
+  const [theme, setTheme] = useLocalStorageState('theme', 'dark');
 
   function switchTheme(passedTheme) {
     return setTheme(passedTheme);

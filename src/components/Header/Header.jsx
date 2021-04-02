@@ -39,7 +39,7 @@ const Button = styled.div`
 `;
 
 const Header = ({ switchTheme }) => {
-  const [theme, setTheme] = useLocalStorageState('theme');
+  const [theme, setTheme] = useLocalStorageState('theme', 'dark');
 
   useEffect(() => {
     switchTheme(theme);
