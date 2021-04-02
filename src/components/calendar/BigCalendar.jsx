@@ -288,6 +288,7 @@ const BigCalendar = () => {
     let newSchedule = turns[workerIndex].schedule;
     newSchedule[scheduleIndex] = acceptedShift[index + 1];
 
+    console.log(turns);
     setTurns([...turns]);
   };
 
