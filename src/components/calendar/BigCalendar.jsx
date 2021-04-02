@@ -6,7 +6,7 @@ import { MONTHS } from '../hooks/useDate/Constants';
 import useDate from '../hooks/useDate/useDate';
 import useLocalStorageState from '../hooks/useLocalStorageState';
 
-import { TURNISTI } from '../../datamock';
+import { TURNISTI } from '../../datamock2';
 
 const Frame = styled.div`
   display: flex;
@@ -174,33 +174,29 @@ const BigCalendar = () => {
     startDay
   } = useDate(); //custom hook
 
-  const [turns, setTurns] = useLocalStorageState('turns', TURNISTI);
+  const [turns, setTurns] = useLocalStorageState('turns', []);
 
   /**
    * Update state if year or month change. So the schedule in
    * state has only the days and not year or month as original data
    */
   React.useEffect(() => {
-    const newState = TURNISTI.map((worker) => {
-      console.log('worker in useEffect -> ', worker);
-      let newSchedule = {};
+    let newSchedule = [];
 
-      if (
-        !worker.schedule ||
-        !worker.schedule[year] ||
-        !worker.schedule[year][month + 1]
-      ) {
-        newSchedule = {};
-      } else {
-        newSchedule = { ...worker.schedule[year][month + 1] };
+    if (
+      !TURNISTI.schedule ||
+      !TURNISTI.schedule[year] ||
+      !TURNISTI.schedule[year][month + 1]
+    ) {
+      newSchedule = [];
+    } else {
+      for (let userId in TURNISTI.schedule[year][month + 1]) {
+        newSchedule.push(TURNISTI.schedule[year][month + 1][userId]);
       }
+    }
 
-      return { ...worker, schedule: newSchedule };
-    });
-
-    console.log(newState);
-    if (turns) return;
-    setTurns(newState);
+    console.log('newSchedule', newSchedule);
+    setTurns(newSchedule);
   }, [year, month, setTurns]);
 
   const coloredDiv = (turns) => {
@@ -220,7 +216,7 @@ const BigCalendar = () => {
 
   function deletePerson(idToDelete) {
     // I think there are better ways to write this
-    let newWorkerTeam = turns.filter((worker) => worker.id !== idToDelete);
+    let newWorkerTeam = turns.filter((worker) => worker.userId !== idToDelete);
     setTurns([...newWorkerTeam]);
   }
 
@@ -229,39 +225,41 @@ const BigCalendar = () => {
    * @param monthLenght integer
    */
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
-    const { id, name, schedule } = worker;
+    const { userId, user, days } = worker;
 
     let children = [
-      <TableCell key={id}>
+      <TableCell key={userId}>
         <Names>
-          {name}
-          <DeleteButton onClick={() => deletePerson(id)}>delete</DeleteButton>
+          {user}
+          <DeleteButton onClick={() => deletePerson(userId)}>
+            delete
+          </DeleteButton>
         </Names>
       </TableCell>
     ];
 
     for (let i = 1; i < monthLenght; i++) {
-      if (!schedule) {
+      if (!days) {
         children.push(
           <TableCell
             key={i}
-            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
+            onClick={() => cycleThrougShifts(workerIndex, i, days[i])}
           />
         );
-      } else if (schedule[i]) {
+      } else if (days[i]) {
         children.push(
           <TableCell
             key={i}
-            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
+            onClick={() => cycleThrougShifts(workerIndex, i, days[i])}
           >
-            {coloredDiv(schedule[i])}
+            {coloredDiv(days[i])}
           </TableCell>
         );
       } else {
         children.push(
           <TableCell
             key={i}
-            onClick={() => cycleThrougShifts(workerIndex, i, schedule[i])}
+            onClick={() => cycleThrougShifts(workerIndex, i, days[i])}
           ></TableCell>
         );
       }
@@ -281,26 +279,24 @@ const BigCalendar = () => {
       index = -1;
     }
 
-    if (!turns[workerIndex].schedule) {
+    if (!turns[workerIndex].days) {
       return;
     }
 
-    let newSchedule = turns[workerIndex].schedule;
+    let newSchedule = turns[workerIndex].days;
     newSchedule[scheduleIndex] = acceptedShift[index + 1];
 
-    console.log(turns);
     setTurns([...turns]);
   };
 
   const addNewRow = () => {
-    let name = prompt('Insert name');
-    console.log('name', name);
-    if (name === null) return;
-    if (name.length === 0) return alert("Name can't be empty");
-    return setTurns([...turns, { name, id: uuidv4(), schedule: {} }]);
+    let user = prompt('Insert name');
+    console.log('name', user);
+    if (user === null) return;
+    if (user.length === 0) return alert("Name can't be empty");
+    return setTurns([...turns, { user, userId: uuidv4(), days: {} }]);
   };
 
-  // TODO refactor please
   return (
     <Frame>
       <Header>
@@ -333,7 +329,7 @@ const BigCalendar = () => {
           <tbody>
             {turns.map((worker, index) => {
               return (
-                <TableRow key={worker.id}>
+                <TableRow key={worker.userId}>
                   {putValuesToTable(worker, days[month] + 1, index)}
                 </TableRow>
               );
