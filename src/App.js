@@ -1,12 +1,13 @@
-import React from "react";
-import { useState } from "react";
-import "./index.css";
-import { GlobalStyles } from "./GlobalStyles";
+import React from 'react';
+// import { useState } from 'react';
+import './index.css';
+import { GlobalStyles } from './GlobalStyles';
 
-import Header from "./components/Header/Header";
-import Main from "./components/Main";
+import Header from './components/Header/Header';
+import Main from './components/Main';
 
-// TODO useLocalStorage from EpicReact to store theme pref
+import useLocalStorageState from './components/hooks/useLocalStorageState';
+
 const StyledApp = ({ children, theme }) => {
   return (
     <>
@@ -17,10 +18,10 @@ const StyledApp = ({ children, theme }) => {
 };
 
 const App = () => {
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useLocalStorageState('theme');
 
   function switchTheme(passedTheme) {
-    return passedTheme ? setTheme("light") : setTheme("");
+    return setTheme(passedTheme);
   }
 
   return (
