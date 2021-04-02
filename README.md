@@ -24,8 +24,11 @@ The project will be keeped intentionally as simple as possible, hoping to reach 
 
 - [ ] Weekly view?
 - [ ] Not User login but **Team** login
-- [ ] Add/delete worker
-- [ ] local starage for theme and login
+- [X] Add/delete worker
+- [o] local storage
+  - [X] theme
+  - [ ] login
+  - [X] data of current month
 - [ ] backend to store workshift and team data
 - [ ] Edit toggle button to avoid accidental edit of the schedule of only view user;
-- [ ] Print button???
+- [ ] ~~Print button? (maybe not as usefull as it seems)~~
