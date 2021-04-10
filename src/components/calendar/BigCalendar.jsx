@@ -6,7 +6,7 @@ import { MONTHS } from '../hooks/useDate/Constants';
 import useDate from '../hooks/useDate/useDate';
 import useLocalStorageState from '../hooks/useLocalStorageState';
 
-import { TURNISTI } from '../../datamock2';
+import teamService from '../../services/teams'
 
 const Frame = styled.div`
   display: flex;
@@ -98,7 +98,6 @@ const TableCellHeader = styled.td`
   background-color: var(--color-background);
   zindex: 5;
 `;
-
 const TableContent = styled.div`
   position: absolute;
   top: 0;
@@ -159,7 +158,7 @@ const acceptedShift = [
 ];
 
 const BigCalendar = () => {
-  const today = new Date();
+  // const today = new Date();
 
   const {
     isToday,
@@ -167,11 +166,11 @@ const BigCalendar = () => {
     previousMonth,
     newDate,
     days,
-    date,
+    // date,
     day,
     month,
     year,
-    startDay
+    // startDay
   } = useDate(); //custom hook
 
   const [turns, setTurns] = useLocalStorageState('turns', []);
@@ -181,22 +180,30 @@ const BigCalendar = () => {
    * state has only the days and not year or month as original data
    */
   React.useEffect(() => {
-    let newSchedule = [];
+    let teams;
 
-    if (
-      !TURNISTI.schedule ||
-      !TURNISTI.schedule[year] ||
-      !TURNISTI.schedule[year][month + 1]
-    ) {
-      newSchedule = [];
-    } else {
-      for (let userId in TURNISTI.schedule[year][month + 1]) {
-        newSchedule.push(TURNISTI.schedule[year][month + 1][userId]);
-      }
-    }
+    teamService.getAll()
+      .then(initialTeams => {
+    // TODO now get all > but you need only data of the logged team
+        teams = initialTeams.filter(team => team.name == "CovidUTI")[0]
 
-    console.log('newSchedule', newSchedule);
+        let newSchedule = [];
+
+        if (
+          !teams.schedule ||
+          !teams.schedule[year] ||
+          !teams.schedule[year][month + 1]
+        ) {
+          newSchedule = [];
+        } else {
+          for (let userId in teams.schedule[year][month + 1]) {
+            newSchedule.push(teams.schedule[year][month + 1][userId]);
+          }
+        }
+
     setTurns(newSchedule);
+      })
+
   }, [year, month, setTurns]);
 
   const coloredDiv = (turns) => {
@@ -291,10 +298,13 @@ const BigCalendar = () => {
 
   const addNewRow = () => {
     let user = prompt('Insert name');
-    console.log('name', user);
+
     if (user === null) return;
     if (user.length === 0) return alert("Name can't be empty");
-    return setTurns([...turns, { user, userId: uuidv4(), days: {} }]);
+
+    const newPerson = {user, userId: uuidv4(), days: {}}
+
+    return setTurns([...turns, newPerson]);
   };
 
   return (

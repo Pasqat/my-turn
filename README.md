@@ -30,5 +30,6 @@ The project will be keeped intentionally as simple as possible, hoping to reach 
   - [ ] login
   - [X] data of current month
 - [ ] backend to store workshift and team data
+  - [ ] use GraphQL
 - [ ] Edit toggle button to avoid accidental edit of the schedule of only view user;
 - [ ] ~~Print button? (maybe not as usefull as it seems)~~
