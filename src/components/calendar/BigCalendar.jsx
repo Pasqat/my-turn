@@ -145,6 +145,9 @@ const DeleteButton = styled.div`
   }
 `;
 
+// TODO fetch acceptedShift from server using
+// scheduleService.getAll(data => data[acceptedShift])
+// do this on parent level to use data on sidebar too
 const workshiftItem = {
   morning: 'morning',
   afternoon: 'afternoon',
@@ -181,15 +184,15 @@ const BigCalendar = () => {
     scheduleService.getMonth(year, month)
       .then(data => {
 
-        console.log('data', data)
+        console.log('data', data, 'month', month, 'year', year)
 
         setTurns(data)
       })
 
   }, [year, month, setTurns]);
 
-  const coloredDiv = (turns) => {
-    switch (turns) {
+  const coloredDiv = (turn) => {
+    switch (turn) {
       case workshiftItem.morning:
         return <TableContent workshift={workshiftItem.morning}></TableContent>;
       case workshiftItem.afternoon:
@@ -204,31 +207,21 @@ const BigCalendar = () => {
     }
   };
 
-  function deletePerson(idToDelete) {
-    // I think there are better ways to write this
-    let newWorkerTeam = turns.filter((worker) => worker.userId !== idToDelete);
-    setTurns([...newWorkerTeam]);
-  }
-
-  /**
-   * @param worker the element containing the name, id and schedule info
-   * @param monthLenght integer
-   */
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
-    const { userId, user, days } = worker;
+    const { userId, name, days } = worker;
 
     let children = [
-      <TableCell key={userId}>
+      <TableCell key={userId || `is-unique-enough ${Math.floor(Math.random() * 100 )}`}>
         <Names>
-          {user}
-          <DeleteButton onClick={() => deletePerson(userId)}>
+          {name}
+          <DeleteButton onClick={() => removeRow(userId)}>
             delete
           </DeleteButton>
         </Names>
       </TableCell>
     ];
 
-    for (let i = 1; i < monthLenght; i++) {
+    for (let i = 0; i < monthLenght - 1; i++) {
       if (!days) {
         children.push(
           <TableCell
@@ -265,8 +258,8 @@ const BigCalendar = () => {
     let index = acceptedShiftIndex;
 
     // -1 so when update newSchedule the index became 0
-    // if (acceptedShiftIndex === 3) {
-    if (acceptedShiftIndex === acceptedShift.length) {
+    console.log(acceptedShift, acceptedShift.length)
+    if (acceptedShiftIndex === acceptedShift.length - 1) {
       index = -1;
     }
 
@@ -281,15 +274,30 @@ const BigCalendar = () => {
   };
 
   const addNewRow = () => {
-    let user = prompt('Insert name');
+    let name = prompt('Insert name');
 
-    if (user === null) return;
-    if (user.length === 0) return alert("Name can't be empty");
+    if (name === null) return;
+    if (name.length === 0) return alert("Name can't be empty");
 
-    const newPerson = {user, userId: uuidv4(), days: {}}
+    const newPerson = {
+      // TODO hardcoded, the best way to screw up 🍾
+      teamName: 'CovidUTI',
+      teamId: "733326af-6d26-49f4-8204-3f944f20c34d",
+      name
+    }
 
-    return setTurns([...turns, newPerson]);
+    scheduleService.addNewMember(newPerson, year, month).then(
+      data => setTurns([...turns, data]))
+
   };
+
+  function removeRow(idToDelete) {
+    let newWorkerTeam = turns.filter((worker) => worker.userId !== idToDelete);
+
+    scheduleService.removeTeamMember(year, month, idToDelete)
+
+    setTurns([...newWorkerTeam]);
+  }
 
   return (
     <Frame>

@@ -13,11 +13,10 @@ const getYear = (year) => {
 
 const getMonth = (year, month) => {
   const request = axios.get(`${baseUrl}/${year}/${month}`)
-  // const request = axios.get(`${baseUrl}/2021/4`)
   return request.then(response => response.data)
 }
 
-const create = newObject => {
+const addNewMember = (newObject, year, month) => {
 /*
  * body of the request
  * {
@@ -27,7 +26,7 @@ const create = newObject => {
  *   days: []       OPTIONAL
  * }
  */
-  const request = axios.post(baseUrl, newObject)
+  const request = axios.post(`${baseUrl}/${year}/${month}`, newObject)
   return request.then(response => response.data)
 }
 
@@ -38,10 +37,10 @@ const update = (id, newObject) => {
 }
 
 const removeTeamMember = (year, month, id) => {
-  const request = axios.delete(`${baseUrl}/${year}/${month}/${year}/${month}/${id}`)
+  const request = axios.delete(`${baseUrl}/${year}/${month}/${id}`)
   return request.then(response => response.data)
 }
 
 export default {
-  getAll, getYear, getMonth, create, update, removeTeamMember
+  getAll, getYear, getMonth, addNewMember, update, removeTeamMember
 }
