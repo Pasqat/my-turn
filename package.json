@@ -1,6 +1,5 @@
 {
   "name": "il_mio_turno",
-  "homepage": "https://pasqat.github.io/my-turn",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,6 +22,7 @@
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },

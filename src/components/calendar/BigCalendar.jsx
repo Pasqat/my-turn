@@ -7,6 +7,7 @@ import useDate from '../hooks/useDate/useDate';
 import useLocalStorageState from '../hooks/useLocalStorageState';
 
 import teamService from '../../services/teams'
+import scheduleService from '../../services/scheduledTime'
 
 const Frame = styled.div`
   display: flex;
@@ -175,33 +176,14 @@ const BigCalendar = () => {
 
   const [turns, setTurns] = useLocalStorageState('turns', []);
 
-  /**
-   * Update state if year or month change. So the schedule in
-   * state has only the days and not year or month as original data
-   */
+
   React.useEffect(() => {
-    let teams;
+    scheduleService.getMonth(year, month)
+      .then(data => {
 
-    teamService.getAll()
-      .then(initialTeams => {
-    // TODO now get all > but you need only data of the logged team
-        teams = initialTeams.filter(team => team.name == "CovidUTI")[0]
+        console.log('data', data)
 
-        let newSchedule = [];
-
-        if (
-          !teams.schedule ||
-          !teams.schedule[year] ||
-          !teams.schedule[year][month + 1]
-        ) {
-          newSchedule = [];
-        } else {
-          for (let userId in teams.schedule[year][month + 1]) {
-            newSchedule.push(teams.schedule[year][month + 1][userId]);
-          }
-        }
-
-    setTurns(newSchedule);
+        setTurns(data)
       })
 
   }, [year, month, setTurns]);
@@ -217,7 +199,8 @@ const BigCalendar = () => {
       case workshiftItem.night:
         return <TableContent workshift={workshiftItem.night}></TableContent>;
       default:
-        throw new Error(`Only 'morning', 'afternoon' or 'night' are supported`);
+        return <TableContent workshift={workshiftItem.night}></TableContent>;
+        // throw new Error(`Only 'morning', 'afternoon' or 'night' are supported`);
     }
   };
 
@@ -282,7 +265,8 @@ const BigCalendar = () => {
     let index = acceptedShiftIndex;
 
     // -1 so when update newSchedule the index became 0
-    if (acceptedShiftIndex === 3) {
+    // if (acceptedShiftIndex === 3) {
+    if (acceptedShiftIndex === acceptedShift.length) {
       index = -1;
     }
 
