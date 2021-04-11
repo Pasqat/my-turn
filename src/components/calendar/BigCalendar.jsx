@@ -1,158 +1,21 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
+import {Frame, Calendar, Header, Button, Day,
+        Table, TableCell, TableCellHeader, TableContent,
+        TableHead, TableRow, Names, DeleteButton,
+        } from './bigCalendar-style'
+
 import { MONTHS } from '../hooks/useDate/Constants';
 
 import useDate from '../hooks/useDate/useDate';
 import useLocalStorageState from '../hooks/useLocalStorageState';
 
-import teamService from '../../services/teams'
 import scheduleService from '../../services/scheduledTime'
+import { coloredDiv, workshiftItem } from '../utils/calendar'
 
-const Frame = styled.div`
-  display: flex;
-  flex-direction: column;
-  // overflow-y: none;
-  // overflow-x: scroll;
-  /* margin-left: 18rem; */
-  height: 100%;
-  width: 100%;
-`;
-
-const Calendar = styled.div`
-  /* flex: 1 1 auto; */
-  /* display: flex; */
-`;
-const Header = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 20px 15px;
-  color: var(--color-primary);
-  letter-spacing: 2px;
-  /* background: var(--background-main); */
-  overflow-y: auto;
-`;
-
-const Button = styled.div`
-  cursor: pointer;
-  margin: 0 15px;
-`;
-
-const Day = styled.div`
-  /* width: 14.2%; */
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  /* border-left: var(--color-border) */
-
-  ${(props) =>
-    props.isToday &&
-    css`
-      background-color: var(--color-selected);
-    `}
-
-  ${(props) =>
-    props.isSelected &&
-    css`
-      background-color: var(--color-selected);
-    `}
-`;
-
-const Table = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  /* background: var(--background-main); */
-`;
-
-const TableHead = styled.thead`
-  /* 🤖 Are you sure this is needed? */
-`;
-
-const TableRow = styled.tr`
-  border: var(--color-border);
-`;
-
-const TableCell = styled.td`
-  border: var(--color-border);
-  font-weight: normal;
-  position: relative;
-  ${(props) =>
-    props.isToday &&
-    css`
-      background-color: var(--color-selected);
-    `};
-`;
-
-const TableCellHeader = styled.td`
-  width: 2.8%;
-  border: var(--color-border);
-  ${(props) =>
-    props.isToday &&
-    css`
-      background-color: var(--color-selected);
-    `};
-  position: sticky;
-  top: -2;
-  background-color: var(--color-background);
-  zindex: 5;
-`;
-const TableContent = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  cursor: pointer;
-  background-color: yellow;
-  cursor: pointer;
-  ${(props) => {
-    switch (props.workshift) {
-      case workshiftItem.morning:
-        return css`
-          background-color: var(--color-primary);
-        `;
-      case workshiftItem.afternoon:
-        return css`
-          background-color: var(--color-secondary);
-        `;
-      case workshiftItem.night:
-        return css`
-          background-color: var(--color-terziary);
-        `;
-      default:
-        throw new Error(
-          `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
-        );
-    }
-  }}
-`;
-
-const Names = styled.div`
-  padding: 10px 20px;
-  font-size: 1.5rem;
-`;
-
-const DeleteButton = styled.div`
-  font-size: 1rem;
-  display: none;
-  color: red;
-  ${Names}:hover & {
-    display: block;
-    cursor: pointer;
-  }
-`;
 
 // TODO fetch acceptedShift from server using
 // scheduleService.getAll(data => data[acceptedShift])
 // do this on parent level to use data on sidebar too
-const workshiftItem = {
-  morning: 'morning',
-  afternoon: 'afternoon',
-  night: 'night'
-};
 
 const acceptedShift = [
   workshiftItem.morning,
@@ -191,21 +54,6 @@ const BigCalendar = () => {
 
   }, [year, month, setTurns]);
 
-  const coloredDiv = (turn) => {
-    switch (turn) {
-      case workshiftItem.morning:
-        return <TableContent workshift={workshiftItem.morning}></TableContent>;
-      case workshiftItem.afternoon:
-        return (
-          <TableContent workshift={workshiftItem.afternoon}></TableContent>
-        );
-      case workshiftItem.night:
-        return <TableContent workshift={workshiftItem.night}></TableContent>;
-      default:
-        return <TableContent workshift={workshiftItem.night}></TableContent>;
-        // throw new Error(`Only 'morning', 'afternoon' or 'night' are supported`);
-    }
-  };
 
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
     const { userId, name, days } = worker;
