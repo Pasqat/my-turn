@@ -33,3 +33,10 @@ The project will be keeped intentionally as simple as possible, hoping to reach 
 - [X] backend to store workshift and team data
 - [ ] Edit toggle button to avoid accidental edit of the schedule of only view user;
 - [ ] ~~Print button? (maybe not as usefull as it seems)~~
+- [ ] Short instruction
+  - [ ] how to add people
+  - [ ] how to remove people
+  - [ ] how to change block
+- [ ] Mobile view
+  - [ ] weekly view of calendar
+  - [ ] no sidebar
