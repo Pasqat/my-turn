@@ -1,6 +1,6 @@
 import React from 'react';
 import {Frame, Calendar, Header, Button, Day,
-        Table, TableCell, TableCellHeader, TableContent,
+        Table, TableCell, TableCellHeader, 
         TableHead, TableRow, Names, DeleteButton,
         } from './bigCalendar-style'
 
@@ -140,7 +140,7 @@ const BigCalendar = () => {
   };
 
   function removeRow(idToDelete) {
-    let newWorkerTeam = tu_id.filter((worker) => worker._id !== idToDelete);
+    let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete);
 
     scheduleService.removeTeamMember(year, idToDelete)
 
