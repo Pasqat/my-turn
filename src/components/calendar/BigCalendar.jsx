@@ -140,7 +140,7 @@ const BigCalendar = () => {
   };
 
   function removeRow(idToDelete) {
-    let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete);
+    let newWorkerTeam = tu_id.filter((worker) => worker._id !== idToDelete);
 
     scheduleService.removeTeamMember(year, idToDelete)
 
