@@ -56,13 +56,13 @@ const BigCalendar = () => {
 
 
   const putValuesToTable = (worker, monthLenght, workerIndex) => {
-    const { userId, name, days } = worker;
+    const { userId, name, days, _id } = worker;
 
     let children = [
       <TableCell key={userId || `is-unique-enough ${Math.floor(Math.random() * 100 )}`}>
         <Names>
           {name}
-          <DeleteButton onClick={() => removeRow(userId)}>
+          <DeleteButton onClick={() => removeRow(_id)}>
             delete
           </DeleteButton>
         </Names>
@@ -140,9 +140,9 @@ const BigCalendar = () => {
   };
 
   function removeRow(idToDelete) {
-    let newWorkerTeam = turns.filter((worker) => worker.userId !== idToDelete);
+    let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete);
 
-    scheduleService.removeTeamMember(year, month, idToDelete)
+    scheduleService.removeTeamMember(year, idToDelete)
 
     setTurns([...newWorkerTeam]);
   }

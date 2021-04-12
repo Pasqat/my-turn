@@ -12,7 +12,7 @@ const getYear = (year) => {
 }
 
 const getMonth = (year, month) => {
-  const request = axios.get(`${baseUrl}/${year}/${month}`)
+  const request = axios.get(`${baseUrl}/${year}/${month + 1}`)
   return request.then(response => response.data)
 }
 
@@ -26,7 +26,7 @@ const addNewMember = (newObject, year, month) => {
  *   days: []       OPTIONAL
  * }
  */
-  const request = axios.post(`${baseUrl}/${year}/${month}`, newObject)
+  const request = axios.post(`${baseUrl}/${year}/${month + 1}`, newObject)
   return request.then(response => response.data)
 }
 
@@ -36,8 +36,8 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-const removeTeamMember = (year, month, id) => {
-  const request = axios.delete(`${baseUrl}/${year}/${month}/${id}`)
+const removeTeamMember = (year, id) => {
+  const request = axios.delete(`${baseUrl}/${year}/${id}`)
   return request.then(response => response.data)
 }
 

@@ -31,7 +31,7 @@ The project will be keeped intentionally as simple as possible, hoping to reach 
   - [ ] login
   - [X] data of current month
 - [X] backend to store workshift and team data
-- [ ] Edit toggle button to avoid accidental edit of the schedule of only view user;
+- [ ] Save Button, so no accidental edit and reduced IO operation on DB
 - [ ] ~~Print button? (maybe not as usefull as it seems)~~
 - [ ] Short instruction
   - [ ] how to add people
