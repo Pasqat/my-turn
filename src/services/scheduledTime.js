@@ -30,9 +30,9 @@ const addNewMember = (newObject, year, month) => {
   return request.then(response => response.data)
 }
 
-const update = (id, newObject) => {
-  // TODO this need to be done
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
+const update = (year, id, newObject) => {
+    console.log('newObject in update', newObject)
+  const request = axios.put(`${baseUrl}/${year}/${id}`, newObject)
   return request.then(response => response.data)
 }
 

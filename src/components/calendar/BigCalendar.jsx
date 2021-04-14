@@ -46,98 +46,96 @@ const BigCalendar = () => {
   React.useEffect(() => {
     scheduleService.getMonth(year, month)
       .then(data => {
-
-        console.log('data', data, 'month', month, 'year', year)
-
         setTurns(data)
       })
 
   }, [year, month, setTurns]);
 
 
-  const putValuesToTable = (worker, monthLenght, workerIndex) => {
-    const { userId, name, days, _id } = worker;
+    const putValuesToTable = (worker, monthLenght) => {
+        const { userId, name, days, _id } = worker;
 
-    let children = [
-      <TableCell key={userId || `is-unique-enough ${Math.floor(Math.random() * 100 )}`}>
-        <Names>
-          {name}
-          <DeleteButton onClick={() => removeRow(_id)}>
-            delete
-          </DeleteButton>
-        </Names>
-      </TableCell>
-    ];
-
-    for (let i = 0; i < monthLenght - 1; i++) {
-      if (!days) {
-        children.push(
-          <TableCell
-            key={i}
-            onClick={() => cycleThrougShifts(workerIndex, i, days[i])}
-          />
-        );
-      } else if (days[i]) {
-        children.push(
-          <TableCell
-            key={i}
-            onClick={() => cycleThrougShifts(workerIndex, i, days[i])}
-          >
-            {coloredDiv(days[i])}
+        let children = [
+          <TableCell key={userId || `is-unique-enough ${Math.floor(Math.random() * 100 )}`}>
+            <Names>
+              {name}
+              <DeleteButton onClick={() => removeRow(_id)}>
+                delete
+              </DeleteButton>
+            </Names>
           </TableCell>
+        ];
+
+        for (let i = 0; i < monthLenght - 1; i++) {
+            if (!days) {
+                children.push(
+                    <TableCell
+                    key={i}
+                    onClick={() => cycleThrougShifts(_id, i, days[i])}
+                    />
+                );
+            } else if (days[i]) {
+                children.push(
+                    <TableCell
+                    key={i}
+                    onClick={() => cycleThrougShifts(_id, i, days[i])}
+                    >
+                    {coloredDiv(days[i])}
+                    </TableCell>
+                );
+            } else {
+                children.push(
+                    <TableCell
+                    key={i}
+                    onClick={() => cycleThrougShifts(_id, i, days[i])}
+                    ></TableCell>
+                );
+            }
+        }
+        return children;
+    };
+
+    const cycleThrougShifts = (workerId, scheduleIndex, schedule) => {
+        const acceptedShiftIndex = acceptedShift.findIndex(
+            (shift) => shift === schedule
         );
-      } else {
-        children.push(
-          <TableCell
-            key={i}
-            onClick={() => cycleThrougShifts(workerIndex, i, days[i])}
-          ></TableCell>
-        );
-      }
-    }
-    return children;
-  };
 
-  const cycleThrougShifts = (workerIndex, scheduleIndex, schedule) => {
-    const acceptedShiftIndex = acceptedShift.findIndex(
-      (shift) => shift === schedule
-    );
+        let index = acceptedShiftIndex;
 
-    let index = acceptedShiftIndex;
+        // -1 so when update newSchedule the index became 0
+        if (acceptedShiftIndex === acceptedShift.length - 1) {
+            index = -1;
+        }
 
-    // -1 so when update newSchedule the index became 0
-    console.log(acceptedShift, acceptedShift.length)
-    if (acceptedShiftIndex === acceptedShift.length - 1) {
-      index = -1;
-    }
 
-    if (!turns[workerIndex].days) {
-      return;
-    }
+        let newSchedule = turns.find(worker => worker._id === workerId).days
 
-    let newSchedule = turns[workerIndex].days;
-    newSchedule[scheduleIndex] = acceptedShift[index + 1];
+        if (newSchedule === null) newSchedule = []
 
-    setTurns([...turns]);
-  };
+        newSchedule[scheduleIndex] = acceptedShift[index + 1];
 
-  const addNewRow = () => {
-    let name = prompt('Insert name');
+        scheduleService.update(year, workerId, newSchedule)
 
-    if (name === null) return;
-    if (name.length === 0) return alert("Name can't be empty");
+        setTurns([...turns]);
+    };
 
-    const newPerson = {
-      // TODO hardcoded, the best way to screw up 🍾
-      teamName: 'CovidUTI',
-      teamId: "733326af-6d26-49f4-8204-3f944f20c34d",
-      name
-    }
+    const addNewRow = () => {
+        let name = prompt('Insert name');
 
-    scheduleService.addNewMember(newPerson, year, month).then(
-      data => setTurns([...turns, data]))
+        if (name === null) return;
+        if (name.length === 0) return alert("Name can't be empty");
 
-  };
+        const newPerson = {
+            // TODO hardcoded, the best way to screw up 🍾
+            teamName: 'CovidUTI',
+            teamId: "733326af-6d26-49f4-8204-3f944f20c34d",
+            name
+        }
+
+        scheduleService.addNewMember(newPerson, year, month).then(
+            data => setTurns([...turns, data]))
+
+    };
 
   function removeRow(idToDelete) {
     let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete);
@@ -146,6 +144,12 @@ const BigCalendar = () => {
 
     setTurns([...newWorkerTeam]);
   }
+
+    function updateDay(idToUpdate, newDays) {
+        scheduleService.update(year, idToUpdate, newDays).then(
+            data => console.log(data)
+        )
+    }
 
   return (
     <Frame>
@@ -177,10 +181,10 @@ const BigCalendar = () => {
             </TableRow>
           </TableHead>
           <tbody>
-            {turns.map((worker, index) => {
+            {turns.map((worker) => {
               return (
                 <TableRow key={worker.userId}>
-                  {putValuesToTable(worker, days[month] + 1, index)}
+                  {putValuesToTable(worker, days[month] + 1)}
                 </TableRow>
               );
             })}
