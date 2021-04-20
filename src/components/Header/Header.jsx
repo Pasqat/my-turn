@@ -38,7 +38,7 @@ const Button = styled.div`
   height: 100%;
 `;
 
-const Header = ({ switchTheme }) => {
+const Header = ({ switchTheme, user }) => {
   const [theme, setTheme] = useLocalStorageState('theme', 'dark');
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const Header = ({ switchTheme }) => {
 
   return (
     <StyledHeader>
-      <H2>Team Name</H2>
+      <H2>{user.teamName}</H2>
       <Button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
         {theme === 'light' ? <Moon /> : <Sun />}
       </Button>

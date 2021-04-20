@@ -1,46 +1,54 @@
-import axios from 'axios'
-const baseUrl = '/api/schedule'
+import axios from "axios";
+const baseUrl = "/api/schedule";
 
-const getAll = () => {
-  const request = axios.get(baseUrl)
-  return request.then(response => response.data)
-}
+const getAll = async () => {
+  const request = await axios.get(baseUrl);
+  return request.data;
+};
 
-const getYear = (year) => {
-  const request = axios.get(`${baseUrl}/${year}`)
-  return request.then(response => response.data)
-}
+const getYear = async (year) => {
+  const request = await axios.get(`${baseUrl}/${year}`);
+  return request.data;
+};
 
-const getMonth = (year, month) => {
-  const request = axios.get(`${baseUrl}/${year}/${month + 1}`)
-  return request.then(response => response.data)
-}
+const getMonth = async (year, month) => {
+  const request = await axios.get(`${baseUrl}/${year}/${month + 1}`);
+  return request.data;
+  // return request.then((response) => response.data);
+};
 
-const addNewMember = (newObject, year, month) => {
-/*
- * body of the request
- * {
- *   teamName: current loggedin team,
- *   teamId: teamId,
- *   name: name of the team member to add
- *   days: []       OPTIONAL
- * }
- */
-  const request = axios.post(`${baseUrl}/${year}/${month + 1}`, newObject)
-  return request.then(response => response.data)
-}
+const addNewMember = async (newObject, year, month) => {
+  /*
+   * body of the request
+   * {
+   *   teamName: current loggedin team,
+   *   teamId: teamId,
+   *   name: name of the team member to add
+   *   days: []       OPTIONAL
+   * }
+   */
+  const request = await axios.post(
+    `${baseUrl}/${year}/${month + 1}`,
+    newObject
+  );
+  return request.data;
+};
 
-const update = (year, id, newObject) => {
-    console.log('newObject in update', newObject)
-  const request = axios.put(`${baseUrl}/${year}/${id}`, newObject)
-  return request.then(response => response.data)
-}
+const update = async (year, id, newObject) => {
+  const request = await axios.put(`${baseUrl}/${year}/${id}`, newObject);
+  return request.data;
+};
 
-const removeTeamMember = (year, id) => {
-  const request = axios.delete(`${baseUrl}/${year}/${id}`)
-  return request.then(response => response.data)
-}
+const removeTeamMember = async (year, id) => {
+  const request = await axios.delete(`${baseUrl}/${year}/${id}`);
+  return request.data;
+};
 
 export default {
-  getAll, getYear, getMonth, addNewMember, update, removeTeamMember
-}
+  getAll,
+  getYear,
+  getMonth,
+  addNewMember,
+  update,
+  removeTeamMember
+};

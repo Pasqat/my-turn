@@ -126,12 +126,14 @@ const BigCalendar = () => {
         if (name.length === 0) return alert("Name can't be empty");
 
         const newPerson = {
-            // TODO hardcoded, the best way to screw up 🍾
+            // TODO hardcoded
             teamName: 'CovidUTI',
             teamId: "733326af-6d26-49f4-8204-3f944f20c34d",
             name
         }
-
+        // FIXME the member just added can't be edited
+        // it could lack the _id property
+        // or maybe you need to use useEffect()
         scheduleService.addNewMember(newPerson, year, month).then(
             data => setTurns([...turns, data]))
 

@@ -19,24 +19,3 @@ The beta version will have the following functionality:
 This is my first own made project to test my competence on react and web dev in general.
 I tried to not use external library where possible.
 The project will be keeped intentionally as simple as possible, hoping to reach a working version anytime soon.
-
-## TODO
-
-- [ ] Weekly view?
-- [ ] Not User login but **Team** login
-- [X] Add/delete worker
-- [ ] Custom block Type and Color
-- [o] local storage
-  - [X] theme
-  - [ ] login
-  - [X] data of current month
-- [X] backend to store workshift and team data
-- [ ] Save Button, so no accidental edit and reduced IO operation on DB
-- [ ] ~~Print button? (maybe not as usefull as it seems)~~
-- [ ] Short instruction
-  - [ ] how to add people
-  - [ ] how to remove people
-  - [ ] how to change block
-- [ ] Mobile view
-  - [ ] weekly view of calendar
-  - [ ] no sidebar
