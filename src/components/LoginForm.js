@@ -1,6 +1,5 @@
 import React from "react";
 import loginService from "../services/login";
-import scheduleService from "../services/scheduledTime";
 
 const LoginForm = ({ loginTeam }) => {
   const [teamName, setTeamName] = React.useState("");
@@ -15,7 +14,6 @@ const LoginForm = ({ loginTeam }) => {
 
     try {
       const team = await loginService.login({ teamName, password });
-      scheduleService.setToken(team.token);
       loginTeam(team);
     } catch (exception) {
       setErrorMessage("Wrong credentials");

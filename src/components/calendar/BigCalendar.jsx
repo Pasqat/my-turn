@@ -130,9 +130,6 @@ const BigCalendar = () => {
     const newMember = {
       name
     };
-    // FIXME the member just added can't be edited
-    // it could lack the _id property
-    // or maybe you need to use useEffect()
     const addedMember = await scheduleService.addNewMember(
       newMember,
       year,
