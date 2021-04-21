@@ -1,6 +1,12 @@
 import axios from "axios";
 const baseUrl = "/api/schedule";
 
+let token = null;
+
+const setToken = (newToken) => {
+  token = `bearer ${newToken}`;
+};
+
 const getAll = async () => {
   const request = await axios.get(baseUrl);
   return request.data;
@@ -27,9 +33,13 @@ const addNewMember = async (newObject, year, month) => {
    *   days: []       OPTIONAL
    * }
    */
+  const config = {
+    headers: { Authorization: token }
+  };
   const request = await axios.post(
     `${baseUrl}/${year}/${month + 1}`,
-    newObject
+    newObject,
+    config
   );
   return request.data;
 };
@@ -40,7 +50,11 @@ const update = async (year, id, newObject) => {
 };
 
 const removeTeamMember = async (year, id) => {
-  const request = await axios.delete(`${baseUrl}/${year}/${id}`);
+  const config = {
+    headers: { Authorization: token }
+  };
+
+  const request = await axios.delete(`${baseUrl}/${year}/${id}`, config);
   return request.data;
 };
 
@@ -50,5 +64,6 @@ export default {
   getMonth,
   addNewMember,
   update,
-  removeTeamMember
+  removeTeamMember,
+  setToken
 };

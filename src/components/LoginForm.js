@@ -1,10 +1,13 @@
 import React from "react";
 import loginService from "../services/login";
+import scheduleService from "../services/scheduledTime";
 
 const LoginForm = ({ loginTeam }) => {
   const [teamName, setTeamName] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [errorMessage, setErrorMessage] = React.useState();
+  const [errorMessage, setErrorMessage] = React.useState(
+    "try TestUser and password"
+  );
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -12,6 +15,7 @@ const LoginForm = ({ loginTeam }) => {
 
     try {
       const team = await loginService.login({ teamName, password });
+      scheduleService.setToken(team.token);
       loginTeam(team);
     } catch (exception) {
       setErrorMessage("Wrong credentials");

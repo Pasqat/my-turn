@@ -1,12 +1,13 @@
-import React from 'react';
-import './index.css';
-import { GlobalStyles } from './GlobalStyles';
+import React from "react";
+import "./index.css";
+import { GlobalStyles } from "./GlobalStyles";
 
-import Header from './components/Header/Header';
-import Main from './components/Main';
-import LoginForm from './components/LoginForm';
+import Header from "./components/Header/Header";
+import Main from "./components/Main";
+import LoginForm from "./components/LoginForm";
 
-import useLocalStorageState from './components/hooks/useLocalStorageState';
+import scheduleService from "./services/scheduledTime";
+import useLocalStorageState from "./components/hooks/useLocalStorageState";
 
 const StyledApp = ({ children, theme }) => {
   return (
@@ -27,7 +28,7 @@ const LoggedApp = ({ switchTheme, user }) => {
 };
 
 const App = () => {
-  const [theme, setTheme] = useLocalStorageState('theme', 'dark');
+  const [theme, setTheme] = useLocalStorageState("theme", "dark");
   const [user, setUser] = React.useState(null);
 
   function switchTheme(passedTheme) {
@@ -35,6 +36,7 @@ const App = () => {
   }
 
   function loginTeam(team) {
+    scheduleService.setToken(team.token);
     return setUser(team);
   }
 

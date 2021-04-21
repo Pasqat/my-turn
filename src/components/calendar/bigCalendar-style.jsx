@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { workshiftItem } from '../utils/calendar'
+import styled, { css } from "styled-components";
+import { workshiftItem } from "../utils/calendar";
 
 export const Frame = styled.div`
   display: flex;
@@ -114,6 +114,10 @@ export const TableContent = styled.div`
         return css`
           background-color: var(--color-terziary);
         `;
+      case workshiftItem.fullday:
+        return css`
+          background-color: #009933;
+        `;
       default:
         throw new Error(
           `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
@@ -136,5 +140,3 @@ export const DeleteButton = styled.div`
     cursor: pointer;
   }
 `;
-
-
