@@ -35,6 +35,10 @@ const ItemDot = styled.div`
       return css`
         background-color: var(--color-secondary);
       `;
+    } else if (props.color === "green") {
+      return css`
+        background-color: var(--color-green);
+      `;
     } else {
       return css`
         background-color: var(--color-terziary);
@@ -61,6 +65,10 @@ const Sidebar = () => {
         <LegendItem>
           <ItemDot color="terziary" />
           Night
+        </LegendItem>
+        <LegendItem>
+          <ItemDot color="green" />
+          Full Day
         </LegendItem>
       </Legend>
     </StyledSideBar>

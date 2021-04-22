@@ -6,11 +6,18 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
-const create = (newObject) => {
-  // TODO this need to be done
-  const request = axios.post(baseUrl, newObject);
-  return request.then((response) => response.data);
+const create = async (newObject) => {
+  const request = await axios.post(baseUrl, newObject);
+  console.log(request.data);
+  return response.data;
 };
+
+
+const register = async (credential) => {
+    const response = await axios.post(baseUrl, credential);
+    console.log(response.data)
+    return response.data
+}
 
 // const update = (id, newObject) => {
 //   // TODO this need to be done
@@ -25,8 +32,5 @@ const create = (newObject) => {
 
 export default {
   getAll,
-  getAllSchedules,
-  create,
-  update,
-  removeTeam,
+  register,
 };

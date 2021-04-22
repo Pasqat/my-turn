@@ -5,7 +5,6 @@ let token = null;
 
 const setToken = (newToken) => {
   token = `bearer ${newToken}`;
-  console.log("this is setToken", token);
 };
 
 const getAll = async () => {
@@ -58,7 +57,6 @@ const addNewMember = async (newObject, year, month) => {
 };
 
 const update = async (year, id, newObject) => {
-
   const config = {
     headers: { Authorization: token },
   };

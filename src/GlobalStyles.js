@@ -17,7 +17,7 @@ ${(props) => {
         --color-primary: #4bbced;
         --color-secondary: #fcd173;
         --color-terziary: #eb7b52;
-        --color-green: #;
+        --color-green: #43b34f;
         --color-border: 2px solid rgb(240, 246, 247);
         --color-selected: #e8edff;
       }
@@ -34,7 +34,7 @@ ${(props) => {
         --color-primary: #1099a2;
         --color-secondary: #b19053;
         --color-terziary: #b16550;
-        --color-green: #;
+        --color-green: #3c973f;
         --color-border: 2px solid #37394e;
         --color-selected: #3a3a51;
       }
