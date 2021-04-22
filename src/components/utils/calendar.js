@@ -4,7 +4,7 @@ export const workshiftItem = {
   morning: "morning",
   afternoon: "afternoon",
   fullday: "fullday",
-  night: "night"
+  night: "night",
 };
 
 export const coloredDiv = (turn) => {

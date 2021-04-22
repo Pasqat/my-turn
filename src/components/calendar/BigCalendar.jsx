@@ -11,7 +11,7 @@ import {
   TableHead,
   TableRow,
   Names,
-  DeleteButton
+  DeleteButton,
 } from "./bigCalendar-style";
 
 import { MONTHS } from "../hooks/useDate/Constants";
@@ -31,7 +31,7 @@ const acceptedShift = [
   workshiftItem.afternoon,
   workshiftItem.night,
   workshiftItem.fullday,
-  ""
+  "",
 ];
 
 const BigCalendar = () => {
@@ -46,7 +46,7 @@ const BigCalendar = () => {
     // date,
     day,
     month,
-    year
+    year,
     // startDay
   } = useDate(); //custom hook
 
@@ -69,7 +69,7 @@ const BigCalendar = () => {
           {name}
           <DeleteButton onClick={() => removeRow(_id)}>delete</DeleteButton>
         </Names>
-      </TableCell>
+      </TableCell>,
     ];
 
     for (let i = 0; i < monthLenght - 1; i++) {
@@ -128,7 +128,7 @@ const BigCalendar = () => {
     if (name.length === 0) return alert("Name can't be empty");
 
     const newMember = {
-      name
+      name,
     };
     const addedMember = await scheduleService.addNewMember(
       newMember,
@@ -197,7 +197,7 @@ const BigCalendar = () => {
                     cursor: "pointer",
                     display: "flex",
                     alignContent: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <span

@@ -48,7 +48,7 @@ const Sidebar = () => {
     <StyledSideBar>
       {/* <Calendar /> */}
       {/* TODO the div is just a placeholder, REMOVE */}
-      <div style={{height: 59, borderBottom: "var(--color-border)"}}></div>
+      <div style={{ height: 59, borderBottom: "var(--color-border)" }}></div>
       <Legend>
         <LegendItem>
           <ItemDot color="primary" />

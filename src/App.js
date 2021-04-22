@@ -18,18 +18,9 @@ const StyledApp = ({ children, theme }) => {
   );
 };
 
-const LoggedApp = ({ switchTheme, user }) => {
-  return (
-    <>
-      <Header switchTheme={switchTheme} user={user} />
-      <Main />
-    </>
-  );
-};
-
 const App = () => {
   const [theme, setTheme] = useLocalStorageState("theme", "dark");
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = useLocalStorageState("loggedUser", null);
 
   function switchTheme(passedTheme) {
     return setTheme(passedTheme);
@@ -45,7 +36,10 @@ const App = () => {
       {user === null ? (
         <LoginForm loginTeam={loginTeam} />
       ) : (
-        <LoggedApp switchTheme={switchTheme} user={user} />
+        <>
+          <Header switchTheme={switchTheme} setUser={setUser} />
+          <Main />
+        </>
       )}
     </StyledApp>
   );

@@ -10,7 +10,6 @@ const LoginForm = ({ loginTeam }) => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    console.log("logging in with", teamName, password);
 
     try {
       const team = await loginService.login({ teamName, password });
@@ -30,7 +29,7 @@ const LoginForm = ({ loginTeam }) => {
         height: "100vh",
         display: "flex",
         justifyContent: "center",
-        alignContent: "center"
+        alignContent: "center",
       }}
     >
       <form onSubmit={handleLogin} style={{ margin: "auto" }}>
