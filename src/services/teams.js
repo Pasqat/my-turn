@@ -6,13 +6,6 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
-const create = async (newObject) => {
-  const request = await axios.post(baseUrl, newObject);
-  console.log(request.data);
-  return response.data;
-};
-
-
 const register = async (credential) => {
     const response = await axios.post(baseUrl, credential);
     console.log(response.data)

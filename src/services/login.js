@@ -6,8 +6,5 @@ const login = async (credential) => {
   return response.data;
 };
 
-const register = async (credential) => {
-    const response = await axios.post("/api/team", credential);
-}
 
 export default { login, register };
