@@ -7,10 +7,10 @@ const getAll = () => {
 };
 
 const register = async (credential) => {
-    const response = await axios.post(baseUrl, credential);
-    console.log(response.data)
-    return response.data
-}
+  const response = await axios.post(baseUrl, credential);
+  console.log(response.data);
+  return response.data;
+};
 
 // const update = (id, newObject) => {
 //   // TODO this need to be done

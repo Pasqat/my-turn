@@ -49,7 +49,7 @@ const LoginForm = ({ loginTeam }) => {
         alignContent: "center",
       }}
     >
-      <div style={{marginRight: "40px"}}>
+      <div style={{ marginRight: "40px" }}>
         Login
         <form onSubmit={handleLogin} style={{ margin: "auto" }}>
           <div
@@ -97,7 +97,7 @@ const LoginForm = ({ loginTeam }) => {
             />
           </div>
           <div>
-                email
+            email
             <input
               type="email"
               value={email}
