@@ -55,4 +55,8 @@ ${(props) => {
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Lato'
   }
+
+ * {
+     margin: 0;
+ box-sizing: border-box;}
 `;
