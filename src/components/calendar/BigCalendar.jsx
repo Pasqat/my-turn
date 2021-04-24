@@ -68,7 +68,9 @@ const BigCalendar = () => {
       >
         <Names>
           {name}
-          <DeleteButton onClick={() => removeRow(_id)}>delete</DeleteButton>
+          <DeleteButton onClick={() => removeRow(_id, name)}>
+            delete
+          </DeleteButton>
         </Names>
       </TableCell>,
     ];
@@ -139,12 +141,13 @@ const BigCalendar = () => {
     setTurns([...turns, addedMember]);
   };
 
-  function removeRow(idToDelete) {
+  function removeRow(idToDelete, name) {
     let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete);
-
-    scheduleService.removeTeamMember(year, idToDelete);
-
-    setTurns([...newWorkerTeam]);
+    const ok = window.confirm(`Remove ${name}?`);
+    if (ok) {
+      scheduleService.removeTeamMember(year, idToDelete);
+      setTurns([...newWorkerTeam]);
+    }
   }
 
   function updateDay(idToUpdate, newDays) {
