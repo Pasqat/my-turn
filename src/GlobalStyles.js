@@ -41,22 +41,20 @@ ${(props) => {
     `;
   }
 }}
-  body {
+
+body {
     height: 100%;
     background: var(--color-background);
     background-repeat: no-repeat;
     color: var(--color-text);
     overflow-x: hidden;
     margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Lato', 'Roboto', san-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Lato'
   }
 
  * {
      margin: 0;
- box-sizing: border-box;}
+     box-sizing: border-box;}
 `;

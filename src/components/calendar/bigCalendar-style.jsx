@@ -9,6 +9,7 @@ export const Frame = styled.div`
   /* margin-left: 18rem; */
   height: 100%;
   width: 100%;
+  padding-right: 30px;
 `;
 
 export const Calendar = styled.div`
@@ -30,6 +31,49 @@ export const Button = styled.div`
   margin: 0 15px;
 `;
 
+export const ButtonPrimary = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  margin: 40px 0 0 20px;
+  padding: 10px 20px;
+  color: var(--color-primary);
+  font-weight: bold;
+  font-size: 1.3rem;
+  border: var(--color-border);
+  cursor: pointer;
+  :hover {
+    background: var(--color-primary);
+    color: var(--color-background);
+    border: 2px solid var(--color-primary);
+  }
+  display: none;
+  ${(props) =>
+    props.isEditable &&
+    css`
+      display: inherit;
+    `}
+`;
+
+export const ButtonSecondary = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  margin: 40px 0 0 20px;
+  padding: 10px 20px;
+  color: var(--color-green);
+  font-weight: bold;
+  font-size: 1.3rem;
+  border: var(--color-border);
+  cursor: pointer;
+  :hover {
+    background: var(--color-green);
+    color: #ededed;
+    border: 2px solid var(--color-green);
+  }
+`;
 export const Day = styled.div`
   /* width: 14.2%; */
   height: 2rem;

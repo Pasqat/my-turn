@@ -114,6 +114,11 @@ const LoginForm = ({ setUser }) => {
   const [teamName, setTeamName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [errors, setErrors] = React.useState({
+    teamName: "",
+    email: "",
+    password: "",
+  });
   const [errorMessage, setErrorMessage] = React.useState();
   const [isLogin, setIsLogin] = React.useState(true);
 
@@ -137,9 +142,9 @@ const LoginForm = ({ setUser }) => {
 
     try {
       await teamService.register({ teamName, email, password });
-const team = await loginService.login({ teamName, password });
+      const team = await loginService.login({ teamName, password });
       storage.saveUser(team);
-        setUser(team)
+      setUser(team);
     } catch (exception) {
       setErrorMessage("Wrong credentials");
       setTimeout(() => {

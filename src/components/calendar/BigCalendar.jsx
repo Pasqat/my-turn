@@ -1,9 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 import {
   Frame,
   Calendar,
   Header,
   Button,
+  ButtonPrimary,
+  ButtonSecondary,
   Day,
   Table,
   TableCell,
@@ -22,10 +25,6 @@ import useLocalStorageState from "../hooks/useLocalStorageState";
 import scheduleService from "../../services/scheduledTime";
 import { coloredDiv, workshiftItem } from "../utils/calendar";
 
-// TODO fetch acceptedShift from server using
-// scheduleService.getAll(data => data[acceptedShift])
-// do this on parent level to use data on sidebar too
-
 const acceptedShift = [
   workshiftItem.morning,
   workshiftItem.afternoon,
@@ -36,7 +35,7 @@ const acceptedShift = [
 
 const BigCalendar = () => {
   // const today = new Date();
-
+  const [isEditable, setIsEditable] = React.useState(false);
   const {
     isToday,
     nextMonth,
@@ -50,8 +49,8 @@ const BigCalendar = () => {
     // startDay
   } = useDate(); //custom hook
 
-  // const [turns, setTurns] = useLocalStorageState("turns", []);
-  const [turns, setTurns] = React.useState([]);
+  const [turns, setTurns] = useLocalStorageState("turns", []);
+  // const [turns, setTurns] = React.useState([]);
 
   React.useEffect(() => {
     scheduleService.getMonth(year, month).then((data) => {
@@ -102,6 +101,7 @@ const BigCalendar = () => {
   };
 
   const cycleThrougShifts = (workerId, scheduleIndex, schedule) => {
+    if (!isEditable) return;
     const acceptedShiftIndex = acceptedShift.findIndex(
       (shift) => shift === schedule
     );
@@ -193,32 +193,48 @@ const BigCalendar = () => {
                 </TableRow>
               );
             })}
-            <TableRow key="addNewRow">
-              <TableCell>
-                <Names
-                  onClick={() => addNewRow()}
-                  style={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignContent: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
-                    style={{ fontSize: "1rem" }}
-                    role="img"
-                    aria-label="add new worker"
-                  >
-                    ➕
-                  </span>
-                </Names>
-              </TableCell>
-            </TableRow>
           </tbody>
         </Table>
       </Calendar>
+      <div
+        style={{
+          display: "flex",
+          marginLeft: "auto",
+          justifyContent: "center",
+          alignContent: "space-around",
+        }}
+      >
+        <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
+          Add new
+        </ButtonPrimary>
+        <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
+          {isEditable ? "Done" : "Edit"}
+        </ButtonSecondary>
+      </div>
     </Frame>
   );
 };
 
 export default BigCalendar;
+
+// <TableRow key="addNewRow">
+//   <TableCell>
+//     <Names
+//       onClick={() => addNewRow()}
+//       style={{
+//         cursor: "pointer",
+//         display: "flex",
+//         alignContent: "center",
+//         justifyContent: "center",
+//       }}
+//     >
+//       <span
+//         style={{ fontSize: "1rem" }}
+//         role="img"
+//         aria-label="add new worker"
+//       >
+//         ➕
+//       </span>
+//     </Names>
+//   </TableCell>
+// </TableRow>
