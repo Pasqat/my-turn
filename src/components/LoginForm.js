@@ -1,8 +1,9 @@
 import React from "react";
 import loginService from "../services/login";
 import teamService from "../services/teams";
+import storage from "../utils/storage";
 
-const LoginForm = ({ loginTeam }) => {
+const LoginForm = ({ setUser }) => {
   const [teamName, setTeamName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -15,7 +16,8 @@ const LoginForm = ({ loginTeam }) => {
 
     try {
       const team = await loginService.login({ teamName, password });
-      loginTeam(team);
+      setUser(team);
+      storage.saveUser(team);
     } catch (exception) {
       setErrorMessage("Wrong credentials");
       setTimeout(() => {
@@ -30,7 +32,7 @@ const LoginForm = ({ loginTeam }) => {
     try {
       await teamService.register({ teamName, email, password });
       const team = await loginService.login({ teamName, password });
-      loginTeam(team);
+      storage.saveUser(team);
     } catch (exception) {
       setErrorMessage("Wrong credentials");
       setTimeout(() => {

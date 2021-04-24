@@ -50,7 +50,8 @@ const BigCalendar = () => {
     // startDay
   } = useDate(); //custom hook
 
-  const [turns, setTurns] = useLocalStorageState("turns", []);
+  // const [turns, setTurns] = useLocalStorageState("turns", []);
+  const [turns, setTurns] = React.useState([]);
 
   React.useEffect(() => {
     scheduleService.getMonth(year, month).then((data) => {

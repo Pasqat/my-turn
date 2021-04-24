@@ -1,44 +1,34 @@
 import axios from "axios";
+import storage from "../utils/storage";
 const baseUrl = "/api/schedule";
 
-let token = null;
-
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`;
+const getConfig = () => {
+  console.log(storage.loadUser().token);
+  return {
+    headers: { Authorization: `bearer ${storage.loadUser().token}` },
+  };
 };
 
 const getAll = async () => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
-  const request = await axios.get(baseUrl, config);
+  const request = await axios.get(baseUrl, getConfig());
   return request.data;
 };
 
 const getYear = async (year) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
-  const request = await axios.get(`${baseUrl}/${year}`, config);
+  const request = await axios.get(`${baseUrl}/${year}`, getConfig());
   return request.data;
 };
 
 const getMonth = async (year, month) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
-  const request = await axios.get(`${baseUrl}/${year}/${month + 1}`, config);
+  console.log("getConf", getConfig());
+  const request = await axios.get(
+    `${baseUrl}/${year}/${month + 1}`,
+    getConfig()
+  );
   return request.data;
 };
 
 const addNewMember = async (newObject, year, month) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
   /*
    * body of the request
    * {
@@ -51,30 +41,22 @@ const addNewMember = async (newObject, year, month) => {
   const request = await axios.post(
     `${baseUrl}/${year}/${month + 1}`,
     newObject,
-    config
+    getConfig()
   );
   return request.data;
 };
 
 const update = async (year, id, newObject) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
   const request = await axios.put(
     `${baseUrl}/${year}/${id}`,
     newObject,
-    config
+    getConfig()
   );
   return request.data;
 };
 
 const removeTeamMember = async (year, id) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
-  const request = await axios.delete(`${baseUrl}/${year}/${id}`, config);
+  const request = await axios.delete(`${baseUrl}/${year}/${id}`, getConfig());
   return request.data;
 };
 
@@ -85,5 +67,4 @@ export default {
   addNewMember,
   update,
   removeTeamMember,
-  setToken,
 };
