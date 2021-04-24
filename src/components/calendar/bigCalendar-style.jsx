@@ -104,11 +104,12 @@ export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
   /* background: var(--background-main); */
+  @media (max-width: 800px) {
+    margin-bottom: 20px;
+  }
 `;
 
-export const TableHead = styled.thead`
-  /* 🤖 Are you sure this is needed? */
-`;
+export const TableHead = styled.thead``;
 
 export const TableRow = styled.tr`
   border: var(--color-border);
@@ -125,7 +126,7 @@ export const TableCell = styled.td`
     `};
 `;
 
-export const TableCellHeader = styled.td`
+export const TableCellHeader = styled.th`
   width: 2.8%;
   border: var(--color-border);
   ${(props) =>
@@ -134,10 +135,11 @@ export const TableCellHeader = styled.td`
       background-color: var(--color-selected);
     `};
   position: sticky;
-  top: -2;
+  top: -2px;
   background-color: var(--color-background);
-  zindex: 5;
+  z-index: 5;
 `;
+
 export const TableContent = styled.div`
   position: absolute;
   top: 0;
@@ -148,6 +150,11 @@ export const TableContent = styled.div`
   background-color: yellow;
   cursor: pointer;
   ${(props) => {
+    props.isToday &&
+      css`
+        background-color: var(--color-selected);
+      `;
+
     switch (props.workshift) {
       case workshiftItem.morning:
         return css`

@@ -101,27 +101,25 @@ const BigCalendar = () => {
     return children;
   };
 
-  const putValuesToTableMobile = (d, monthLenght) => {
+  const putValuesToTableMobile = (d) => {
     let children = [
       <TableCell>
-        <Day isSelected={d === day}>{d > 0 ? d : ""}</Day>
+        <Day isSelected={d + 1 === day}>{d + 1}</Day>
       </TableCell>,
     ];
 
-    // for (let i = 1; i < turns.length; i++) {
     for (let worker of turns) {
-      console.log("worker", worker);
       if (!worker.days) {
         children.push(
           <TableCell
+            key={worker._id + d}
             onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
-          >
-            <Day isSelected={d === day}></Day>
-          </TableCell>
+          />
         );
       } else if (worker.days[d]) {
         children.push(
           <TableCell
+            key={worker._id + d}
             onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
           >
             {coloredDiv(worker.days[d])}
@@ -130,6 +128,7 @@ const BigCalendar = () => {
       } else {
         children.push(
           <TableCell
+            key={worker._id + d}
             onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
           ></TableCell>
         );
@@ -297,18 +296,30 @@ const BigCalendar = () => {
             </TableRow>
           </TableHead>
           <tbody>
-            {Array(days[month] + 1)
+            {Array(days[month])
               .fill(null)
               .map((_, d) => {
-                return (
-                  <TableRow key={d} isToday={isToday(d)}>
-                    {putValuesToTableMobile(d, days[month] + 1)}
-                  </TableRow>
-                );
+                return <TableRow key={d}>{putValuesToTableMobile(d)}</TableRow>;
               })}
           </tbody>
         </Table>
       </Calendar>
+      <div
+        style={{
+          display: "flex",
+          marginLeft: "auto",
+          marginBottom: "20px",
+          justifyContent: "center",
+          alignContent: "space-around",
+        }}
+      >
+        <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
+          Add new
+        </ButtonPrimary>
+        <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
+          {isEditable ? "Done" : "Edit"}
+        </ButtonSecondary>
+      </div>
     </Frame>
   );
 };
