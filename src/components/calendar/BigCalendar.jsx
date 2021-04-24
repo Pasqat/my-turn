@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {
   Frame,
   Calendar,
@@ -21,6 +20,7 @@ import { MONTHS } from "../hooks/useDate/Constants";
 
 import useDate from "../hooks/useDate/useDate";
 import useLocalStorageState from "../hooks/useLocalStorageState";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 import scheduleService from "../../services/scheduledTime";
 import { coloredDiv, workshiftItem } from "../utils/calendar";
@@ -36,6 +36,7 @@ const acceptedShift = [
 const BigCalendar = () => {
   // const today = new Date();
   const [isEditable, setIsEditable] = React.useState(false);
+  let isPageWide = useMediaQuery("(min-width: 800px)");
   const {
     isToday,
     nextMonth,
@@ -100,6 +101,43 @@ const BigCalendar = () => {
     return children;
   };
 
+  const putValuesToTableMobile = (d, monthLenght) => {
+    let children = [
+      <TableCell>
+        <Day isSelected={d === day}>{d > 0 ? d : ""}</Day>
+      </TableCell>,
+    ];
+
+    // for (let i = 1; i < turns.length; i++) {
+    for (let worker of turns) {
+      console.log("worker", worker);
+      if (!worker.days) {
+        children.push(
+          <TableCell
+            onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
+          >
+            <Day isSelected={d === day}></Day>
+          </TableCell>
+        );
+      } else if (worker.days[d]) {
+        children.push(
+          <TableCell
+            onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
+          >
+            {coloredDiv(worker.days[d])}
+          </TableCell>
+        );
+      } else {
+        children.push(
+          <TableCell
+            onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
+          ></TableCell>
+        );
+      }
+    }
+    return children;
+  };
+
   const cycleThrougShifts = (workerId, scheduleIndex, schedule) => {
     if (!isEditable) return;
     const acceptedShiftIndex = acceptedShift.findIndex(
@@ -156,6 +194,62 @@ const BigCalendar = () => {
       .then((data) => console.log(data));
   }
 
+  if (isPageWide) {
+    return (
+      <Frame>
+        <Header>
+          <Button onClick={() => previousMonth()}>&lt;</Button>
+          <div>
+            {MONTHS[month].toUpperCase()} {year}
+          </div>
+          <Button onClick={() => nextMonth()}>&gt;</Button>
+        </Header>
+        <Calendar>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {Array(days[month] + 1)
+                  .fill(null)
+                  .map((_, d) => {
+                    return (
+                      <TableCellHeader key={d} isToday={isToday(d)}>
+                        <Day isSelected={d === day}>{d > 0 ? d : ""}</Day>
+                      </TableCellHeader>
+                    );
+                  })}
+              </TableRow>
+            </TableHead>
+            <tbody>
+              {turns.map((worker) => {
+                console.log(worker);
+                return (
+                  <TableRow key={worker.userId}>
+                    {putValuesToTable(worker, days[month] + 1)}
+                  </TableRow>
+                );
+              })}
+            </tbody>
+          </Table>
+        </Calendar>
+        <div
+          style={{
+            display: "flex",
+            marginLeft: "auto",
+            justifyContent: "center",
+            alignContent: "space-around",
+            marginTop: "40px",
+          }}
+        >
+          <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
+            Add new
+          </ButtonPrimary>
+          <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
+            {isEditable ? "Done" : "Edit"}
+          </ButtonSecondary>
+        </div>
+      </Frame>
+    );
+  }
   return (
     <Frame>
       <Header>
@@ -165,41 +259,11 @@ const BigCalendar = () => {
         </div>
         <Button onClick={() => nextMonth()}>&gt;</Button>
       </Header>
-      <Calendar>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {Array(days[month] + 1)
-                .fill(null)
-                .map((_, d) => {
-                  return (
-                    <TableCellHeader key={d} isToday={isToday(d)}>
-                      <Day
-                        isSelected={d === day}
-                        onClick={() => newDate(year, month, d)}
-                      >
-                        {d > 0 ? d : ""}
-                      </Day>
-                    </TableCellHeader>
-                  );
-                })}
-            </TableRow>
-          </TableHead>
-          <tbody>
-            {turns.map((worker) => {
-              return (
-                <TableRow key={worker.userId}>
-                  {putValuesToTable(worker, days[month] + 1)}
-                </TableRow>
-              );
-            })}
-          </tbody>
-        </Table>
-      </Calendar>
       <div
         style={{
           display: "flex",
           marginLeft: "auto",
+          marginBottom: "20px",
           justifyContent: "center",
           alignContent: "space-around",
         }}
@@ -211,30 +275,42 @@ const BigCalendar = () => {
           {isEditable ? "Done" : "Edit"}
         </ButtonSecondary>
       </div>
+      <Calendar>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCellHeader></TableCellHeader>
+              {turns.map((worker) => {
+                return (
+                  <TableCellHeader key={worker._id}>
+                    <Names>
+                      {worker.name}
+                      <DeleteButton
+                        onClick={() => removeRow(worker._id, worker.name)}
+                      >
+                        delete
+                      </DeleteButton>
+                    </Names>
+                  </TableCellHeader>
+                );
+              })}
+            </TableRow>
+          </TableHead>
+          <tbody>
+            {Array(days[month] + 1)
+              .fill(null)
+              .map((_, d) => {
+                return (
+                  <TableRow key={d} isToday={isToday(d)}>
+                    {putValuesToTableMobile(d, days[month] + 1)}
+                  </TableRow>
+                );
+              })}
+          </tbody>
+        </Table>
+      </Calendar>
     </Frame>
   );
 };
 
 export default BigCalendar;
-
-// <TableRow key="addNewRow">
-//   <TableCell>
-//     <Names
-//       onClick={() => addNewRow()}
-//       style={{
-//         cursor: "pointer",
-//         display: "flex",
-//         alignContent: "center",
-//         justifyContent: "center",
-//       }}
-//     >
-//       <span
-//         style={{ fontSize: "1rem" }}
-//         role="img"
-//         aria-label="add new worker"
-//       >
-//         ➕
-//       </span>
-//     </Names>
-//   </TableCell>
-// </TableRow>

@@ -3,7 +3,6 @@ import storage from "../utils/storage";
 const baseUrl = "/api/schedule";
 
 const getConfig = () => {
-  console.log(storage.loadUser().token);
   return {
     headers: { Authorization: `bearer ${storage.loadUser().token}` },
   };
@@ -20,7 +19,6 @@ const getYear = async (year) => {
 };
 
 const getMonth = async (year, month) => {
-  console.log("getConf", getConfig());
   const request = await axios.get(
     `${baseUrl}/${year}/${month + 1}`,
     getConfig()

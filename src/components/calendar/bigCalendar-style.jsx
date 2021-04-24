@@ -10,6 +10,9 @@ export const Frame = styled.div`
   height: 100%;
   width: 100%;
   padding-right: 30px;
+  @media (max-width: 800px) {
+    padding: 0 10px;
+  }
 `;
 
 export const Calendar = styled.div`
@@ -36,7 +39,7 @@ export const ButtonPrimary = styled.div`
   justify-content: center;
   align-items: center;
   height: 30px;
-  margin: 40px 0 0 20px;
+  margin-left: 20px;
   padding: 10px 20px;
   color: var(--color-primary);
   font-weight: bold;
@@ -61,7 +64,7 @@ export const ButtonSecondary = styled.div`
   justify-content: center;
   align-items: center;
   height: 30px;
-  margin: 40px 0 0 20px;
+  margin-left: 20px;
   padding: 10px 20px;
   color: var(--color-green);
   font-weight: bold;
@@ -160,7 +163,7 @@ export const TableContent = styled.div`
         `;
       case workshiftItem.fullday:
         return css`
-          background-color: #009933;
+          background-color: var(--color-green);
         `;
       default:
         throw new Error(
@@ -173,6 +176,9 @@ export const TableContent = styled.div`
 export const Names = styled.div`
   padding: 10px 20px;
   font-size: 1.5rem;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 export const DeleteButton = styled.div`

@@ -8,6 +8,9 @@ const StyledSideBar = styled.div`
   /* border-right: var(--color-border); */
   position: sticky;
   top: 0;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Legend = styled.div`
@@ -52,7 +55,7 @@ const Sidebar = () => {
     <StyledSideBar>
       {/* <Calendar /> */}
       {/* TODO the div is just a placeholder, REMOVE */}
-      <div style={{ height: 59, borderBottom: "var(--color-border)" }}></div>
+      <div style={{ height: 59 }}></div>
       <Legend>
         <LegendItem>
           <ItemDot color="primary" />
