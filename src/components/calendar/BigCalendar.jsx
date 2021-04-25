@@ -41,7 +41,7 @@ const BigCalendar = () => {
     isToday,
     nextMonth,
     previousMonth,
-    newDate,
+    // newDate,
     days,
     // date,
     day,
@@ -60,11 +60,13 @@ const BigCalendar = () => {
   }, [year, month, setTurns]);
 
   const putValuesToTable = (worker, monthLenght) => {
-    const { userId, name, days, _id } = worker;
+    const { name, days, _id } = worker;
 
     let children = [
       <TableCell
-        key={userId || `is-unique-enough ${Math.floor(Math.random() * 100)}`}
+        key={
+          _id + "tr" || `is-unique-enough ${Math.floor(Math.random() * 100)}`
+        }
       >
         <Names>
           {name}
@@ -79,20 +81,23 @@ const BigCalendar = () => {
       if (!days) {
         children.push(
           <TableCell
-            key={i}
+            key={_id + i}
             onClick={() => cycleThrougShifts(_id, i, days[i])}
           />
         );
       } else if (days[i]) {
         children.push(
-          <TableCell key={i} onClick={() => cycleThrougShifts(_id, i, days[i])}>
+          <TableCell
+            key={_id + i}
+            onClick={() => cycleThrougShifts(_id, i, days[i])}
+          >
             {coloredDiv(days[i])}
           </TableCell>
         );
       } else {
         children.push(
           <TableCell
-            key={i}
+            key={_id + i}
             onClick={() => cycleThrougShifts(_id, i, days[i])}
           ></TableCell>
         );
@@ -103,7 +108,7 @@ const BigCalendar = () => {
 
   const putValuesToTableMobile = (d) => {
     let children = [
-      <TableCell>
+      <TableCell key={"dayTCell" + d}>
         <Day isSelected={d + 1 === day}>{d + 1}</Day>
       </TableCell>,
     ];
@@ -187,12 +192,6 @@ const BigCalendar = () => {
     }
   }
 
-  function updateDay(idToUpdate, newDays) {
-    scheduleService
-      .update(year, idToUpdate, newDays)
-      .then((data) => console.log(data));
-  }
-
   if (isPageWide) {
     return (
       <Frame>
@@ -220,9 +219,8 @@ const BigCalendar = () => {
             </TableHead>
             <tbody>
               {turns.map((worker) => {
-                console.log(worker);
                 return (
-                  <TableRow key={worker.userId}>
+                  <TableRow key={worker._id}>
                     {putValuesToTable(worker, days[month] + 1)}
                   </TableRow>
                 );

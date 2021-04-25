@@ -202,7 +202,7 @@ const LoginForm = ({ setUser }) => {
             </WrapButton>
             <TextCenter style={{ paddingTop: "45px" }}>
               Whant to log-in?{" "}
-              <Link onClick={() => setIsLogin(!isLogin)}>Register</Link>
+              <Link onClick={() => setIsLogin(!isLogin)}>Login</Link>
             </TextCenter>
           </FormLogin>
         </WrapLogin>

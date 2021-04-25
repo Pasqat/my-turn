@@ -49,7 +49,7 @@ body {
     color: var(--color-text);
     overflow-x: hidden;
     margin: 0;
-  font-family: 'Lato', 'Roboto', san-serif;
+  font-family: 'Lato', 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   }
