@@ -16,8 +16,7 @@ export const Frame = styled.div`
 `;
 
 export const Calendar = styled.div`
-  /* flex: 1 1 auto; */
-  /* display: flex; */
+  overflow-x: scroll;
 `;
 export const Header = styled.div`
   display: flex;

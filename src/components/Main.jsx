@@ -7,7 +7,9 @@ import BigCalendar from "./calendar/BigCalendar";
 const StyledMain = styled.div`
   width: 100vw;
   display: flex;
-  flex-direction: row;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 const Main = () => {
