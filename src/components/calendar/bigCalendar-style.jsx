@@ -16,7 +16,9 @@ export const Frame = styled.div`
 `;
 
 export const Calendar = styled.div`
-  overflow-x: scroll;
+  @media (max-width: 800px) {
+    overflow-x: scroll;
+  }
 `;
 export const Header = styled.div`
   display: flex;

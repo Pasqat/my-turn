@@ -15,7 +15,6 @@ const StyledHeader = styled.div`
   padding: 10px 2rem;
   color: var(--color-primary);
   font-family: "Raleway", sans-serif;
-  width: 100%;
 `;
 
 const H2 = styled.h2`

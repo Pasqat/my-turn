@@ -192,6 +192,48 @@ const BigCalendar = () => {
     }
   }
 
+  function renderMobileTable() {
+    if (turns.length !== 0) {
+      return (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCellHeader></TableCellHeader>
+              {turns.map((worker) => {
+                return (
+                  <TableCellHeader key={worker._id}>
+                    <Names>
+                      {worker.name}
+                      <DeleteButton
+                        onClick={() => removeRow(worker._id, worker.name)}
+                      >
+                        delete
+                      </DeleteButton>
+                    </Names>
+                  </TableCellHeader>
+                );
+              })}
+            </TableRow>
+          </TableHead>
+          <tbody>
+            {Array(days[month])
+              .fill(null)
+              .map((_, d) => {
+                return <TableRow key={d}>{putValuesToTableMobile(d)}</TableRow>;
+              })}
+          </tbody>
+        </Table>
+      );
+    }
+
+    return (
+      <div style={{ marginBottom: "40px" }}>
+        Start by clicking on <span style={{ fontWeight: "bold" }}>edit</span>{" "}
+        and add a new person
+      </div>
+    );
+  }
+
   if (isPageWide) {
     return (
       <Frame>
@@ -247,6 +289,7 @@ const BigCalendar = () => {
       </Frame>
     );
   }
+
   return (
     <Frame>
       <Header>
@@ -272,36 +315,7 @@ const BigCalendar = () => {
           {isEditable ? "Done" : "Edit"}
         </ButtonSecondary>
       </div>
-      <Calendar>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCellHeader></TableCellHeader>
-              {turns.map((worker) => {
-                return (
-                  <TableCellHeader key={worker._id}>
-                    <Names>
-                      {worker.name}
-                      <DeleteButton
-                        onClick={() => removeRow(worker._id, worker.name)}
-                      >
-                        delete
-                      </DeleteButton>
-                    </Names>
-                  </TableCellHeader>
-                );
-              })}
-            </TableRow>
-          </TableHead>
-          <tbody>
-            {Array(days[month])
-              .fill(null)
-              .map((_, d) => {
-                return <TableRow key={d}>{putValuesToTableMobile(d)}</TableRow>;
-              })}
-          </tbody>
-        </Table>
-      </Calendar>
+      <Calendar>{renderMobileTable()}</Calendar>
       <div
         style={{
           display: "flex",
