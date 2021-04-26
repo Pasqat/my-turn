@@ -1,5 +1,5 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react'
+import styled, { css } from 'styled-components'
 
 const Legend = styled.div`
   padding: 20px;
@@ -9,13 +9,13 @@ const Legend = styled.div`
     justify-content: space-evenly;
       padding-bottom: 0;
   }
-`;
+`
 
 const LegendItem = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 1rem;
-`;
+`
 
 const ItemDot = styled.div`
   width: 18px;
@@ -24,25 +24,25 @@ const ItemDot = styled.div`
   border-radius: 50%;
 
   ${(props) => {
-    if (props.color === "primary") {
+    if (props.color === 'primary') {
       return css`
         background-color: var(--color-primary);
-      `;
-    } else if (props.color === "secondary") {
+      `
+    } else if (props.color === 'secondary') {
       return css`
         background-color: var(--color-secondary);
-      `;
-    } else if (props.color === "green") {
+      `
+    } else if (props.color === 'green') {
       return css`
         background-color: var(--color-green);
-      `;
+      `
     } else {
       return css`
         background-color: var(--color-terziary);
-      `;
+      `
     }
   }}
-`;
+`
 
 const AcceptedSchiftLegend = () => {
   return (
@@ -64,7 +64,7 @@ const AcceptedSchiftLegend = () => {
         Full Day
       </LegendItem>
     </Legend>
-  );
-};
+  )
+}
 
-export default AcceptedSchiftLegend;
+export default AcceptedSchiftLegend

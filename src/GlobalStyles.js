@@ -1,12 +1,12 @@
-import { createGlobalStyle, css } from "styled-components";
+import { createGlobalStyle, css } from 'styled-components'
 
 // GlobalStyle Component
 // to attach CSS-variables
 // to html
 export const GlobalStyles = createGlobalStyle`
 ${(props) => {
-  if (props.theme === "light") {
-    return css`
+    if (props.theme === 'light') {
+      return css`
       html {
         --color-text: #595e77;
         --color-text-light: #c6c9df;
@@ -21,9 +21,9 @@ ${(props) => {
         --color-border: 2px solid rgb(240, 246, 247);
         --color-selected: #e8edff;
       }
-    `;
-  } else if (props.theme === "dark") {
-    return css`
+    `
+    } else if (props.theme === 'dark') {
+      return css`
       html {
         --color-text: #595e77;
         --color-text-light: #3e4157;
@@ -38,9 +38,9 @@ ${(props) => {
         --color-border: 2px solid #37394e;
         --color-selected: #3a3a51;
       }
-    `;
-  }
-}}
+    `
+    }
+  }}
 
 body {
     height: 100%;
@@ -57,4 +57,4 @@ body {
  * {
      margin: 0;
      box-sizing: border-box;}
-`;
+`

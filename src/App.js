@@ -1,12 +1,12 @@
-import React from "react";
-import "./index.css";
-import { GlobalStyles } from "./GlobalStyles";
+import React from 'react'
+import './index.css'
+import { GlobalStyles } from './GlobalStyles'
 
-import Header from "./components/Header/Header";
-import Main from "./components/Main";
-import LoginForm from "./components/LoginForm";
+import Header from './components/Header/Header'
+import Main from './components/Main'
+import LoginForm from './components/loginForm/LoginForm'
 
-import useLocalStorageState from "./components/hooks/useLocalStorageState";
+import useLocalStorageState from './components/hooks/useLocalStorageState'
 
 const StyledApp = ({ children, theme }) => {
   return (
@@ -14,15 +14,15 @@ const StyledApp = ({ children, theme }) => {
       <GlobalStyles theme={theme} />
       {children}
     </>
-  );
-};
+  )
+}
 
 const App = () => {
-  const [theme, setTheme] = useLocalStorageState("theme", "dark");
-  const [user, setUser] = useLocalStorageState("loggedUser", null);
+  const [theme, setTheme] = useLocalStorageState('theme', 'dark')
+  const [user, setUser] = useLocalStorageState('loggedUser', null)
 
   function switchTheme(passedTheme) {
-    return setTheme(passedTheme);
+    return setTheme(passedTheme)
   }
 
   return (
@@ -36,6 +36,6 @@ const App = () => {
         </>
       )}
     </StyledApp>
-  );
-};
-export default App;
+  )
+}
+export default App

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   Frame,
   Calendar,
@@ -14,29 +14,29 @@ import {
   TableRow,
   Names,
   DeleteButton,
-} from "./bigCalendar-style";
+} from './bigCalendar-style'
 
-import { MONTHS } from "../hooks/useDate/Constants";
+import { MONTHS } from '../hooks/useDate/Constants'
 
-import useDate from "../hooks/useDate/useDate";
-import useLocalStorageState from "../hooks/useLocalStorageState";
-import { useMediaQuery } from "../hooks/useMediaQuery";
+import useDate from '../hooks/useDate/useDate'
+import useLocalStorageState from '../hooks/useLocalStorageState'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
-import scheduleService from "../../services/scheduledTime";
-import { coloredDiv, workshiftItem } from "../utils/calendar";
+import scheduleService from '../../services/scheduledTime'
+import { coloredDiv, workshiftItem } from '../utils/calendar'
 
 const acceptedShift = [
   workshiftItem.morning,
   workshiftItem.afternoon,
   workshiftItem.night,
   workshiftItem.fullday,
-  "",
-];
+  '',
+]
 
 const BigCalendar = () => {
   // const today = new Date();
-  const [isEditable, setIsEditable] = React.useState(false);
-  let isPageWide = useMediaQuery("(min-width: 800px)");
+  const [isEditable, setIsEditable] = React.useState(false)
+  let isPageWide = useMediaQuery('(min-width: 800px)')
   const {
     isToday,
     nextMonth,
@@ -48,24 +48,24 @@ const BigCalendar = () => {
     month,
     year,
     // startDay
-  } = useDate(); //custom hook
+  } = useDate() //custom hook
 
-  const [turns, setTurns] = useLocalStorageState("turns", []);
+  const [turns, setTurns] = useLocalStorageState('turns', [])
   // const [turns, setTurns] = React.useState([]);
 
   React.useEffect(() => {
     scheduleService.getMonth(year, month).then((data) => {
-      setTurns(data);
-    });
-  }, [year, month, setTurns]);
+      setTurns(data)
+    })
+  }, [year, month, setTurns])
 
   const putValuesToTable = (worker, monthLenght) => {
-    const { name, days, _id } = worker;
+    const { name, days, _id } = worker
 
     let children = [
       <TableCell
         key={
-          _id + "tr" || `is-unique-enough ${Math.floor(Math.random() * 100)}`
+          _id + 'tr' || `is-unique-enough ${Math.floor(Math.random() * 100)}`
         }
       >
         <Names>
@@ -75,7 +75,7 @@ const BigCalendar = () => {
           </DeleteButton>
         </Names>
       </TableCell>,
-    ];
+    ]
 
     for (let i = 0; i < monthLenght - 1; i++) {
       if (!days) {
@@ -84,7 +84,7 @@ const BigCalendar = () => {
             key={_id + i}
             onClick={() => cycleThrougShifts(_id, i, days[i])}
           />
-        );
+        )
       } else if (days[i]) {
         children.push(
           <TableCell
@@ -93,25 +93,25 @@ const BigCalendar = () => {
           >
             {coloredDiv(days[i])}
           </TableCell>
-        );
+        )
       } else {
         children.push(
           <TableCell
             key={_id + i}
             onClick={() => cycleThrougShifts(_id, i, days[i])}
           ></TableCell>
-        );
+        )
       }
     }
-    return children;
-  };
+    return children
+  }
 
   const putValuesToTableMobile = (d) => {
     let children = [
-      <TableCell key={"dayTCell" + d}>
+      <TableCell key={'dayTCell' + d}>
         <Day isSelected={d + 1 === day}>{d + 1}</Day>
       </TableCell>,
-    ];
+    ]
 
     for (let worker of turns) {
       if (!worker.days) {
@@ -120,7 +120,7 @@ const BigCalendar = () => {
             key={worker._id + d}
             onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
           />
-        );
+        )
       } else if (worker.days[d]) {
         children.push(
           <TableCell
@@ -129,66 +129,66 @@ const BigCalendar = () => {
           >
             {coloredDiv(worker.days[d])}
           </TableCell>
-        );
+        )
       } else {
         children.push(
           <TableCell
             key={worker._id + d}
             onClick={() => cycleThrougShifts(worker._id, d, worker.days[d])}
           ></TableCell>
-        );
+        )
       }
     }
-    return children;
-  };
+    return children
+  }
 
   const cycleThrougShifts = (workerId, scheduleIndex, schedule) => {
-    if (!isEditable) return;
+    if (!isEditable) return
     const acceptedShiftIndex = acceptedShift.findIndex(
       (shift) => shift === schedule
-    );
+    )
 
-    let index = acceptedShiftIndex;
+    let index = acceptedShiftIndex
 
     // -1 so when update newSchedule the index became 0
     if (acceptedShiftIndex === acceptedShift.length - 1) {
-      index = -1;
+      index = -1
     }
 
-    let newSchedule = turns.find((worker) => worker._id === workerId).days;
+    let newSchedule = turns.find((worker) => worker._id === workerId).days
 
-    if (newSchedule === null) newSchedule = [];
+    if (newSchedule === null) newSchedule = []
 
-    newSchedule[scheduleIndex] = acceptedShift[index + 1];
+    newSchedule[scheduleIndex] = acceptedShift[index + 1]
 
-    scheduleService.update(year, workerId, newSchedule);
+    scheduleService.update(year, workerId, newSchedule)
 
-    setTurns([...turns]);
-  };
+    setTurns([...turns])
+  }
 
   const addNewRow = async () => {
-    let name = prompt("Insert name");
+    let name = prompt('Insert name')
 
-    if (name === null) return;
-    if (name.length === 0) return alert("Name can't be empty");
+    if (name === null) return
+    if (name.length === 0) return alert('Name can\'t be empty')
 
     const newMember = {
       name,
-    };
+    }
     const addedMember = await scheduleService.addNewMember(
       newMember,
       year,
       month
-    );
-    setTurns([...turns, addedMember]);
-  };
+    )
+    setTurns([...turns, addedMember])
+  }
 
   function removeRow(idToDelete, name) {
-    let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete);
-    const ok = window.confirm(`Remove ${name}?`);
+    let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete)
+    const ok = window.confirm(`Remove ${name}?`)
     if (ok) {
-      scheduleService.removeTeamMember(year, idToDelete);
-      setTurns([...newWorkerTeam]);
+      scheduleService.removeTeamMember(year, idToDelete)
+      setTurns([...newWorkerTeam])
     }
   }
 
@@ -211,7 +211,7 @@ const BigCalendar = () => {
                       </DeleteButton>
                     </Names>
                   </TableCellHeader>
-                );
+                )
               })}
             </TableRow>
           </TableHead>
@@ -219,19 +219,19 @@ const BigCalendar = () => {
             {Array(days[month])
               .fill(null)
               .map((_, d) => {
-                return <TableRow key={d}>{putValuesToTableMobile(d)}</TableRow>;
+                return <TableRow key={d}>{putValuesToTableMobile(d)}</TableRow>
               })}
           </tbody>
         </Table>
-      );
+      )
     }
 
     return (
-      <div style={{ marginBottom: "40px" }}>
-        Start by clicking on <span style={{ fontWeight: "bold" }}>edit</span>{" "}
+      <div style={{ marginBottom: '40px' }}>
+        Start by clicking on <span style={{ fontWeight: 'bold' }}>edit</span>{' '}
         and add a new person
       </div>
-    );
+    )
   }
 
   if (isPageWide) {
@@ -253,9 +253,9 @@ const BigCalendar = () => {
                   .map((_, d) => {
                     return (
                       <TableCellHeader key={d} isToday={isToday(d)}>
-                        <Day isSelected={d === day}>{d > 0 ? d : ""}</Day>
+                        <Day isSelected={d === day}>{d > 0 ? d : ''}</Day>
                       </TableCellHeader>
-                    );
+                    )
                   })}
               </TableRow>
             </TableHead>
@@ -265,29 +265,29 @@ const BigCalendar = () => {
                   <TableRow key={worker._id}>
                     {putValuesToTable(worker, days[month] + 1)}
                   </TableRow>
-                );
+                )
               })}
             </tbody>
           </Table>
         </Calendar>
         <div
           style={{
-            display: "flex",
-            marginLeft: "auto",
-            justifyContent: "center",
-            alignContent: "space-around",
-            marginTop: "40px",
+            display: 'flex',
+            marginLeft: 'auto',
+            justifyContent: 'center',
+            alignContent: 'space-around',
+            marginTop: '40px',
           }}
         >
           <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
             Add new
           </ButtonPrimary>
           <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-            {isEditable ? "Done" : "Edit"}
+            {isEditable ? 'Done' : 'Edit'}
           </ButtonSecondary>
         </div>
       </Frame>
-    );
+    )
   }
 
   return (
@@ -301,39 +301,39 @@ const BigCalendar = () => {
       </Header>
       <div
         style={{
-          display: "flex",
-          marginLeft: "auto",
-          marginBottom: "20px",
-          justifyContent: "center",
-          alignContent: "space-around",
+          display: 'flex',
+          marginLeft: 'auto',
+          marginBottom: '20px',
+          justifyContent: 'center',
+          alignContent: 'space-around',
         }}
       >
         <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
           Add new
         </ButtonPrimary>
         <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-          {isEditable ? "Done" : "Edit"}
+          {isEditable ? 'Done' : 'Edit'}
         </ButtonSecondary>
       </div>
       <Calendar>{renderMobileTable()}</Calendar>
       <div
         style={{
-          display: "flex",
-          marginLeft: "auto",
-          marginBottom: "20px",
-          justifyContent: "center",
-          alignContent: "space-around",
+          display: 'flex',
+          marginLeft: 'auto',
+          marginBottom: '20px',
+          justifyContent: 'center',
+          alignContent: 'space-around',
         }}
       >
         <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
           Add new
         </ButtonPrimary>
         <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-          {isEditable ? "Done" : "Edit"}
+          {isEditable ? 'Done' : 'Edit'}
         </ButtonSecondary>
       </div>
     </Frame>
-  );
-};
+  )
+}
 
-export default BigCalendar;
+export default BigCalendar

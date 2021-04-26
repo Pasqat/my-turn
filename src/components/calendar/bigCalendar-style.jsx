@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { workshiftItem } from "../utils/calendar";
+import styled, { css } from 'styled-components'
+import { workshiftItem } from '../utils/calendar'
 
 export const Frame = styled.div`
   display: flex;
@@ -13,13 +13,13 @@ export const Frame = styled.div`
   @media (max-width: 800px) {
     padding: 0 10px;
   }
-`;
+`
 
 export const Calendar = styled.div`
   @media (max-width: 800px) {
     overflow-x: scroll;
   }
-`;
+`
 export const Header = styled.div`
   display: flex;
   justify-content: center;
@@ -28,12 +28,12 @@ export const Header = styled.div`
   letter-spacing: 2px;
   /* background: var(--background-main); */
   overflow-y: auto;
-`;
+`
 
 export const Button = styled.div`
   cursor: pointer;
   margin: 0 15px;
-`;
+`
 
 export const ButtonPrimary = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ export const ButtonPrimary = styled.div`
     css`
       display: inherit;
     `}
-`;
+`
 
 export const ButtonSecondary = styled.div`
   display: flex;
@@ -77,7 +77,7 @@ export const ButtonSecondary = styled.div`
     color: #ededed;
     border: 2px solid var(--color-green);
   }
-`;
+`
 export const Day = styled.div`
   /* width: 14.2%; */
   height: 2rem;
@@ -99,7 +99,7 @@ export const Day = styled.div`
     css`
       background-color: var(--color-selected);
     `}
-`;
+`
 
 export const Table = styled.table`
   border-collapse: collapse;
@@ -108,13 +108,13 @@ export const Table = styled.table`
   @media (max-width: 800px) {
     margin-bottom: 20px;
   }
-`;
+`
 
-export const TableHead = styled.thead``;
+export const TableHead = styled.thead``
 
 export const TableRow = styled.tr`
   border: var(--color-border);
-`;
+`
 
 export const TableCell = styled.td`
   border: var(--color-border);
@@ -125,7 +125,7 @@ export const TableCell = styled.td`
     css`
       background-color: var(--color-selected);
     `};
-`;
+`
 
 export const TableCellHeader = styled.th`
   width: 2.8%;
@@ -139,7 +139,7 @@ export const TableCellHeader = styled.th`
   top: -2px;
   background-color: var(--color-background);
   z-index: 5;
-`;
+`
 
 export const TableContent = styled.div`
   position: absolute;
@@ -154,32 +154,32 @@ export const TableContent = styled.div`
     props.isToday &&
       css`
         background-color: var(--color-selected);
-      `;
+      `
 
     switch (props.workshift) {
-      case workshiftItem.morning:
-        return css`
+    case workshiftItem.morning:
+      return css`
           background-color: var(--color-primary);
-        `;
-      case workshiftItem.afternoon:
-        return css`
+        `
+    case workshiftItem.afternoon:
+      return css`
           background-color: var(--color-secondary);
-        `;
-      case workshiftItem.night:
-        return css`
+        `
+    case workshiftItem.night:
+      return css`
           background-color: var(--color-terziary);
-        `;
-      case workshiftItem.fullday:
-        return css`
+        `
+    case workshiftItem.fullday:
+      return css`
           background-color: var(--color-green);
-        `;
-      default:
-        throw new Error(
-          `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
-        );
+        `
+    default:
+      throw new Error(
+        `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
+      )
     }
   }}
-`;
+`
 
 export const Names = styled.div`
   padding: 10px 20px;
@@ -187,7 +187,7 @@ export const Names = styled.div`
   @media (max-width: 768px) {
     font-size: 1rem;
   }
-`;
+`
 
 export const DeleteButton = styled.div`
   font-size: 1rem;
@@ -197,4 +197,4 @@ export const DeleteButton = styled.div`
     display: block;
     cursor: pointer;
   }
-`;
+`

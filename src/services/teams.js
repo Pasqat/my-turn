@@ -1,16 +1,16 @@
-import axios from "axios";
-const baseUrl = "/api/team";
+import axios from 'axios'
+const baseUrl = '/api/team'
 
 const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
-};
+  const request = axios.get(baseUrl)
+  return request.then((response) => response.data)
+}
 
 const register = async (credential) => {
-  const response = await axios.post(baseUrl, credential);
-  console.log(response.data);
-  return response.data;
-};
+  const response = await axios.post(baseUrl, credential)
+  console.log(response.data)
+  return response.data
+}
 
 // const update = (id, newObject) => {
 //   // TODO this need to be done
@@ -26,4 +26,4 @@ const register = async (credential) => {
 export default {
   getAll,
   register,
-};
+}

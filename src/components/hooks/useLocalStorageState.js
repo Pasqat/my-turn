@@ -1,31 +1,31 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from 'react'
 
 const useLocalStorageState = (
   key,
-  defaultValue = "",
+  defaultValue = '',
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) => {
-  const prevKeyRef = useRef(key); // useRef to not rerender
+  const prevKeyRef = useRef(key) // useRef to not rerender
 
   const [state, setState] = useState(() => {
-    const valuesToLocalStorage = window.localStorage.getItem(key);
+    const valuesToLocalStorage = window.localStorage.getItem(key)
     if (valuesToLocalStorage) {
-      return deserialize(valuesToLocalStorage);
+      return deserialize(valuesToLocalStorage)
     }
-    return typeof defaultValue === "function" ? defaultValue() : defaultValue;
-  });
+    return typeof defaultValue === 'function' ? defaultValue() : defaultValue
+  })
 
   useEffect(() => {
-    const prevKey = prevKeyRef.current;
+    const prevKey = prevKeyRef.current
     if (prevKey !== key) {
-      window.localStorage.removeItem(prevKey);
+      window.localStorage.removeItem(prevKey)
     }
-    prevKeyRef.current = key;
+    prevKeyRef.current = key
 
-    window.localStorage.setItem(key, serialize(state));
-  }, [key, serialize, state]);
+    window.localStorage.setItem(key, serialize(state))
+  }, [key, serialize, state])
 
-  return [state, setState];
-};
+  return [state, setState]
+}
 
-export default useLocalStorageState;
+export default useLocalStorageState
