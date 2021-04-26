@@ -5,7 +5,6 @@ const Notification = ({ notification }) => {
   if (!notification) {
     return null
   }
-  console.log(notification)
   return (
     <NotificationStyled type={notification.type}>
       {notification.message}
