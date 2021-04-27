@@ -23,8 +23,49 @@ const LoginForm = ({ setUser }) => {
   const [notification, setNotification] = React.useState(null)
   const [isLogin, setIsLogin] = React.useState(true)
 
+  const validEmailRegex = RegExp(
+    // eslint-disable-next-line no-useless-escape
+    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  )
+
+  const validateForm = () => {
+    let isValid = true
+    if (teamName.length <= 3) {
+      setNotification({
+        type: 'error',
+        message: 'Team Name must be at least 3 characters',
+      })
+      isValid = false
+    }
+    if (!isLogin && !validEmailRegex.test(email)) {
+      setNotification({
+        type: 'error',
+        message: 'invalid email address',
+      })
+      isValid = false
+    }
+    if (password.length < 8) {
+      setNotification({
+        type: 'error',
+        message: 'password too short',
+      })
+
+      isValid = false
+    }
+
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
+
+    return isValid
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
+
+    console.log('pre')
+    if (!validateForm()) return
+    console.log('post')
 
     try {
       const team = await loginService.login({ teamName, password })
@@ -52,38 +93,6 @@ const LoginForm = ({ setUser }) => {
         setNotification(null)
       }, 5000)
     }
-  }
-
-  const validEmailRegex = RegExp(
-    // eslint-disable-next-line no-useless-escape
-    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-  )
-
-  const validateForm = () => {
-    let isValid
-    if (teamName.length <= 3) {
-      setNotification({
-        type: 'error',
-        message: 'Team Name must be at least 3 characters',
-      })
-      isValid = false
-    }
-    if (!validEmailRegex.test(email)) {
-      setNotification({
-        type: 'error',
-        message: 'invalid email address',
-      })
-      isValid = false
-    }
-    if (password.length < 8) {
-      setNotification({
-        type: 'error',
-        message: 'password too short',
-      })
-
-      isValid = false
-    }
-    return isValid
   }
 
   if (!isLogin) {

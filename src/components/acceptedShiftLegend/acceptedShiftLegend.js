@@ -7,7 +7,7 @@ const Legend = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-      padding-bottom: 0;
+    padding-bottom: 0;
   }
 `
 

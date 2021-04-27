@@ -78,6 +78,7 @@ export const Button = styled.button`
   display: -ms-flexbox;
   display: flex;
   justify-content: center;
+  cursor: pointer;
   align-items: center;
   padding: 0 20px;
   width: 100%;

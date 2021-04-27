@@ -1,15 +1,15 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { DAYS_OF_THE_WEEK, MONTHS } from "../hooks/useDate/Constants";
+import React from 'react'
+import styled, { css } from 'styled-components'
+import { DAYS_OF_THE_WEEK, MONTHS } from '../hooks/useDate/Constants'
 
-import useDate from "../hooks/useDate/useDate";
+import useDate from '../hooks/useDate/useDate'
 
 const Frame = styled.div`
   width: 18rem;
   position: sticky;
   top: 0;
   background: var(--color-background);
-`;
+`
 
 const Header = styled.div`
   display: flex;
@@ -17,17 +17,17 @@ const Header = styled.div`
   padding: 20px 15px;
   border-bottom: var(--color-border);
   color: var(--color-primary);
-`;
+`
 
 const Button = styled.div`
   cursor: pointer;
-`;
+`
 
 const Body = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-`;
+`
 
 const Day = styled.div`
   width: 14.2%;
@@ -49,10 +49,10 @@ const Day = styled.div`
     css`
       background-color: var(--color-selected);
     `}
-`;
+`
 
 const Calendar = () => {
-  const today = new Date();
+  const today = new Date()
 
   const {
     isToday,
@@ -65,7 +65,7 @@ const Calendar = () => {
     month,
     year,
     startDay,
-  } = useDate();
+  } = useDate()
 
   return (
     <Frame>
@@ -81,7 +81,7 @@ const Calendar = () => {
         {Array(days[month] + (startDay - 1))
           .fill(null)
           .map((_, index) => {
-            const d = index - (startDay - 2);
+            const d = index - (startDay - 2)
             return (
               <Day
                 key={index}
@@ -89,13 +89,13 @@ const Calendar = () => {
                 isSelected={d === day}
                 onClick={() => newDate(year, month, d)}
               >
-                {d > 0 ? d : ""}
+                {d > 0 ? d : ''}
               </Day>
-            );
+            )
           })}
       </Body>
     </Frame>
-  );
-};
+  )
+}
 
-export default Calendar;
+export default Calendar

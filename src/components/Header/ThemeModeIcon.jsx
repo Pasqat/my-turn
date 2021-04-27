@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import Icon from "./Icon";
+import React from 'react'
+import styled from 'styled-components'
+import Icon from './Icon'
 
 const Svg = styled(Icon)`
   width: 24px;
   height: 24px;
-`;
+`
 
 export const Sun = ({ className }) => (
   <Svg viewBox="0 0 24 24" className={className} fill="currentColor">
@@ -43,10 +43,10 @@ export const Sun = ({ className }) => (
     ></rect>
     <path d="M10,6 C7.8,6 6,7.8 6,10 C6,12.2 7.8,14 10,14 C12.2,14 14,12.2 14,10 C14,7.8 12.2,6 10,6 Z" />
   </Svg>
-);
+)
 
 export const Moon = ({ className }) => (
   <Svg viewBox="0 0 24 24" className={className} fill="currentColor">
     <path d="M8,2 C4.5,2.9 2,6.1 2,9.9 C2,14.4 5.6,18 10.1,18 C13.9,18 17,15.5 18,12 C11.9,13.7 6.3,8.1 8,2 Z" />
   </Svg>
-);
+)

@@ -1,3 +1,4 @@
+import React from 'react'
 import { TableContent } from '../calendar/bigCalendar-style'
 
 export const workshiftItem = {
