@@ -63,9 +63,7 @@ const LoginForm = ({ setUser }) => {
   const handleLogin = async (event) => {
     event.preventDefault()
 
-    console.log('pre')
     if (!validateForm()) return
-    console.log('post')
 
     try {
       const team = await loginService.login({ teamName, password })
