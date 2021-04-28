@@ -35,7 +35,6 @@ function notificationReducer(state, { type, payload }) {
       }
     }
     default: {
-      console.log(type)
       throw new Error(`Unsupported type: ${type}`)
     }
   }
@@ -49,9 +48,9 @@ const initialState = {
 function useNotification({ reducer = notificationReducer } = {}) {
   const [state, dispatch] = React.useReducer(reducer, initialState)
 
-  const { type, message } = state
-  console.log("state", state, "dispatch", dispatch)
-  dispatch({ type, message })
+  // const { type, message } = state
+  // console.log("state", state, "dispatch", dispatch)
+  // dispatch({ type, message })
 
   return [state, dispatch]
 }
