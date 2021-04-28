@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react"
 
 const actionTypes = {
-  error: 'error',
-  success: 'success',
-  warning: 'warning',
-  dismiss: 'dismiss',
+  error: "error",
+  success: "success",
+  warning: "warning",
+  dismiss: "dismiss",
 }
 
 function notificationReducer(state, { type, payload }) {
   switch (type) {
     case actionTypes.error: {
-      console.log('error')
+      console.log("error")
       return {
         type: actionTypes.error,
         message: payload,
@@ -30,8 +30,8 @@ function notificationReducer(state, { type, payload }) {
     }
     case actionTypes.dismiss: {
       return {
-        type: '',
-        message: '',
+        type: "",
+        message: "",
       }
     }
     default: {
@@ -42,15 +42,15 @@ function notificationReducer(state, { type, payload }) {
 }
 
 const initialState = {
-  type: '',
-  message: '',
+  type: "",
+  message: "",
 }
 
 function useNotification({ reducer = notificationReducer } = {}) {
   const [state, dispatch] = React.useReducer(reducer, initialState)
 
   const { type, message } = state
-  console.log('state', state, 'dispatch', dispatch)
+  console.log("state", state, "dispatch", dispatch)
   dispatch({ type, message })
 
   return [state, dispatch]

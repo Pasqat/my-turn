@@ -1,11 +1,11 @@
-import React from 'react'
-import { TableContent } from '../calendar/bigCalendar-style'
+import React from "react"
+import { TableContent } from "../calendar/bigCalendar-style"
 
 export const workshiftItem = {
-  morning: 'morning',
-  afternoon: 'afternoon',
-  fullday: 'fullday',
-  night: 'night',
+  morning: "morning",
+  afternoon: "afternoon",
+  fullday: "fullday",
+  night: "night",
 }
 
 export const coloredDiv = (turn) => {

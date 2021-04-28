@@ -1,5 +1,5 @@
-import React from 'react'
-import { NotificationStyled } from './notification-style'
+import React from "react"
+import { NotificationStyled } from "./notification-style"
 
 const Notification = ({ notification }) => {
   if (!notification) {

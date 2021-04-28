@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import SideBar from './Sidebar'
-import BigCalendar from './calendar/BigCalendar'
+import SideBar from "./Sidebar"
+import BigCalendar from "./calendar/BigCalendar"
 
 const StyledMain = styled.div`
   width: 100vw;
@@ -18,8 +18,8 @@ const Main = () => {
       <SideBar />
       <BigCalendar
         style={{
-          backgroundColor: 'var(--gradient-background)',
-          height: '100%',
+          backgroundColor: "var(--gradient-background)",
+          height: "100%",
         }}
       />
     </StyledMain>

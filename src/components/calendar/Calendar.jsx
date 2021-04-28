@@ -1,8 +1,8 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { DAYS_OF_THE_WEEK, MONTHS } from '../hooks/useDate/Constants'
+import React from "react"
+import styled, { css } from "styled-components"
+import { DAYS_OF_THE_WEEK, MONTHS } from "../hooks/useDate/Constants"
 
-import useDate from '../hooks/useDate/useDate'
+import useDate from "../hooks/useDate/useDate"
 
 const Frame = styled.div`
   width: 18rem;
@@ -89,7 +89,7 @@ const Calendar = () => {
                 isSelected={d === day}
                 onClick={() => newDate(year, month, d)}
               >
-                {d > 0 ? d : ''}
+                {d > 0 ? d : ""}
               </Day>
             )
           })}

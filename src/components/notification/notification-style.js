@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from "styled-components"
 
 export const NotificationStyled = styled.div`
   position: absolute;
@@ -10,12 +10,12 @@ export const NotificationStyled = styled.div`
   box-shadow: 0 3px 20px 2px rgba(0, 0, 0, 0.6);
   ${(props) => {
     switch (props.type) {
-      case 'succes':
+      case "succes":
         return css`
           color: var(--color-green);
           border: 1px solid var(--color-green);
         `
-      case 'error':
+      case "error":
         return css`
           color: var(--color-terziary);
           border: 1px solid var(--color-terziary);

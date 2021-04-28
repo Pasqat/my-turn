@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import Icon from './Icon'
+import React from "react"
+import styled from "styled-components"
+import Icon from "./Icon"
 
 const Svg = styled(Icon)`
   width: 24px;

@@ -1,8 +1,8 @@
-import React from 'react'
-import loginService from '../../services/login'
-import teamService from '../../services/teams'
-import storage from '../../utils/storage'
-import Notification from '../notification/Notification'
+import React from "react"
+import loginService from "../../services/login"
+import teamService from "../../services/teams"
+import storage from "../../utils/storage"
+import Notification from "../notification/Notification"
 import {
   Input,
   ContainerLogin,
@@ -14,12 +14,12 @@ import {
   TextCenter,
   Link,
   Button,
-} from './loginForm-styles'
+} from "./loginForm-styles"
 
 const LoginForm = ({ setUser }) => {
-  const [teamName, setTeamName] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [email, setEmail] = React.useState('')
+  const [teamName, setTeamName] = React.useState("")
+  const [password, setPassword] = React.useState("")
+  const [email, setEmail] = React.useState("")
   const [notification, setNotification] = React.useState(null)
   const [isLogin, setIsLogin] = React.useState(true)
 
@@ -32,22 +32,22 @@ const LoginForm = ({ setUser }) => {
     let isValid = true
     if (teamName.length <= 3) {
       setNotification({
-        type: 'error',
-        message: 'Team Name must be at least 3 characters',
+        type: "error",
+        message: "Team Name must be at least 3 characters",
       })
       isValid = false
     }
     if (!isLogin && !validEmailRegex.test(email)) {
       setNotification({
-        type: 'error',
-        message: 'invalid email address',
+        type: "error",
+        message: "invalid email address",
       })
       isValid = false
     }
     if (password.length < 8) {
       setNotification({
-        type: 'error',
-        message: 'password too short',
+        type: "error",
+        message: "password too short",
       })
 
       isValid = false
@@ -70,7 +70,7 @@ const LoginForm = ({ setUser }) => {
       setUser(team)
       storage.saveUser(team)
     } catch (exception) {
-      setNotification({ type: 'error', message: 'Wrong credentials' })
+      setNotification({ type: "error", message: "Wrong credentials" })
       setTimeout(() => {
         setNotification(null)
       }, 5000)
@@ -86,7 +86,7 @@ const LoginForm = ({ setUser }) => {
       storage.saveUser(team)
       setUser(team)
     } catch (exception) {
-      setNotification({ type: 'error', message: 'Wrong credentials' })
+      setNotification({ type: "error", message: "Wrong credentials" })
       setTimeout(() => {
         setNotification(null)
       }, 5000)
@@ -111,7 +111,7 @@ const LoginForm = ({ setUser }) => {
             </WrapInput>
             <WrapInput>
               <Input
-                style={{ borderTop: 'none' }}
+                style={{ borderTop: "none" }}
                 type="email"
                 placeholder="email"
                 value={email}
@@ -121,7 +121,7 @@ const LoginForm = ({ setUser }) => {
             </WrapInput>
             <WrapInput>
               <Input
-                style={{ borderTop: 'none' }}
+                style={{ borderTop: "none" }}
                 type="password"
                 value={password}
                 name="password"
@@ -132,8 +132,8 @@ const LoginForm = ({ setUser }) => {
             <WrapButton>
               <Button type="submit">Register</Button>
             </WrapButton>
-            <TextCenter style={{ paddingTop: '45px' }}>
-              Whant to log-in?{' '}
+            <TextCenter style={{ paddingTop: "45px" }}>
+              Whant to log-in?{" "}
               <Link onClick={() => setIsLogin(!isLogin)}>Login</Link>
             </TextCenter>
           </FormLogin>
@@ -158,7 +158,7 @@ const LoginForm = ({ setUser }) => {
           </WrapInput>
           <WrapInput>
             <Input
-              style={{ borderTop: 'none' }}
+              style={{ borderTop: "none" }}
               type="password"
               value={password}
               name="password"
@@ -169,8 +169,8 @@ const LoginForm = ({ setUser }) => {
           <WrapButton>
             <Button type="submit">login</Button>
           </WrapButton>
-          <TextCenter style={{ paddingTop: '45px' }}>
-            Not Register yet?{' '}
+          <TextCenter style={{ paddingTop: "45px" }}>
+            Not Register yet?{" "}
             <Link onClick={() => setIsLogin(!isLogin)}>Register</Link>
           </TextCenter>
         </FormLogin>

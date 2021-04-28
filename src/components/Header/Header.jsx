@@ -1,9 +1,9 @@
-import React from 'react'
-import { useEffect } from 'react'
-import styled from 'styled-components'
+import React from "react"
+import { useEffect } from "react"
+import styled from "styled-components"
 
-import useLocalStorageState from '../hooks/useLocalStorageState'
-import { Sun, Moon } from './ThemeModeIcon'
+import useLocalStorageState from "../hooks/useLocalStorageState"
+import { Sun, Moon } from "./ThemeModeIcon"
 
 const StyledHeader = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ const StyledHeader = styled.div`
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
   padding: 10px 2rem;
   color: var(--color-primary);
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 `
 
 const H2 = styled.h2`
@@ -40,22 +40,22 @@ const Button = styled.div`
 `
 
 const Header = ({ switchTheme, setUser }) => {
-  const [theme, setTheme] = useLocalStorageState('theme', 'dark')
+  const [theme, setTheme] = useLocalStorageState("theme", "dark")
 
   useEffect(() => {
     switchTheme(theme)
   }, [switchTheme, theme])
 
   const logOut = () => {
-    window.localStorage.removeItem('loggedUser')
+    window.localStorage.removeItem("loggedUser")
     return setUser(null)
   }
 
   return (
     <StyledHeader>
       <H2>My Turn</H2>
-      <Button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-        {theme === 'light' ? <Moon /> : <Sun />}
+      <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+        {theme === "light" ? <Moon /> : <Sun />}
       </Button>
       <div onClick={logOut}>
         <Link>log-out</Link>

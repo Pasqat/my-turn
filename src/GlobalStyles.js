@@ -1,11 +1,11 @@
-import { createGlobalStyle, css } from 'styled-components'
+import { createGlobalStyle, css } from "styled-components"
 
 // GlobalStyle Component
 // to attach CSS-variables
 // to html
 export const GlobalStyles = createGlobalStyle`
 ${(props) => {
-  if (props.theme === 'light') {
+  if (props.theme === "light") {
     return css`
       html {
         --color-text: #595e77;
@@ -22,7 +22,7 @@ ${(props) => {
         --color-selected: #e8edff;
       }
     `
-  } else if (props.theme === 'dark') {
+  } else if (props.theme === "dark") {
     return css`
       html {
         --color-text: #595e77;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   Frame,
   Calendar,
@@ -14,29 +14,29 @@ import {
   TableRow,
   Names,
   DeleteButton,
-} from './bigCalendar-style'
+} from "./bigCalendar-style"
 
-import { MONTHS } from '../hooks/useDate/Constants'
+import { MONTHS } from "../hooks/useDate/Constants"
 
-import useDate from '../hooks/useDate/useDate'
-import useLocalStorageState from '../hooks/useLocalStorageState'
-import { useMediaQuery } from '../hooks/useMediaQuery'
+import useDate from "../hooks/useDate/useDate"
+import useLocalStorageState from "../hooks/useLocalStorageState"
+import { useMediaQuery } from "../hooks/useMediaQuery"
 
-import scheduleService from '../../services/scheduledTime'
-import { coloredDiv, workshiftItem } from '../utils/calendar'
+import scheduleService from "../../services/scheduledTime"
+import { coloredDiv, workshiftItem } from "../utils/calendar"
 
 const acceptedShift = [
   workshiftItem.morning,
   workshiftItem.afternoon,
   workshiftItem.night,
   workshiftItem.fullday,
-  '',
+  "",
 ]
 
 const BigCalendar = () => {
   // const today = new Date();
   const [isEditable, setIsEditable] = React.useState(false)
-  let isPageWide = useMediaQuery('(min-width: 800px)')
+  let isPageWide = useMediaQuery("(min-width: 800px)")
   const {
     isToday,
     nextMonth,
@@ -50,7 +50,7 @@ const BigCalendar = () => {
     // startDay
   } = useDate() //custom hook
 
-  const [turns, setTurns] = useLocalStorageState('turns', [])
+  const [turns, setTurns] = useLocalStorageState("turns", [])
   // const [turns, setTurns] = React.useState([]);
 
   React.useEffect(() => {
@@ -65,7 +65,7 @@ const BigCalendar = () => {
     let children = [
       <TableCell
         key={
-          _id + 'tr' || `is-unique-enough ${Math.floor(Math.random() * 100)}`
+          _id + "tr" || `is-unique-enough ${Math.floor(Math.random() * 100)}`
         }
       >
         <Names>
@@ -107,7 +107,7 @@ const BigCalendar = () => {
 
   const putValuesToTableMobile = (d) => {
     let children = [
-      <TableCell key={'dayTCell' + d}>
+      <TableCell key={"dayTCell" + d}>
         <Day isSelected={d + 1 === day}>{d + 1}</Day>
       </TableCell>,
     ]
@@ -166,7 +166,7 @@ const BigCalendar = () => {
   }
 
   const addNewRow = async () => {
-    let name = prompt('Insert name')
+    let name = prompt("Insert name")
 
     if (name === null) return
     if (name.length === 0) return alert("Name can't be empty")
@@ -226,8 +226,8 @@ const BigCalendar = () => {
     }
 
     return (
-      <div style={{ marginBottom: '40px' }}>
-        Start by clicking on <span style={{ fontWeight: 'bold' }}>edit</span>{' '}
+      <div style={{ marginBottom: "40px" }}>
+        Start by clicking on <span style={{ fontWeight: "bold" }}>edit</span>{" "}
         and add a new person
       </div>
     )
@@ -252,7 +252,7 @@ const BigCalendar = () => {
                   .map((_, d) => {
                     return (
                       <TableCellHeader key={d} isToday={isToday(d)}>
-                        <Day isSelected={d === day}>{d > 0 ? d : ''}</Day>
+                        <Day isSelected={d === day}>{d > 0 ? d : ""}</Day>
                       </TableCellHeader>
                     )
                   })}
@@ -271,18 +271,18 @@ const BigCalendar = () => {
         </Calendar>
         <div
           style={{
-            display: 'flex',
-            marginLeft: 'auto',
-            justifyContent: 'center',
-            alignContent: 'space-around',
-            marginTop: '40px',
+            display: "flex",
+            marginLeft: "auto",
+            justifyContent: "center",
+            alignContent: "space-around",
+            marginTop: "40px",
           }}
         >
           <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
             Add new
           </ButtonPrimary>
           <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-            {isEditable ? 'Done' : 'Edit'}
+            {isEditable ? "Done" : "Edit"}
           </ButtonSecondary>
         </div>
       </Frame>
@@ -300,35 +300,35 @@ const BigCalendar = () => {
       </Header>
       <div
         style={{
-          display: 'flex',
-          marginLeft: 'auto',
-          marginBottom: '20px',
-          justifyContent: 'center',
-          alignContent: 'space-around',
+          display: "flex",
+          marginLeft: "auto",
+          marginBottom: "20px",
+          justifyContent: "center",
+          alignContent: "space-around",
         }}
       >
         <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
           Add new
         </ButtonPrimary>
         <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-          {isEditable ? 'Done' : 'Edit'}
+          {isEditable ? "Done" : "Edit"}
         </ButtonSecondary>
       </div>
       <Calendar>{renderMobileTable()}</Calendar>
       <div
         style={{
-          display: 'flex',
-          marginLeft: 'auto',
-          marginBottom: '20px',
-          justifyContent: 'center',
-          alignContent: 'space-around',
+          display: "flex",
+          marginLeft: "auto",
+          marginBottom: "20px",
+          justifyContent: "center",
+          alignContent: "space-around",
         }}
       >
         <ButtonPrimary onClick={() => addNewRow()} isEditable={isEditable}>
           Add new
         </ButtonPrimary>
         <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-          {isEditable ? 'Done' : 'Edit'}
+          {isEditable ? "Done" : "Edit"}
         </ButtonSecondary>
       </div>
     </Frame>

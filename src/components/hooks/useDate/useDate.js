@@ -1,6 +1,6 @@
-import { isLeapYear, getStartDayOfMonth } from './utility'
-import { DAYS, DAYS_LEAP } from './Constants'
-import { useReducer } from 'react'
+import { isLeapYear, getStartDayOfMonth } from "./utility"
+import { DAYS, DAYS_LEAP } from "./Constants"
+import { useReducer } from "react"
 
 function updateDate(date) {
   return {
@@ -12,10 +12,10 @@ function updateDate(date) {
 }
 
 const actionTypes = {
-  nextMonth: 'next_month',
-  previousMonth: 'previous_month',
-  update: 'update',
-  newDate: 'new_date',
+  nextMonth: "next_month",
+  previousMonth: "previous_month",
+  update: "update",
+  newDate: "new_date",
 }
 
 function dateReducer(state, { type, payload }) {

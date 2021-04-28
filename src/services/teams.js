@@ -1,5 +1,5 @@
-import axios from 'axios'
-const baseUrl = '/api/team'
+import axios from "axios"
+const baseUrl = "/api/team"
 
 const getAll = () => {
   const request = axios.get(baseUrl)

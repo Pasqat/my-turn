@@ -1,14 +1,14 @@
-import React from 'react'
-import './index.css'
-import { GlobalStyles } from './GlobalStyles'
+import React from "react"
+import "./index.css"
+import { GlobalStyles } from "./GlobalStyles"
 
-import Header from './components/Header/Header'
-import Main from './components/Main'
-import LoginForm from './components/loginForm/LoginForm'
-import Notification from './components/notification/Notification'
-import useNotification from './components/hooks/useNotification'
+import Header from "./components/Header/Header"
+import Main from "./components/Main"
+import LoginForm from "./components/loginForm/LoginForm"
+import Notification from "./components/notification/Notification"
+import useNotification from "./components/hooks/useNotification"
 
-import useLocalStorageState from './components/hooks/useLocalStorageState'
+import useLocalStorageState from "./components/hooks/useLocalStorageState"
 
 const StyledApp = ({ children, theme }) => {
   return (
@@ -20,8 +20,8 @@ const StyledApp = ({ children, theme }) => {
 }
 
 const App = () => {
-  const [theme, setTheme] = useLocalStorageState('theme', 'dark')
-  const [user, setUser] = useLocalStorageState('loggedUser', null)
+  const [theme, setTheme] = useLocalStorageState("theme", "dark")
+  const [user, setUser] = useLocalStorageState("loggedUser", null)
   const [notification, setNotification] = useNotification()
 
   function switchTheme(passedTheme) {
@@ -29,7 +29,7 @@ const App = () => {
   }
 
   React.useEffect(() => {
-    setNotification({ type: 'error', message: 'ciaone' })
+    setNotification({ type: "error", message: "ciaone" })
   }, [])
 
   return (

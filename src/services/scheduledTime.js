@@ -1,6 +1,6 @@
-import axios from 'axios'
-import storage from '../utils/storage'
-const baseUrl = '/api/schedule'
+import axios from "axios"
+import storage from "../utils/storage"
+const baseUrl = "/api/schedule"
 
 const getConfig = () => {
   return {
