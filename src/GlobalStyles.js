@@ -5,8 +5,8 @@ import { createGlobalStyle, css } from 'styled-components'
 // to html
 export const GlobalStyles = createGlobalStyle`
 ${(props) => {
-    if (props.theme === 'light') {
-      return css`
+  if (props.theme === 'light') {
+    return css`
       html {
         --color-text: #595e77;
         --color-text-light: #c6c9df;
@@ -22,8 +22,8 @@ ${(props) => {
         --color-selected: #e8edff;
       }
     `
-    } else if (props.theme === 'dark') {
-      return css`
+  } else if (props.theme === 'dark') {
+    return css`
       html {
         --color-text: #595e77;
         --color-text-light: #3e4157;
@@ -39,8 +39,8 @@ ${(props) => {
         --color-selected: #3a3a51;
       }
     `
-    }
-  }}
+  }
+}}
 
 body {
     height: 100%;

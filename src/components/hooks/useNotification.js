@@ -9,35 +9,35 @@ const actionTypes = {
 
 function notificationReducer(state, { type, payload }) {
   switch (type) {
-  case actionTypes.error: {
-    console.log('error')
-    return {
-      type: actionTypes.error,
-      message: payload,
+    case actionTypes.error: {
+      console.log('error')
+      return {
+        type: actionTypes.error,
+        message: payload,
+      }
     }
-  }
-  case actionTypes.success: {
-    return {
-      type: actionTypes.success,
-      message: payload,
+    case actionTypes.success: {
+      return {
+        type: actionTypes.success,
+        message: payload,
+      }
     }
-  }
-  case actionTypes.warning: {
-    return {
-      type: actionTypes.warning,
-      message: payload,
+    case actionTypes.warning: {
+      return {
+        type: actionTypes.warning,
+        message: payload,
+      }
     }
-  }
-  case actionTypes.dismiss: {
-    return {
-      type: '',
-      message: '',
+    case actionTypes.dismiss: {
+      return {
+        type: '',
+        message: '',
+      }
     }
-  }
-  default: {
-    console.log(type)
-    throw new Error(`Unsupported type: ${type}`)
-  }
+    default: {
+      console.log(type)
+      throw new Error(`Unsupported type: ${type}`)
+    }
   }
 }
 

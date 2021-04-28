@@ -18,44 +18,44 @@ const actionTypes = {
   newDate: 'new_date',
 }
 
-function dateReducer(state, { type, initialState, payload }) {
+function dateReducer(state, { type, payload }) {
   switch (type) {
-  case actionTypes.nextMonth: {
-    const newDate = new Date(state.year, state.month + 1, state.day)
-    return {
-      date: newDate,
-      ...updateDate(newDate),
+    case actionTypes.nextMonth: {
+      const newDate = new Date(state.year, state.month + 1, state.day)
+      return {
+        date: newDate,
+        ...updateDate(newDate),
+      }
     }
-  }
-  case actionTypes.previousMonth: {
-    const newDate = new Date(state.year, state.month - 1, state.day)
-    return {
-      ...state,
-      date: newDate,
-      ...updateDate(newDate),
+    case actionTypes.previousMonth: {
+      const newDate = new Date(state.year, state.month - 1, state.day)
+      return {
+        ...state,
+        date: newDate,
+        ...updateDate(newDate),
+      }
     }
-  }
-  case actionTypes.update: {
-    return {
-      ...state,
-      day: state.date.getDate(),
-      month: state.date.getMonth(),
-      year: state.date.getFullYear(),
-      setStartday: getStartDayOfMonth(state.date),
+    case actionTypes.update: {
+      return {
+        ...state,
+        day: state.date.getDate(),
+        month: state.date.getMonth(),
+        year: state.date.getFullYear(),
+        setStartday: getStartDayOfMonth(state.date),
+      }
     }
-  }
-  case actionTypes.newDate: {
-    const { year, month, day } = payload
-    const newDate = new Date(year, month, day)
-    return {
-      ...state,
-      date: newDate,
-      ...updateDate(newDate),
+    case actionTypes.newDate: {
+      const { year, month, day } = payload
+      const newDate = new Date(year, month, day)
+      return {
+        ...state,
+        date: newDate,
+        ...updateDate(newDate),
+      }
     }
-  }
-  default: {
-    throw new Error(`Unsupported type: ${type}`)
-  }
+    default: {
+      throw new Error(`Unsupported type: ${type}`)
+    }
   }
 }
 

@@ -76,7 +76,6 @@ const BigCalendar = () => {
         </Names>
       </TableCell>,
     ]
-
     for (let i = 0; i < monthLenght - 1; i++) {
       if (!days) {
         children.push(
@@ -170,7 +169,7 @@ const BigCalendar = () => {
     let name = prompt('Insert name')
 
     if (name === null) return
-    if (name.length === 0) return alert('Name can\'t be empty')
+    if (name.length === 0) return alert("Name can't be empty")
 
     const newMember = {
       name,
