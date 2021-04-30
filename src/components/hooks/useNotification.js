@@ -1,58 +1,58 @@
 import React from "react"
 
 const actionTypes = {
-  error: "error",
-  success: "success",
-  warning: "warning",
-  dismiss: "dismiss",
+    error: "error",
+    success: "success",
+    warning: "warning",
+    dismiss: "dismiss",
 }
 
 function notificationReducer(state, { type, payload }) {
-  switch (type) {
+    switch (type) {
     case actionTypes.error: {
-      console.log("error")
-      return {
-        type: actionTypes.error,
-        message: payload,
-      }
+        console.log("error")
+        return {
+            type: actionTypes.error,
+            message: payload,
+        }
     }
     case actionTypes.success: {
-      return {
-        type: actionTypes.success,
-        message: payload,
-      }
+        return {
+            type: actionTypes.success,
+            message: payload,
+        }
     }
     case actionTypes.warning: {
-      return {
-        type: actionTypes.warning,
-        message: payload,
-      }
+        return {
+            type: actionTypes.warning,
+            message: payload,
+        }
     }
     case actionTypes.dismiss: {
-      return {
-        type: "",
-        message: "",
-      }
+        return {
+            type: "",
+            message: "",
+        }
     }
     default: {
-      throw new Error(`Unsupported type: ${type}`)
+        throw new Error(`Unsupported type: ${type}`)
     }
-  }
+    }
 }
 
 const initialState = {
-  type: "",
-  message: "",
+    type: "",
+    message: "",
 }
 
 function useNotification({ reducer = notificationReducer } = {}) {
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+    const [state, dispatch] = React.useReducer(reducer, initialState)
 
-  // const { type, message } = state
-  // console.log("state", state, "dispatch", dispatch)
-  // dispatch({ type, message })
+    // const { type, message } = state
+    // console.log("state", state, "dispatch", dispatch)
+    // dispatch({ type, message })
 
-  return [state, dispatch]
+    return [state, dispatch]
 }
 
 export default useNotification

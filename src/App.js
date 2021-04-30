@@ -9,33 +9,33 @@ import LoginForm from "./components/loginForm/LoginForm"
 import useLocalStorageState from "./components/hooks/useLocalStorageState"
 
 const StyledApp = ({ children, theme }) => {
-  return (
-    <>
-      <GlobalStyles theme={theme} />
-      {children}
-    </>
-  )
+    return (
+        <>
+            <GlobalStyles theme={theme} />
+            {children}
+        </>
+    )
 }
 
 const App = () => {
-  const [theme, setTheme] = useLocalStorageState("theme", "dark")
-  const [user, setUser] = useLocalStorageState("loggedUser", null)
+    const [theme, setTheme] = useLocalStorageState("theme", "dark")
+    const [user, setUser] = useLocalStorageState("loggedUser", null)
 
-  function switchTheme(passedTheme) {
-    return setTheme(passedTheme)
-  }
+    function switchTheme(passedTheme) {
+        return setTheme(passedTheme)
+    }
 
-  return (
-    <StyledApp theme={theme}>
-      {user === null ? (
-        <LoginForm setUser={setUser} />
-      ) : (
-        <>
-          <Header switchTheme={switchTheme} setUser={setUser} />
-          <Main />
-        </>
-      )}
-    </StyledApp>
-  )
+    return (
+        <StyledApp theme={theme}>
+            {user === null ? (
+                <LoginForm setUser={setUser} />
+            ) : (
+                <>
+                    <Header switchTheme={switchTheme} setUser={setUser} />
+                    <Main />
+                </>
+            )}
+        </StyledApp>
+    )
 }
 export default App

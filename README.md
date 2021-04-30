@@ -6,12 +6,12 @@ A simple app to manage workshift of people.
 
 The beta version will have the following functionality:
 
-- **Login** as a Team;
-- **Add/remove people** from the team directly in the calendar view;
-- The team composition can have different worker from month to month;
-- Manage workshifts just by clicking on the calendar;
-- An **overview of the scheduled workshifts** per worker in shift (or maybe hours);
-- Ligth and dark **themes**;
+-   **Login** as a Team;
+-   **Add/remove people** from the team directly in the calendar view;
+-   The team composition can have different worker from month to month;
+-   Manage workshifts just by clicking on the calendar;
+-   An **overview of the scheduled workshifts** per worker in shift (or maybe hours);
+-   Ligth and dark **themes**;
 
 ## Why My turn?
 
