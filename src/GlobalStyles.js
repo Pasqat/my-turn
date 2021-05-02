@@ -20,8 +20,10 @@ ${(props) => {
                 --color-header-background: #e8edff;
                 --color-primary: #4bbced;
                 --color-secondary: #fcd173;
-                --color-terziary: #eb7b52;
-                --color-green: #43b34f;
+                --color-blue1: #4bbced;
+                --color-yellow1: #fcd173;
+                --color-orange1: #eb7b52;
+                --color-green1: #43b34f;
                 --color-border: 2px solid rgb(240, 246, 247);
                 --color-selected: #e8edff;
             }
@@ -41,8 +43,10 @@ ${(props) => {
                 --color-header-background: #1d1d31;
                 --color-primary: #1099a2;
                 --color-secondary: #b19053;
-                --color-terziary: #b16550;
-                --color-green: #3c973f;
+                --color-blue1: #1099a2;
+                --color-yellow1: #b19053;
+                --color-orange1: #b16550;
+                --color-green1: #3c973f;
                 --color-border: 2px solid #37394e;
                 --color-selected: #3a3a51;
             }

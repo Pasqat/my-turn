@@ -1,5 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
+import { Tooltip, TooltipText } from "../tooltip/tooltip"
 
 const Legend = styled.div`
     padding: 20px;
@@ -24,24 +25,10 @@ const ItemDot = styled.div`
     border-radius: 50%;
 
     ${(props) => {
-        if (props.color === "primary") {
-            return css`
-                background-color: var(--color-primary);
-            `
-        } else if (props.color === "yellow") {
-            return css`
-                background-color: var(--color-secondary);
-            `
-        } else if (props.color === "green") {
-            return css`
-                background-color: var(--color-green);
-            `
-        } else {
-            return css`
-                background-color: var(--color-terziary);
-            `
-        }
-    }}
+        return css`
+            background-color: var(${props.color});
+        `
+    }}}
 `
 
 const AcceptedSchiftLegend = ({ acceptedShift }) => {
@@ -54,7 +41,7 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
             {acceptedShift.map((element) => (
                 <LegendItem key={element.shiftName}>
                     <ItemDot color={element.color} />
-                    {element.shiftName}
+                    <Tooltip>{element.shiftName}<TooltipText>{element.hours}</TooltipText></Tooltip>
                 </LegendItem>
             ))}
         </Legend>

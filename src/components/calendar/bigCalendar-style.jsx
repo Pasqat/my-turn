@@ -65,15 +65,15 @@ export const ButtonSecondary = styled.div`
     height: 30px;
     margin-left: 20px;
     padding: 10px 20px;
-    color: var(--color-green);
+    color: var(--color-green1);
     font-weight: bold;
     font-size: 1.3rem;
     border: var(--color-border);
     cursor: pointer;
     :hover {
-        background: var(--color-green);
+        background: var(--color-green1);
         color: #ededed;
-        border: 2px solid var(--color-green);
+        border: 2px solid var(--color-green1);
     }
 `
 export const Day = styled.div`
@@ -159,19 +159,19 @@ export const TableContent = styled.div`
         switch (props.workshift) {
         case workshiftItem.morning:
             return css`
-                    background-color: var(--color-primary);
+                    background-color: var(--color-blue1);
             `
         case workshiftItem.afternoon:
             return css`
-                background-color: var(--color-secondary);
+                background-color: var(--color-yellow1);
             `
         case workshiftItem.night:
             return css`
-                background-color: var(--color-terziary);
+                background-color: var(--color-orange1);
             `
         case workshiftItem.fullday:
             return css`
-                background-color: var(--color-green);
+                background-color: var(--color-green1);
             `
         default:
             throw new Error(
