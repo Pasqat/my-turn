@@ -28,7 +28,7 @@ const ItemDot = styled.div`
             return css`
                 background-color: var(--color-primary);
             `
-        } else if (props.color === "secondary") {
+        } else if (props.color === "yellow") {
             return css`
                 background-color: var(--color-secondary);
             `
@@ -44,25 +44,19 @@ const ItemDot = styled.div`
     }}
 `
 
-const AcceptedSchiftLegend = () => {
+const AcceptedSchiftLegend = ({ acceptedShift }) => {
+    console.log("on legend", acceptedShift)
+
+    if (!acceptedShift) return <LegendItem>Loading...</LegendItem>
+
     return (
         <Legend>
-            <LegendItem>
-                <ItemDot color="primary" />
-                Morning
-            </LegendItem>
-            <LegendItem>
-                <ItemDot color="secondary" />
-                Evening
-            </LegendItem>
-            <LegendItem>
-                <ItemDot color="terziary" />
-                Night
-            </LegendItem>
-            <LegendItem>
-                <ItemDot color="green" />
-                Full Day
-            </LegendItem>
+            {acceptedShift.map((element) => (
+                <LegendItem key={element.shiftName}>
+                    <ItemDot color={element.color} />
+                    {element.shiftName}
+                </LegendItem>
+            ))}
         </Legend>
     )
 }
