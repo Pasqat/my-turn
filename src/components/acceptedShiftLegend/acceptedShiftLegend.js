@@ -41,7 +41,10 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
             {acceptedShift.map((element) => (
                 <LegendItem key={element.shiftName}>
                     <ItemDot color={element.color} />
-                    <Tooltip>{element.shiftName}<TooltipText>{element.hours}</TooltipText></Tooltip>
+                    <Tooltip>
+                        {element.shiftName}
+                        <TooltipText>{element.hours}hrs</TooltipText>
+                    </Tooltip>
                 </LegendItem>
             ))}
         </Legend>

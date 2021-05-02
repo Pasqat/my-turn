@@ -7,17 +7,16 @@ export const Tooltip = styled.div`
 
 export const TooltipText = styled.span`
     visibility: hidden;
-    width: 2rem;
     background-color: var(--color-header-background);
-    color: #fff;
-    box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.2);
+    color: var(--color-primary);
+    font-weight: bold;
+    box-shadow: 0 0 1rem 1px rgba(0, 0, 0, 0.2);
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 5px 10px;
     position: absolute;
-    left: 0;
-    bottom: -2rem;
-    z-index: 1;
+    top: -2rem;
+    z-index: 9999;
 
     ${Tooltip}:hover & {
         visibility: visible;
