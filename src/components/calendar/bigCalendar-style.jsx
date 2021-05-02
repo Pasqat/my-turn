@@ -157,26 +157,26 @@ export const TableContent = styled.div`
             `
 
         switch (props.workshift) {
-            case workshiftItem.morning:
-                return css`
+        case workshiftItem.morning:
+            return css`
                     background-color: var(--color-primary);
-                `
-            case workshiftItem.afternoon:
-                return css`
-                    background-color: var(--color-secondary);
-                `
-            case workshiftItem.night:
-                return css`
-                    background-color: var(--color-terziary);
-                `
-            case workshiftItem.fullday:
-                return css`
-                    background-color: var(--color-green);
-                `
-            default:
-                throw new Error(
-                    `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
-                )
+            `
+        case workshiftItem.afternoon:
+            return css`
+                background-color: var(--color-secondary);
+            `
+        case workshiftItem.night:
+            return css`
+                background-color: var(--color-terziary);
+            `
+        case workshiftItem.fullday:
+            return css`
+                background-color: var(--color-green);
+            `
+        default:
+            throw new Error(
+                `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
+            )
         }
     }}
 `

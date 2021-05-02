@@ -19,13 +19,13 @@ const Spacer = styled.div`
     }
 `
 
-const Sidebar = () => {
+const Sidebar = ({ acceptedShift }) => {
+    console.log("on Sidebar", acceptedShift)
     return (
         <StyledSideBar>
             {/* <Calendar /> */}
-            {/* TODO the div is just a placeholder, REMOVE */}
             <Spacer />
-            <AcceptedSchiftLegend />
+            <AcceptedSchiftLegend acceptedShift={acceptedShift}/>
         </StyledSideBar>
     )
 }

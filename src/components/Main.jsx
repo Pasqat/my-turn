@@ -4,6 +4,8 @@ import styled from "styled-components"
 import SideBar from "./Sidebar"
 import BigCalendar from "./calendar/BigCalendar"
 
+import teamService from "../services/teams"
+
 const StyledMain = styled.div`
     width: 100vw;
     display: flex;
@@ -13,9 +15,17 @@ const StyledMain = styled.div`
 `
 
 const Main = () => {
+    const [acceptedShift, setAcceptedShift] = React.useState()
+
+    React.useEffect(() => {
+        teamService.getAcceptedShift().then(data => setAcceptedShift(data.acceptedShift))
+        console.log('acceptedShift', acceptedShift)
+    }, [setAcceptedShift])
+
+
     return (
         <StyledMain>
-            <SideBar />
+            <SideBar acceptedShift={acceptedShift}/>
             <BigCalendar
                 style={{
                     backgroundColor: "var(--gradient-background)",
