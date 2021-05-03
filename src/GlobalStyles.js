@@ -13,8 +13,8 @@ ${(props) => {
                 --color-background: #fff;
                 --gradient-background: linear-gradient(
                     to bottom,
-                    #fff,
-                    #eae4ff
+                    rgba(255, 255, 255, 0.15),
+                    rgb(234, 228, 255, 0.15)
                 );
                 --background-main: rgba(0, 0, 0, 0);
                 --color-header-background: #e8edff;
@@ -36,8 +36,8 @@ ${(props) => {
                 --color-background: #292b3f;
                 --gradient-background: linear-gradient(
                     to bottom,
-                    #292b3f,
-                    #332639
+                    rgb(41, 43, 63, 0.15),
+                    rgb(51, 38, 57, 0.15)
                 );
                 --background-main: rgba(71, 70, 91, 0.25);
                 --color-header-background: #1d1d31;

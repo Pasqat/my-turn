@@ -24,6 +24,7 @@ import { useMediaQuery } from "../hooks/useMediaQuery"
 
 import scheduleService from "../../services/scheduledTime"
 import { coloredDiv, workshiftItem } from "../utils/calendar"
+import AddNewRowModal from "./addNewRowModal"
 
 const acceptedShift = [
     workshiftItem.morning,
@@ -35,8 +36,6 @@ const acceptedShift = [
 
 const BigCalendar = () => {
     // const today = new Date();
-    const [isEditable, setIsEditable] = React.useState(false)
-    let isPageWide = useMediaQuery("(min-width: 800px)")
     const {
         isToday,
         nextMonth,
@@ -51,7 +50,9 @@ const BigCalendar = () => {
     } = useDate() //custom hook
 
     const [turns, setTurns] = useLocalStorageState("turns", [])
-    // const [turns, setTurns] = React.useState([]);
+    const [isEditable, setIsEditable] = React.useState(false)
+    const [isOpen, setIsOpen] = React.useState(false)
+    let isPageWide = useMediaQuery("(min-width: 800px)")
 
     React.useEffect(() => {
         scheduleService.getMonth(year, month).then((data) => {
@@ -172,22 +173,22 @@ const BigCalendar = () => {
         setTurns([...turns])
     }
 
-    const addNewRow = async () => {
-        let name = prompt("Insert name")
+    // const addNewRow = async () => {
+    //     let name = prompt("Insert name")
 
-        if (name === null) return
-        if (name.length === 0) return alert("Name can't be empty")
+    //     if (name === null) return
+    //     if (name.length === 0) return alert("Name can't be empty")
 
-        const newMember = {
-            name,
-        }
-        const addedMember = await scheduleService.addNewMember(
-            newMember,
-            year,
-            month
-        )
-        setTurns([...turns, addedMember])
-    }
+    //     const newMember = {
+    //         name,
+    //     }
+    //     const addedMember = await scheduleService.addNewMember(
+    //         newMember,
+    //         year,
+    //         month
+    //     )
+    //     setTurns([...turns, addedMember])
+    // }
 
     function removeRow(idToDelete, name) {
         let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete)
@@ -304,7 +305,7 @@ const BigCalendar = () => {
                     }}
                 >
                     <ButtonPrimary
-                        onClick={() => addNewRow()}
+                        onClick={() => setIsOpen(!isOpen)}
                         isEditable={isEditable}
                     >
                         Add new
@@ -313,6 +314,16 @@ const BigCalendar = () => {
                         {isEditable ? "Done" : "Edit"}
                     </ButtonSecondary>
                 </div>
+                {isOpen ? (
+                    <AddNewRowModal
+                        setTurns={setTurns}
+                        turns={turns}
+                        year={year}
+                        month={month}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                    />
+                ) : null}
             </Frame>
         )
     }
@@ -336,7 +347,7 @@ const BigCalendar = () => {
                 }}
             >
                 <ButtonPrimary
-                    onClick={() => addNewRow()}
+                    onClick={() => setIsOpen(!isOpen)}
                     isEditable={isEditable}
                 >
                     Add new
@@ -356,7 +367,7 @@ const BigCalendar = () => {
                 }}
             >
                 <ButtonPrimary
-                    onClick={() => addNewRow()}
+                    onClick={() => setIsOpen(!isOpen)}
                     isEditable={isEditable}
                 >
                     Add new
@@ -365,6 +376,16 @@ const BigCalendar = () => {
                     {isEditable ? "Done" : "Edit"}
                 </ButtonSecondary>
             </div>
+            {isOpen ? (
+                <AddNewRowModal
+                    setTurns={setTurns}
+                    turns={turns}
+                    year={year}
+                    month={month}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                />
+            ) : null}
         </Frame>
     )
 }

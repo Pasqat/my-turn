@@ -2,6 +2,17 @@ import React from "react"
 import styled, { css } from "styled-components"
 import { Tooltip, TooltipText } from "../tooltip/tooltip"
 import teamService from "../../services/teams"
+import {
+    ModalForm,
+    ModalInput,
+    ModalButtonAdd,
+    ModalContainer,
+    ModalBackground,
+    ModalButtonClose,
+    ModalSelectInput,
+} from "../modal/Modal.styles"
+
+import { useMediaQuery } from "../hooks/useMediaQuery"
 
 const Legend = styled.div`
     padding: 20px;
@@ -15,6 +26,7 @@ const Legend = styled.div`
 `
 
 const LegendItem = styled.div`
+    font-weight: bold;
     display: flex;
     align-items: center;
     padding-bottom: 1rem;
@@ -35,7 +47,7 @@ const ItemDot = styled.div`
 
 const AddItem = styled.div`
     width: 100%;
-    background: var(--color-header-background);
+    background: var(--color-selected);
     padding: 0px 10px;
     font-weight: bold;
     font-size: 1.8rem;
@@ -43,90 +55,14 @@ const AddItem = styled.div`
     text-align: center;
     cursor: pointer;
 `
-
-const AddItemContainer = styled.div`
-    background-color: var(--color-header-background);
-    padding: 1rem;
-    border-radius: 5px;
-    position: absolute;
-    display: flex;
-    z-index: 200;
-    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.3);
-    -o-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.3);
-    -ms-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.3);
-`
-
-const AddItemForm = styled.form`
-    display: flex;
-    flex-direction: column;
-`
-
-const AddItemInput = styled.input`
-    width: 100%;
-    padding: 0 1rem;
-    display: block;
-    background: 0 0;
-    color: var(--color-text);
-    line-height: 1.2;
-    outline: none;
-    border: none;
-    border-bottom: var(--color-border);
-    font-size: 1rem;
-    margin-bottom: 1rem;
-`
-
-const AddItemSelect = styled.select`
-    width: 100%;
-    padding: 0 1rem;
-    display: block;
-    background: 0 0;
-    color: var(--color-text);
-    line-height: 1.2;
-    outline: none;
-    border: none;
-    border-bottom: var(--color-border);
-    font-size: 1rem;
-    margin-bottom: 1rem;
-`
-
-const Button = styled.button`
-    background: 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 1.2rem;
-    width: 40%;
-    font-size: 1rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin: 0 15px;
-    font-weight: bold;
-    transition: all 200ms;
-    border: none;
-`
-
-const ButtonAdd = styled(Button)`
-    color: var(--color-green1);
-    :hover {
-        color: var(--color-primary);
-    }
-`
-
-const ButtonClose = styled(Button)`
-    color: var(--color-text);
-    :hover {
-        color: var(--color-secondary);
-    }
-`
-
 const AcceptedSchiftLegend = ({ acceptedShift }) => {
     const [state, setState] = React.useState()
     const [shiftName, setShiftName] = React.useState("")
     const [color, setColor] = React.useState("--color-blue1")
     const [hours, setHours] = React.useState("")
     const [isOpen, setIsOpen] = React.useState(false)
+
+    let isPageWide = useMediaQuery("(min-width: 800px)")
 
     React.useEffect(() => {
         if (!acceptedShift) return
@@ -136,6 +72,9 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
     const handleSubmitNewShift = async (event) => {
         event.preventDefault()
 
+        if (shiftName.length <= 0 || color.length <= 0 || hours === 0)
+            return alert("You need to choose a name a color and a duration")
+
         const newAcceptedShift = {
             shiftName,
             color,
@@ -144,6 +83,7 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
 
         await teamService.addAcceptedShift([...state, newAcceptedShift])
         setState(state.concat(newAcceptedShift))
+        setIsOpen(!isOpen)
     }
 
     if (!state) return <LegendItem>Loading...</LegendItem>
@@ -157,7 +97,14 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
                     <ItemDot color={element.color} />
                     <Tooltip>
                         {element.shiftName}
-                        <TooltipText>{element.hours}hrs</TooltipText>
+                        {isPageWide ? (
+                            <TooltipText>{element.hours}h</TooltipText>
+                        ) : (
+                            <span style={{ fontWeight: "initial" }}>
+                                {" "}
+                                {element.hours}h
+                            </span>
+                        )}
                     </Tooltip>
                 </LegendItem>
             ))}
@@ -167,53 +114,55 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
                 </AddItem>
             ) : null}
             {isOpen ? (
-                <AddItemContainer>
-                    <AddItemForm onSubmit={handleSubmitNewShift}>
-                        <AddItemInput
-                            type="text"
-                            name="shiftName"
-                            value={shiftName}
-                            placeholder="shift name"
-                            onChange={({ target }) =>
-                                setShiftName(target.value)
-                            }
-                        />
-                        <AddItemSelect
-                            value={color}
-                            onChange={({ target }) => setColor(target.value)}
-                            required
-                        >
-                            <option value="--color-blue1">Blue</option>
-                            <option value="--color-yellow1">Yellow</option>
-                            <option value="--color-orange1">Orange</option>
-                            <option value="--color-green1">Green</option>
-                            <AddItemInput
+                <ModalBackground>
+                    <ModalContainer>
+                        <ModalForm onSubmit={handleSubmitNewShift}>
+                            <ModalInput
                                 type="text"
-                                name="color"
+                                name="shiftName"
+                                value={shiftName}
+                                placeholder="shift name"
+                                onChange={({ target }) =>
+                                    setShiftName(target.value)
+                                }
+                            />
+                            <ModalSelectInput
                                 value={color}
-                                placeholder="color"
                                 onChange={({ target }) =>
                                     setColor(target.value)
                                 }
+                                required
+                                placeholder="select color"
+                            >
+                                <option value="--color-blue1">Blue</option>
+                                <option value="--color-yellow1">Yellow</option>
+                                <option value="--color-orange1">Orange</option>
+                                <option value="--color-green1">Green</option>
+                            </ModalSelectInput>
+                            <ModalInput
+                                type="number"
+                                name="hours"
+                                min="0"
+                                max="24"
+                                value={hours}
+                                placeholder="duration in hours"
+                                onChange={({ target }) =>
+                                    setHours(target.value)
+                                }
                             />
-                        </AddItemSelect>
-                        <AddItemInput
-                            type="number"
-                            name="hours"
-                            min="0"
-                            max="24"
-                            value={hours}
-                            placeholder="hours"
-                            onChange={({ target }) => setHours(target.value)}
-                        />
-                        <div style={{ display: "flex" }}>
-                            <ButtonClose onClick={() => setIsOpen(!isOpen)}>
-                                close
-                            </ButtonClose>
-                            <ButtonAdd type="submit">add</ButtonAdd>
-                        </div>
-                    </AddItemForm>
-                </AddItemContainer>
+                            <div style={{ display: "flex" }}>
+                                <ModalButtonClose
+                                    onClick={() => setIsOpen(!isOpen)}
+                                >
+                                    close
+                                </ModalButtonClose>
+                                <ModalButtonAdd type="submit">
+                                    add
+                                </ModalButtonAdd>
+                            </div>
+                        </ModalForm>
+                    </ModalContainer>
+                </ModalBackground>
             ) : null}
         </Legend>
     )

@@ -1,5 +1,4 @@
-import React from "react"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 export const Tooltip = styled.div`
     position: relative;
@@ -10,7 +9,7 @@ export const TooltipText = styled.span`
     background-color: var(--color-header-background);
     color: var(--color-primary);
     font-weight: bold;
-    box-shadow: 0 0 1rem 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 1px rgb(0 0 0 / 30%);
     text-align: center;
     border-radius: 6px;
     padding: 5px 10px;
