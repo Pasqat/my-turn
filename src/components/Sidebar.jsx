@@ -20,7 +20,6 @@ const Spacer = styled.div`
 `
 
 const Sidebar = ({ acceptedShift }) => {
-    console.log("on Sidebar", acceptedShift)
     return (
         <StyledSideBar>
             {/* <Calendar /> */}

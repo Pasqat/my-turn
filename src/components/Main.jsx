@@ -18,8 +18,9 @@ const Main = () => {
     const [acceptedShift, setAcceptedShift] = React.useState()
 
     React.useEffect(() => {
-        teamService.getAcceptedShift().then(data => setAcceptedShift(data.acceptedShift))
-        console.log('acceptedShift', acceptedShift)
+        teamService.getAcceptedShift().then(data => {
+            return setAcceptedShift(data.acceptedShift)
+        })
     }, [setAcceptedShift])
 
 
