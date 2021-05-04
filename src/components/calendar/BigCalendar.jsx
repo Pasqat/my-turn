@@ -10,6 +10,7 @@ import {
     Table,
     TableCell,
     TableCellHeader,
+    TableContent,
     TableHead,
     TableRow,
     Names,
@@ -23,18 +24,10 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 import { useMediaQuery } from "../hooks/useMediaQuery"
 
 import scheduleService from "../../services/scheduledTime"
-import { coloredDiv, workshiftItem } from "../utils/calendar"
+import { coloredDiv } from "../utils/calendar"
 import AddNewRowModal from "./addNewRowModal"
 
-const acceptedShift = [
-    workshiftItem.morning,
-    workshiftItem.afternoon,
-    workshiftItem.night,
-    workshiftItem.fullday,
-    "",
-]
-
-const BigCalendar = () => {
+const BigCalendar = ({ acceptedShift }) => {
     // const today = new Date();
     const {
         isToday,
@@ -47,7 +40,7 @@ const BigCalendar = () => {
         month,
         year,
         // startDay
-    } = useDate() //custom hook
+    } = useDate()
 
     const [turns, setTurns] = useLocalStorageState("turns", [])
     const [isEditable, setIsEditable] = React.useState(false)
@@ -92,7 +85,7 @@ const BigCalendar = () => {
                         key={_id + i}
                         onClick={() => cycleThrougShifts(_id, i, days[i])}
                     >
-                        {coloredDiv(days[i])}
+                        {coloredDiv(days[i], acceptedShift)}
                     </TableCell>
                 )
             } else {
@@ -132,7 +125,7 @@ const BigCalendar = () => {
                             cycleThrougShifts(worker._id, d, worker.days[d])
                         }
                     >
-                        {coloredDiv(worker.days[d])}
+                        {coloredDiv(worker.days[d], acceptedShift)}
                     </TableCell>
                 )
             } else {
@@ -149,46 +142,36 @@ const BigCalendar = () => {
         return children
     }
 
+    // need to take the shiftNames array and add an empty string to have the
+    // empty cell onto the calendar
+    let shiftNames = []
+    if (acceptedShift)
+        shiftNames = acceptedShift.map((shift) => shift.shiftName)
+    shiftNames = shiftNames.concat("")
+
     const cycleThrougShifts = (workerId, scheduleIndex, schedule) => {
         if (!isEditable) return
-        const acceptedShiftIndex = acceptedShift.findIndex(
+        const acceptedShiftIndex = shiftNames.findIndex(
             (shift) => shift === schedule
         )
 
         let index = acceptedShiftIndex
 
         // -1 so when update newSchedule the index became 0
-        if (acceptedShiftIndex === acceptedShift.length - 1) {
+        if (acceptedShiftIndex === shiftNames.length - 1) {
             index = -1
         }
 
-        let newSchedule = turns.find((worker) => worker._id === workerId).days
+        let newScheduledDays = turns.find((worker) => worker._id === workerId)
+            .days
 
-        if (newSchedule === null) newSchedule = []
+        if (newScheduledDays === null) newScheduledDays = []
 
-        newSchedule[scheduleIndex] = acceptedShift[index + 1]
-
-        scheduleService.update(year, workerId, newSchedule)
+        newScheduledDays[scheduleIndex] = shiftNames[index + 1]
+        scheduleService.update(year, workerId, newScheduledDays)
 
         setTurns([...turns])
     }
-
-    // const addNewRow = async () => {
-    //     let name = prompt("Insert name")
-
-    //     if (name === null) return
-    //     if (name.length === 0) return alert("Name can't be empty")
-
-    //     const newMember = {
-    //         name,
-    //     }
-    //     const addedMember = await scheduleService.addNewMember(
-    //         newMember,
-    //         year,
-    //         month
-    //     )
-    //     setTurns([...turns, addedMember])
-    // }
 
     function removeRow(idToDelete, name) {
         let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete)

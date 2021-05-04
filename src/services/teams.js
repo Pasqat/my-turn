@@ -13,29 +13,25 @@ const register = async (credential) => {
 }
 
 const getAcceptedShift = async () => {
-    const response = await axios.get(`${baseUrl}/accepted-shift/`, storage.getAxiosConfig())
+    const response = await axios.get(
+        `${baseUrl}/accepted-shift/`,
+        storage.getAxiosConfig()
+    )
     return response.data
 }
 
 const addAcceptedShift = async (newAcceptedShift) => {
-    const response = await axios.put(`${baseUrl}/accepted-shift/`, newAcceptedShift, storage.getAxiosConfig())
+    const response = await axios.put(
+        `${baseUrl}/accepted-shift/`,
+        newAcceptedShift,
+        storage.getAxiosConfig()
+    )
     return response.data
 }
-
-// const update = (id, newObject) => {
-//   // TODO this need to be done
-//   const request = axios.put(`${baseUrl}/${id}`, newObject);
-//   return request.then((response) => response.data);
-// };
-
-// const removeTeam = (id) => {
-//   const request = axios.delete(`${baseUrl}/${id}`);
-//   return request.then((response) => response.data);
-// };
 
 export default {
     getAll,
     register,
     getAcceptedShift,
-    addAcceptedShift
+    addAcceptedShift,
 }

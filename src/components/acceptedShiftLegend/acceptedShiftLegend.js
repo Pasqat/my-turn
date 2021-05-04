@@ -56,7 +56,7 @@ const AddItem = styled.div`
     cursor: pointer;
 `
 const AcceptedSchiftLegend = ({ acceptedShift }) => {
-    const [state, setState] = React.useState()
+    // const [state, setState] = React.useState()
     const [shiftName, setShiftName] = React.useState("")
     const [color, setColor] = React.useState("--color-blue1")
     const [hours, setHours] = React.useState("")
@@ -64,10 +64,10 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
 
     let isPageWide = useMediaQuery("(min-width: 800px)")
 
-    React.useEffect(() => {
-        if (!acceptedShift) return
-        setState(acceptedShift)
-    }, [acceptedShift])
+    // React.useEffect(() => {
+    //     if (!acceptedShift) return
+    //     setState(acceptedShift)
+    // }, [acceptedShift])
 
     const handleSubmitNewShift = async (event) => {
         event.preventDefault()
@@ -81,18 +81,18 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
             hours,
         }
 
-        await teamService.addAcceptedShift([...state, newAcceptedShift])
-        setState(state.concat(newAcceptedShift))
+        await teamService.addAcceptedShift([...acceptedShift, newAcceptedShift])
+        // setState(state.concat(newAcceptedShift))
         setIsOpen(!isOpen)
     }
 
-    if (!state) return <LegendItem>Loading...</LegendItem>
+    if (!acceptedShift) return <LegendItem>Loading...</LegendItem>
 
-    const maxAcceptedShift = state.length === 8
+    const maxAcceptedShift = acceptedShift.length === 8
 
     return (
         <Legend>
-            {state.map((element) => (
+            {acceptedShift.map((element) => (
                 <LegendItem key={element.shiftName}>
                     <ItemDot color={element.color} />
                     <Tooltip>

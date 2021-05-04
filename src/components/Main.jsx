@@ -18,20 +18,20 @@ const Main = () => {
     const [acceptedShift, setAcceptedShift] = React.useState()
 
     React.useEffect(() => {
-        teamService.getAcceptedShift().then(data => {
+        teamService.getAcceptedShift().then((data) => {
             return setAcceptedShift(data.acceptedShift)
         })
-    }, [setAcceptedShift])
-
+    }, [setAcceptedShift, acceptedShift])
 
     return (
         <StyledMain>
-            <SideBar acceptedShift={acceptedShift}/>
+            <SideBar acceptedShift={acceptedShift} />
             <BigCalendar
                 style={{
                     backgroundColor: "var(--gradient-background)",
                     height: "100%",
                 }}
+                acceptedShift={acceptedShift}
             />
         </StyledMain>
     )

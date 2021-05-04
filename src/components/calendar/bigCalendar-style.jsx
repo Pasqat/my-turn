@@ -151,34 +151,10 @@ export const TableContent = styled.div`
     background-color: yellow;
     cursor: pointer;
     ${(props) => {
-        props.isToday &&
-            css`
-                background-color: var(--color-selected);
-            `
-
-        switch (props.workshift) {
-        case workshiftItem.morning:
-            return css`
-                    background-color: var(--color-blue1);
-            `
-        case workshiftItem.afternoon:
-            return css`
-                background-color: var(--color-yellow1);
-            `
-        case workshiftItem.night:
-            return css`
-                background-color: var(--color-orange1);
-            `
-        case workshiftItem.fullday:
-            return css`
-                background-color: var(--color-green1);
-            `
-        default:
-            throw new Error(
-                `workshift must be one of this: 'morning', 'afternoon', 'night'. Use \`${workshiftItem}\``
-            )
-        }
-    }}
+        return css`
+            background-color: var(${props.color});
+        `
+    }}}
 `
 
 export const Names = styled.div`
