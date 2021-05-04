@@ -21,11 +21,14 @@ const Main = () => {
         teamService.getAcceptedShift().then((data) => {
             return setAcceptedShift(data.acceptedShift)
         })
-    }, [setAcceptedShift, acceptedShift])
+    }, [setAcceptedShift])
 
     return (
         <StyledMain>
-            <SideBar acceptedShift={acceptedShift} />
+            <SideBar
+                acceptedShift={acceptedShift}
+                setAcceptedShift={setAcceptedShift}
+            />
             <BigCalendar
                 style={{
                     backgroundColor: "var(--gradient-background)",

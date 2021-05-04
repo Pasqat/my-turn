@@ -55,8 +55,7 @@ const AddItem = styled.div`
     text-align: center;
     cursor: pointer;
 `
-const AcceptedSchiftLegend = ({ acceptedShift }) => {
-    // const [state, setState] = React.useState()
+const AcceptedSchiftLegend = ({ acceptedShift, setAcceptedShift }) => {
     const [shiftName, setShiftName] = React.useState("")
     const [color, setColor] = React.useState("--color-blue1")
     const [hours, setHours] = React.useState("")
@@ -64,16 +63,18 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
 
     let isPageWide = useMediaQuery("(min-width: 800px)")
 
-    // React.useEffect(() => {
-    //     if (!acceptedShift) return
-    //     setState(acceptedShift)
-    // }, [acceptedShift])
-
     const handleSubmitNewShift = async (event) => {
         event.preventDefault()
 
         if (shiftName.length <= 0 || color.length <= 0 || hours === 0)
             return alert("You need to choose a name a color and a duration")
+
+        if (
+            acceptedShift.findIndex(
+                (element) => element.shiftName === shiftName
+            ) !== -1
+        )
+            return alert("name must be unique")
 
         const newAcceptedShift = {
             shiftName,
@@ -81,8 +82,12 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
             hours,
         }
 
-        await teamService.addAcceptedShift([...acceptedShift, newAcceptedShift])
-        // setState(state.concat(newAcceptedShift))
+        const newObject = await teamService.addAcceptedShift([
+            ...acceptedShift,
+            newAcceptedShift,
+        ])
+        console.log(newObject)
+        setAcceptedShift(newObject.acceptedShift)
         setIsOpen(!isOpen)
     }
 
@@ -92,22 +97,25 @@ const AcceptedSchiftLegend = ({ acceptedShift }) => {
 
     return (
         <Legend>
-            {acceptedShift.map((element) => (
-                <LegendItem key={element.shiftName}>
-                    <ItemDot color={element.color} />
-                    <Tooltip>
-                        {element.shiftName}
-                        {isPageWide ? (
-                            <TooltipText>{element.hours}h</TooltipText>
-                        ) : (
-                            <span style={{ fontWeight: "initial" }}>
-                                {" "}
-                                {element.hours}h
-                            </span>
-                        )}
-                    </Tooltip>
-                </LegendItem>
-            ))}
+            {acceptedShift.map((element) => {
+                console.log(element._id)
+                return (
+                    <LegendItem key={element._id}>
+                        <ItemDot color={element.color} />
+                        <Tooltip>
+                            {element.shiftName}
+                            {isPageWide ? (
+                                <TooltipText>{element.hours}h</TooltipText>
+                            ) : (
+                                <span style={{ fontWeight: "initial" }}>
+                                    {" "}
+                                    {element.hours}h
+                                </span>
+                            )}
+                        </Tooltip>
+                    </LegendItem>
+                )
+            })}
             {!maxAcceptedShift ? (
                 <AddItem style={{}} onClick={() => setIsOpen(!isOpen)}>
                     +
