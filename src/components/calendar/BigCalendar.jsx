@@ -10,7 +10,6 @@ import {
     Table,
     TableCell,
     TableCellHeader,
-    TableContent,
     TableHead,
     TableRow,
     Names,
