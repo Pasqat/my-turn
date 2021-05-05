@@ -1,6 +1,6 @@
 # My Turn 📅
 
-[live](https://have-to-work.herokuapp.com/)
+[See the live here](https://have-to-work.herokuapp.com/)
 
 A simple app to manage workshift of people.
 

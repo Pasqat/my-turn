@@ -48,9 +48,12 @@ const BigCalendar = ({ acceptedShift }) => {
 
     React.useEffect(() => {
         scheduleService.getMonth(year, month).then((data) => {
+            console.log("data", data)
             setTurns(data)
         })
     }, [year, month, setTurns])
+
+    if (!turns) return <div>Loading</div>
 
     const putValuesToTable = (worker, monthLenght) => {
         const { name, days, _id } = worker
