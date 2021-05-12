@@ -10,9 +10,9 @@ import {
     ModalBackground,
     ModalButtonClose,
     ModalSelectInput,
-} from "../modal/Modal.styles"
+} from "../modal/modal.styles"
 
-import { useMediaQuery } from "../hooks/useMediaQuery"
+import { useMediaQuery } from "../../hooks/useMediaQuery"
 
 const Legend = styled.div`
     padding: 20px;

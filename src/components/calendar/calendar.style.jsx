@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components"
-import { workshiftItem } from "../utils/calendar"
 
 export const Frame = styled.div`
     display: flex;
@@ -13,7 +12,7 @@ export const Frame = styled.div`
     }
 `
 
-export const Calendar = styled.div`
+export const Container = styled.div`
     @media (max-width: 800px) {
         overflow-x: scroll;
     }

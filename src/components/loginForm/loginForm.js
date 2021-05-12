@@ -2,7 +2,7 @@ import React from "react"
 import loginService from "../../services/login"
 import teamService from "../../services/teams"
 import storage from "../../utils/storage"
-import Notification from "../notification/Notification"
+import Notification from "../notification/notification"
 import {
     Input,
     ContainerLogin,
@@ -14,7 +14,7 @@ import {
     TextCenter,
     Link,
     Button,
-} from "./loginForm-styles"
+} from "./loginForm.styles"
 
 const LoginForm = ({ setUser }) => {
     const [teamName, setTeamName] = React.useState("")

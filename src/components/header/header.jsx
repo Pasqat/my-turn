@@ -2,8 +2,8 @@ import React from "react"
 import { useEffect } from "react"
 import styled from "styled-components"
 
-import useLocalStorageState from "../hooks/useLocalStorageState"
-import { Sun, Moon } from "./ThemeModeIcon"
+import useLocalStorageState from "../../hooks/useLocalStorageState"
+import { Sun, Moon } from "./themeModeIcon"
 
 const StyledHeader = styled.div`
     display: flex;

@@ -6,7 +6,7 @@ import {
     ModalInput,
     ModalButtonAdd,
     ModalButtonClose,
-} from "../modal/Modal.styles"
+} from "../modal/modal.styles"
 import scheduleService from "../../services/scheduledTime"
 
 const AddNewRowModal = ({

@@ -1,5 +1,5 @@
 import React from "react"
-import { TableContent } from "../calendar/bigCalendar-style"
+import { TableContent } from "../calendar/calendar.style"
 
 export const coloredDiv = (turn, acceptedShift) => {
     if (!acceptedShift) return <TableContent />

@@ -1,7 +1,7 @@
 import React from "react"
 import {
     Frame,
-    Calendar,
+    Container,
     Header,
     Button,
     ButtonPrimary,
@@ -14,19 +14,19 @@ import {
     TableRow,
     Names,
     DeleteButton,
-} from "./bigCalendar-style"
+} from "./calendar.style"
 
-import { MONTHS } from "../hooks/useDate/Constants"
+import { MONTHS } from "../../hooks/useDate/Constants"
 
-import useDate from "../hooks/useDate/useDate"
-import useLocalStorageState from "../hooks/useLocalStorageState"
-import { useMediaQuery } from "../hooks/useMediaQuery"
+import useDate from "../../hooks/useDate/useDate"
+import useLocalStorageState from "../../hooks/useLocalStorageState"
+import { useMediaQuery } from "../../hooks/useMediaQuery"
 
 import scheduleService from "../../services/scheduledTime"
 import { coloredDiv } from "../utils/calendar"
 import AddNewRowModal from "./addNewRowModal"
 
-const BigCalendar = ({ acceptedShift }) => {
+const Calendar = ({ acceptedShift }) => {
     // const today = new Date();
     const {
         isToday,
@@ -246,7 +246,7 @@ const BigCalendar = ({ acceptedShift }) => {
                     </div>
                     <Button onClick={() => nextMonth()}>&gt;</Button>
                 </Header>
-                <Calendar>
+                <Container>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -279,7 +279,7 @@ const BigCalendar = ({ acceptedShift }) => {
                             })}
                         </tbody>
                     </Table>
-                </Calendar>
+                </Container>
                 <div
                     style={{
                         display: "flex",
@@ -341,7 +341,7 @@ const BigCalendar = ({ acceptedShift }) => {
                     {isEditable ? "Done" : "Edit"}
                 </ButtonSecondary>
             </div>
-            <Calendar>{renderMobileTable()}</Calendar>
+            <Container>{renderMobileTable()}</Container>
             <div
                 style={{
                     display: "flex",
@@ -375,4 +375,4 @@ const BigCalendar = ({ acceptedShift }) => {
     )
 }
 
-export default BigCalendar
+export default Calendar

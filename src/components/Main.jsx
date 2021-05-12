@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import SideBar from "./Sidebar"
-import BigCalendar from "./calendar/BigCalendar"
+import Calendar from "./calendar/calendar"
 
 import teamService from "../services/teams"
 
@@ -29,7 +29,7 @@ const Main = () => {
                 acceptedShift={acceptedShift}
                 setAcceptedShift={setAcceptedShift}
             />
-            <BigCalendar
+            <Calendar
                 style={{
                     backgroundColor: "var(--gradient-background)",
                     height: "100%",

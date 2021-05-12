@@ -2,11 +2,11 @@ import React from "react"
 import "./index.css"
 import { GlobalStyles } from "./GlobalStyles"
 
-import Header from "./components/Header/Header"
+import Header from "./components/header/header"
 import Main from "./components/Main"
-import LoginForm from "./components/loginForm/LoginForm"
+import LoginForm from "./components/loginForm/loginForm"
 
-import useLocalStorageState from "./components/hooks/useLocalStorageState"
+import useLocalStorageState from "./hooks/useLocalStorageState"
 
 const StyledApp = ({ children, theme }) => {
     return (
