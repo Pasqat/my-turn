@@ -8,16 +8,11 @@ import {
     ModalButtonClose,
 } from "../modal/modal.styles"
 import scheduleService from "../../services/scheduledTime"
+import { ComponentContext } from "../../context/turnsContext"
 
-const AddNewRowModal = ({
-    setTurns,
-    turns,
-    year,
-    month,
-    isOpen,
-    setIsOpen,
-}) => {
+const AddNewRowModal = ({ year, month, isOpen, setIsOpen }) => {
     const [name, setName] = React.useState("")
+    const { state, dispatch } = React.useContext(ComponentContext)
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -33,7 +28,7 @@ const AddNewRowModal = ({
             year,
             month
         )
-        setTurns([...turns, addedMember])
+        dispatch({ type: "ADD_NEW_MEMBER", payload: addedMember })
         setIsOpen(!isOpen)
     }
 

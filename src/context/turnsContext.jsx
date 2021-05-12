@@ -2,10 +2,10 @@ import React, { useReducer } from "react"
 
 const reducer = (state, action) => {
     switch (action.type) {
-    case "IS_EDITABLE":
+    case "TOGGLE_EDITABLE":
         return {
             ...state,
-            isEditable: true,
+            isEditable: !state.isEditable,
         }
     case "IS_NOT_EDITABLE":
         return {
@@ -17,7 +17,11 @@ const reducer = (state, action) => {
             ...state,
             turns: action.payload
         }
-    // ... you can image other cases
+    case "ADD_NEW_MEMBER":
+        return {
+            ...state,
+            turns: [...state.turns, action.payload]
+        }
     default:
         return state
     }

@@ -19,44 +19,37 @@ import {
 import { MONTHS } from "../../hooks/useDate/Constants"
 
 import useDate from "../../hooks/useDate/useDate"
-import useLocalStorageState from "../../hooks/useLocalStorageState"
+// import useLocalStorageState from "../../hooks/useLocalStorageState"
 import { useMediaQuery } from "../../hooks/useMediaQuery"
 import { ComponentContext } from "../../context/turnsContext.jsx"
 
 import scheduleService from "../../services/scheduledTime"
 import { coloredDiv } from "../utils/calendar"
 import AddNewRowModal from "./addNewRowModal"
+import DesktopTable from "./calendar-desktopTable.jsx"
 
 const Calendar = ({ acceptedShift }) => {
-    // const today = new Date();
     const {
-        isToday,
         nextMonth,
         previousMonth,
-        // newDate,
         days,
-        // date,
         day,
         month,
         year,
-        // startDay
     } = useDate()
 
-    const [turns, setTurns] = useLocalStorageState("turns", [])
-    // const {state, dispatch} = React.useContext(ComponentContext)
-    const [isEditable, setIsEditable] = React.useState(false)
+    const { state, dispatch } = React.useContext(ComponentContext)
     // should isOpen be in Context?
     const [isOpen, setIsOpen] = React.useState(false)
     let isPageWide = useMediaQuery("(min-width: 800px)")
 
-    React.useEffect(() => {
-        scheduleService.getMonth(year, month).then((data) => {
-            console.log("data", data)
-            setTurns(data)
-        })
-    }, [year, month, setTurns])
+    // React.useEffect(() => {
+    //     scheduleService.getMonth(year, month).then((data) => {
+    //         dispatch({ type: "SET_TURNS", payload: data })
+    //     })
+    // }, [year, month])
 
-    if (!turns) return <div>Loading</div>
+    if (!state.turns) return <div>Loading</div>
 
     const putValuesToTable = (worker, monthLenght) => {
         const { name, days, _id } = worker
@@ -112,7 +105,7 @@ const Calendar = ({ acceptedShift }) => {
             </TableCell>,
         ]
 
-        for (let worker of turns) {
+        for (let worker of state.turns) {
             if (!worker.days) {
                 children.push(
                     <TableCell
@@ -155,7 +148,7 @@ const Calendar = ({ acceptedShift }) => {
     shiftNames = shiftNames.concat("")
 
     const cycleThrougShifts = (workerId, scheduleIndex, schedule) => {
-        if (!isEditable) return
+        if (!state.isEditable) return
         const acceptedShiftIndex = shiftNames.findIndex(
             (shift) => shift === schedule
         )
@@ -167,34 +160,37 @@ const Calendar = ({ acceptedShift }) => {
             index = -1
         }
 
-        let newScheduledDays = turns.find((worker) => worker._id === workerId)
-            .days
+        let newScheduledDays = state.turns.find(
+            (worker) => worker._id === workerId
+        ).days
 
         if (newScheduledDays === null) newScheduledDays = []
 
         newScheduledDays[scheduleIndex] = shiftNames[index + 1]
         scheduleService.update(year, workerId, newScheduledDays)
 
-        setTurns([...turns])
+        dispatch({ type: "SET_TURNS", payload: [...state.turns] })
     }
 
     function removeRow(idToDelete, name) {
-        let newWorkerTeam = turns.filter((worker) => worker._id !== idToDelete)
+        let newWorkerTeam = state.turns.filter(
+            (worker) => worker._id !== idToDelete
+        )
         const ok = window.confirm(`Remove ${name}?`)
         if (ok) {
             scheduleService.removeTeamMember(year, idToDelete)
-            setTurns([...newWorkerTeam])
+            dispatch({ type: "SET_TURNS", payload: [...newWorkerTeam] })
         }
     }
 
     function renderMobileTable() {
-        if (turns.length !== 0) {
+        if (state.turns.length !== 0) {
             return (
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCellHeader />
-                            {turns.map((worker) => {
+                            {state.turns.map((worker) => {
                                 return (
                                     <TableCellHeader key={worker._id}>
                                         <Names>
@@ -240,80 +236,13 @@ const Calendar = ({ acceptedShift }) => {
     }
 
     if (isPageWide) {
-        return (
-            <Frame>
-                <Header>
-                    <Button onClick={() => previousMonth()}>&lt;</Button>
-                    <div>
-                        {MONTHS[month].toUpperCase()} {year}
-                    </div>
-                    <Button onClick={() => nextMonth()}>&gt;</Button>
-                </Header>
-                <Container>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                {Array(days[month] + 1)
-                                    .fill(null)
-                                    .map((_, d) => {
-                                        return (
-                                            <TableCellHeader
-                                                key={d}
-                                                isToday={isToday(d)}
-                                            >
-                                                <Day isSelected={d === day}>
-                                                    {d > 0 ? d : ""}
-                                                </Day>
-                                            </TableCellHeader>
-                                        )
-                                    })}
-                            </TableRow>
-                        </TableHead>
-                        <tbody>
-                            {turns.map((worker) => {
-                                return (
-                                    <TableRow key={worker._id}>
-                                        {putValuesToTable(
-                                            worker,
-                                            days[month] + 1
-                                        )}
-                                    </TableRow>
-                                )
-                            })}
-                        </tbody>
-                    </Table>
-                </Container>
-                <div
-                    style={{
-                        display: "flex",
-                        marginLeft: "auto",
-                        justifyContent: "center",
-                        alignContent: "space-around",
-                        marginTop: "40px",
-                    }}
-                >
-                    <ButtonPrimary
-                        onClick={() => setIsOpen(!isOpen)}
-                        isEditable={isEditable}
-                    >
-                        Add new
-                    </ButtonPrimary>
-                    <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-                        {isEditable ? "Done" : "Edit"}
-                    </ButtonSecondary>
-                </div>
-                {isOpen ? (
-                    <AddNewRowModal
-                        setTurns={setTurns}
-                        turns={turns}
-                        year={year}
-                        month={month}
-                        isOpen={isOpen}
-                        setIsOpen={setIsOpen}
-                    />
-                ) : null}
-            </Frame>
-        )
+        return <DesktopTable
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            putValuesToTable={putValuesToTable}
+            year={year}
+            month={month}
+        />
     }
 
     return (
@@ -336,12 +265,14 @@ const Calendar = ({ acceptedShift }) => {
             >
                 <ButtonPrimary
                     onClick={() => setIsOpen(!isOpen)}
-                    isEditable={isEditable}
+                    isEditable={state.isEditable}
                 >
                     Add new
                 </ButtonPrimary>
-                <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-                    {isEditable ? "Done" : "Edit"}
+                <ButtonSecondary
+                    onClick={() => dispatch({ type: "TOGGLE_EDITABLE" })}
+                >
+                    {state.isEditable ? "Done" : "Edit"}
                 </ButtonSecondary>
             </div>
             <Container>{renderMobileTable()}</Container>
@@ -356,18 +287,18 @@ const Calendar = ({ acceptedShift }) => {
             >
                 <ButtonPrimary
                     onClick={() => setIsOpen(!isOpen)}
-                    isEditable={isEditable}
+                    isEditable={state.isEditable}
                 >
                     Add new
                 </ButtonPrimary>
-                <ButtonSecondary onClick={() => setIsEditable(!isEditable)}>
-                    {isEditable ? "Done" : "Edit"}
+                <ButtonSecondary
+                    onClick={() => dispatch({ type: "TOGGLE_EDITABLE" })}
+                >
+                    {state.isEditable ? "Done" : "Edit"}
                 </ButtonSecondary>
             </div>
             {isOpen ? (
                 <AddNewRowModal
-                    setTurns={setTurns}
-                    turns={turns}
                     year={year}
                     month={month}
                     isOpen={isOpen}
