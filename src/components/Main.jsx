@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import SideBar from "./Sidebar"
 import Calendar from "./calendar/calendar"
-import StatisticsBlock from "./statistisBlock/statisticsBlock"
+import StatisticsBlock from "./statistisBlock/TotalHoursBlock"
 
 import teamService from "../services/teams"
 

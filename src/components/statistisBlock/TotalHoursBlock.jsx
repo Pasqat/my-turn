@@ -1,54 +1,16 @@
 import React from "react"
 import { ComponentContext } from "../../context/turnsContext"
-import styled, { css } from "styled-components"
+import {
+    ShiftName,
+    ColoredBlock,
+    Container,
+    Name,
+    Total,
+    Grid,
+    Card,
+} from "./block.style"
 
-const Container = styled.div`
-    padding: 40px 0;
-`
-const Grid = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-`
-const Card = styled.div`
-    padding: 1rem;
-    background: var(--color-header-background);
-    box-shadow: 5px 5px 0 0 rgba(0 0 0 / 0.5);
-`
-
-const Name = styled.div`
-    font-size: 1.4rem;
-    padding-bottom: 10px;
-`
-
-const ShiftName = styled.div`
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    font-size: 1.2rem;
-    padding-top: 15px;
-    border-bottom: 1px solid var(--color-text);
-`
-
-const ColoredBlock = styled.span`
-    padding-right: 5px;
-    ${(props) => {
-        return css`
-            color: var(${props.color});
-        `
-    }}}
-`
-
-const Total = styled(ShiftName)`
-    border: none;
-    color: var(--color-secondary);
-    marign-left: auto;
-    &:before {
-        content: "";
-    }
-`
-
-const StatisticsBlock = ({ acceptedShift }) => {
+const TotalHoursBlock = ({ acceptedShift }) => {
     const { state, dispatch } = React.useContext(ComponentContext)
 
     let totalCount = (shift, i) => {
@@ -87,7 +49,7 @@ const StatisticsBlock = ({ acceptedShift }) => {
         <Container>
             <h3
                 style={{
-                    fontSize: "1.8rem",
+                    fontSize: "1.6rem",
                     color: "var(--color-primary)",
                     paddingBottom: "1rem",
                 }}
@@ -108,4 +70,4 @@ const StatisticsBlock = ({ acceptedShift }) => {
     )
 }
 
-export default StatisticsBlock
+export default TotalHoursBlock
