@@ -17,19 +17,18 @@ import {
     TableCellHeader,
     TableHead,
     TableRow,
+    Names,
+    DeleteButton,
 } from "./calendar.style"
 
-const DesktopTable = ({ isOpen, setIsOpen, putValuesToTable }) => {
+const MobileTable = ({
+    isOpen,
+    setIsOpen,
+    putValuesToTableMobile,
+    removeRow,
+}) => {
     const { state, dispatch } = React.useContext(ComponentContext)
-    const {
-        previousMonth,
-        nextMonth,
-        month,
-        days,
-        year,
-        isToday,
-        day,
-    } = useDate()
+    const { previousMonth, nextMonth, month, days, year, day } = useDate()
 
     React.useEffect(() => {
         scheduleService.getMonth(year, month).then((data) => {
@@ -37,6 +36,57 @@ const DesktopTable = ({ isOpen, setIsOpen, putValuesToTable }) => {
         })
     }, [year, month])
 
+    function renderMobileTable() {
+        if (state.turns.length !== 0) {
+            return (
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCellHeader />
+                            {state.turns.map((worker) => {
+                                return (
+                                    <TableCellHeader key={worker._id}>
+                                        <Names>
+                                            {worker.name}
+                                            <DeleteButton
+                                                onClick={() =>
+                                                    removeRow(
+                                                        worker._id,
+                                                        worker.name
+                                                    )
+                                                }
+                                            >
+                                                delete
+                                            </DeleteButton>
+                                        </Names>
+                                    </TableCellHeader>
+                                )
+                            })}
+                        </TableRow>
+                    </TableHead>
+                    <tbody>
+                        {Array(days[month])
+                            .fill(null)
+                            .map((_, d) => {
+                                return (
+                                    <TableRow key={d}>
+                                        {putValuesToTableMobile(d)}
+                                    </TableRow>
+                                )
+                            })}
+                    </tbody>
+                </Table>
+            )
+        }
+
+        return (
+            <div style={{ marginBottom: "40px" }}>
+                Start by clicking on{" "}
+                <span style={{ fontWeight: "bold" }}>edit</span> and add a new
+                person
+            </div>
+        )
+    }
     return (
         <Frame>
             <Header>
@@ -46,44 +96,35 @@ const DesktopTable = ({ isOpen, setIsOpen, putValuesToTable }) => {
                 </div>
                 <Button onClick={() => nextMonth()}>&gt;</Button>
             </Header>
-            <Container>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            {Array(days[month] + 1)
-                                .fill(null)
-                                .map((_, d) => {
-                                    return (
-                                        <TableCellHeader
-                                            key={d}
-                                            isToday={isToday(d)}
-                                        >
-                                            <Day isSelected={d === day}>
-                                                {d > 0 ? d : ""}
-                                            </Day>
-                                        </TableCellHeader>
-                                    )
-                                })}
-                        </TableRow>
-                    </TableHead>
-                    <tbody>
-                        {state.turns.map((worker) => {
-                            return (
-                                <TableRow key={worker._id}>
-                                    {putValuesToTable(worker, days[month] + 1)}
-                                </TableRow>
-                            )
-                        })}
-                    </tbody>
-                </Table>
-            </Container>
             <div
                 style={{
                     display: "flex",
                     marginLeft: "auto",
+                    marginBottom: "20px",
                     justifyContent: "center",
                     alignContent: "space-around",
-                    marginTop: "40px",
+                }}
+            >
+                <ButtonPrimary
+                    onClick={() => setIsOpen(!isOpen)}
+                    isEditable={state.isEditable}
+                >
+                    Add new
+                </ButtonPrimary>
+                <ButtonSecondary
+                    onClick={() => dispatch({ type: "TOGGLE_EDITABLE" })}
+                >
+                    {state.isEditable ? "Done" : "Edit"}
+                </ButtonSecondary>
+            </div>
+            <Container>{renderMobileTable()}</Container>
+            <div
+                style={{
+                    display: "flex",
+                    marginLeft: "auto",
+                    marginBottom: "20px",
+                    justifyContent: "center",
+                    alignContent: "space-around",
                 }}
             >
                 <ButtonPrimary
@@ -110,4 +151,4 @@ const DesktopTable = ({ isOpen, setIsOpen, putValuesToTable }) => {
     )
 }
 
-export default DesktopTable
+export default MobileTable

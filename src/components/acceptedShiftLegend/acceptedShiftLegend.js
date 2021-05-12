@@ -13,6 +13,7 @@ import {
 } from "../modal/modal.styles"
 
 import { useMediaQuery } from "../../hooks/useMediaQuery"
+import { ComponentContext } from "../../context/turnsContext"
 
 const Legend = styled.div`
     padding: 20px;
@@ -60,6 +61,7 @@ const AcceptedSchiftLegend = ({ acceptedShift, setAcceptedShift }) => {
     const [color, setColor] = React.useState("--color-blue1")
     const [hours, setHours] = React.useState("")
     const [isOpen, setIsOpen] = React.useState(false)
+    const { state } = React.useContext(ComponentContext)
 
     let isPageWide = useMediaQuery("(min-width: 800px)")
 
@@ -86,7 +88,6 @@ const AcceptedSchiftLegend = ({ acceptedShift, setAcceptedShift }) => {
             ...acceptedShift,
             newAcceptedShift,
         ])
-        console.log(newObject)
         setAcceptedShift(newObject.acceptedShift)
         setIsOpen(!isOpen)
     }
@@ -98,7 +99,6 @@ const AcceptedSchiftLegend = ({ acceptedShift, setAcceptedShift }) => {
     return (
         <Legend>
             {acceptedShift.map((element) => {
-                console.log(element._id)
                 return (
                     <LegendItem key={element._id}>
                         <ItemDot color={element.color} />
@@ -116,7 +116,7 @@ const AcceptedSchiftLegend = ({ acceptedShift, setAcceptedShift }) => {
                     </LegendItem>
                 )
             })}
-            {!maxAcceptedShift ? (
+            {!maxAcceptedShift && state.isEditable ? (
                 <AddItem style={{}} onClick={() => setIsOpen(!isOpen)}>
                     +
                 </AddItem>

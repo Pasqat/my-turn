@@ -1,22 +1,5 @@
 import React from "react"
-import {
-    Frame,
-    Container,
-    Header,
-    Button,
-    ButtonPrimary,
-    ButtonSecondary,
-    Day,
-    Table,
-    TableCell,
-    TableCellHeader,
-    TableHead,
-    TableRow,
-    Names,
-    DeleteButton,
-} from "./calendar.style"
-
-import { MONTHS } from "../../hooks/useDate/Constants"
+import { Day, TableCell, Names, DeleteButton } from "./calendar.style"
 
 import useDate from "../../hooks/useDate/useDate"
 // import useLocalStorageState from "../../hooks/useLocalStorageState"
@@ -25,29 +8,16 @@ import { ComponentContext } from "../../context/turnsContext.jsx"
 
 import scheduleService from "../../services/scheduledTime"
 import { coloredDiv } from "../utils/calendar"
-import AddNewRowModal from "./addNewRowModal"
 import DesktopTable from "./calendar-desktopTable.jsx"
+import MobileTable from "./calendar-mobileTable.jsx"
 
 const Calendar = ({ acceptedShift }) => {
-    const {
-        nextMonth,
-        previousMonth,
-        days,
-        day,
-        month,
-        year,
-    } = useDate()
+    const { day, year } = useDate()
 
     const { state, dispatch } = React.useContext(ComponentContext)
     // should isOpen be in Context?
     const [isOpen, setIsOpen] = React.useState(false)
     let isPageWide = useMediaQuery("(min-width: 800px)")
-
-    // React.useEffect(() => {
-    //     scheduleService.getMonth(year, month).then((data) => {
-    //         dispatch({ type: "SET_TURNS", payload: data })
-    //     })
-    // }, [year, month])
 
     if (!state.turns) return <div>Loading</div>
 
@@ -183,129 +153,23 @@ const Calendar = ({ acceptedShift }) => {
         }
     }
 
-    function renderMobileTable() {
-        if (state.turns.length !== 0) {
-            return (
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCellHeader />
-                            {state.turns.map((worker) => {
-                                return (
-                                    <TableCellHeader key={worker._id}>
-                                        <Names>
-                                            {worker.name}
-                                            <DeleteButton
-                                                onClick={() =>
-                                                    removeRow(
-                                                        worker._id,
-                                                        worker.name
-                                                    )
-                                                }
-                                            >
-                                                delete
-                                            </DeleteButton>
-                                        </Names>
-                                    </TableCellHeader>
-                                )
-                            })}
-                        </TableRow>
-                    </TableHead>
-                    <tbody>
-                        {Array(days[month])
-                            .fill(null)
-                            .map((_, d) => {
-                                return (
-                                    <TableRow key={d}>
-                                        {putValuesToTableMobile(d)}
-                                    </TableRow>
-                                )
-                            })}
-                    </tbody>
-                </Table>
-            )
-        }
-
+    if (isPageWide) {
         return (
-            <div style={{ marginBottom: "40px" }}>
-                Start by clicking on{" "}
-                <span style={{ fontWeight: "bold" }}>edit</span> and add a new
-                person
-            </div>
+            <DesktopTable
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                putValuesToTable={putValuesToTable}
+            />
         )
     }
 
-    if (isPageWide) {
-        return <DesktopTable
+    return (
+        <MobileTable
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            putValuesToTable={putValuesToTable}
-            year={year}
-            month={month}
+            putValuesToTableMobile={putValuesToTableMobile}
+            removeRow={removeRow}
         />
-    }
-
-    return (
-        <Frame>
-            <Header>
-                <Button onClick={() => previousMonth()}>&lt;</Button>
-                <div>
-                    {MONTHS[month].toUpperCase()} {year}
-                </div>
-                <Button onClick={() => nextMonth()}>&gt;</Button>
-            </Header>
-            <div
-                style={{
-                    display: "flex",
-                    marginLeft: "auto",
-                    marginBottom: "20px",
-                    justifyContent: "center",
-                    alignContent: "space-around",
-                }}
-            >
-                <ButtonPrimary
-                    onClick={() => setIsOpen(!isOpen)}
-                    isEditable={state.isEditable}
-                >
-                    Add new
-                </ButtonPrimary>
-                <ButtonSecondary
-                    onClick={() => dispatch({ type: "TOGGLE_EDITABLE" })}
-                >
-                    {state.isEditable ? "Done" : "Edit"}
-                </ButtonSecondary>
-            </div>
-            <Container>{renderMobileTable()}</Container>
-            <div
-                style={{
-                    display: "flex",
-                    marginLeft: "auto",
-                    marginBottom: "20px",
-                    justifyContent: "center",
-                    alignContent: "space-around",
-                }}
-            >
-                <ButtonPrimary
-                    onClick={() => setIsOpen(!isOpen)}
-                    isEditable={state.isEditable}
-                >
-                    Add new
-                </ButtonPrimary>
-                <ButtonSecondary
-                    onClick={() => dispatch({ type: "TOGGLE_EDITABLE" })}
-                >
-                    {state.isEditable ? "Done" : "Edit"}
-                </ButtonSecondary>
-            </div>
-            {isOpen ? (
-                <AddNewRowModal
-                    year={year}
-                    month={month}
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
-                />
-            ) : null}
-        </Frame>
     )
 }
 
