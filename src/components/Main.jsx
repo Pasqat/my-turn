@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import SideBar from "./Sidebar"
 import Calendar from "./calendar/calendar"
+import StatisticsBlock from "./statistisBlock/statisticsBlock"
 
 import teamService from "../services/teams"
 
@@ -29,13 +30,22 @@ const Main = () => {
                 acceptedShift={acceptedShift}
                 setAcceptedShift={setAcceptedShift}
             />
-            <Calendar
+            <div
                 style={{
-                    backgroundColor: "var(--gradient-background)",
-                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
                 }}
-                acceptedShift={acceptedShift}
-            />
+            >
+                <Calendar
+                    style={{
+                        backgroundColor: "var(--gradient-background)",
+                        height: "100%",
+                    }}
+                    acceptedShift={acceptedShift}
+                />
+                <StatisticsBlock acceptedShift={acceptedShift} />
+            </div>
         </StyledMain>
     )
 }

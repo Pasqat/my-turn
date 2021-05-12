@@ -15,7 +15,6 @@ const Calendar = ({ acceptedShift }) => {
     const { day, year } = useDate()
 
     const { state, dispatch } = React.useContext(ComponentContext)
-    // should isOpen be in Context?
     const [isOpen, setIsOpen] = React.useState(false)
     let isPageWide = useMediaQuery("(min-width: 800px)")
 

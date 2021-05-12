@@ -12,7 +12,6 @@ import {
     Button,
     ButtonPrimary,
     ButtonSecondary,
-    Day,
     Table,
     TableCellHeader,
     TableHead,
@@ -28,7 +27,7 @@ const MobileTable = ({
     removeRow,
 }) => {
     const { state, dispatch } = React.useContext(ComponentContext)
-    const { previousMonth, nextMonth, month, days, year, day } = useDate()
+    const { previousMonth, nextMonth, month, days, year } = useDate()
 
     React.useEffect(() => {
         scheduleService.getMonth(year, month).then((data) => {
