@@ -2,10 +2,20 @@ import React, { useReducer } from "react"
 
 const reducer = (state, action) => {
     switch (action.type) {
-    case "IS_AUTHENTICATED":
+    case "IS_EDITABLE":
         return {
             ...state,
-            isAuthenticated: true,
+            isEditable: true,
+        }
+    case "IS_NOT_EDITABLE":
+        return {
+            ...state,
+            isEditable: false,
+        }
+    case "SET_TURNS":
+        return {
+            ...state,
+            turns: action.payload
         }
     // ... you can image other cases
     default:
@@ -14,11 +24,12 @@ const reducer = (state, action) => {
 }
 
 const initialState = {
-    isAuthenticated: false,
-    // ... imagine so much more!
+    isEditable: false,
+    turns: [],
+    notification: null
 }
 
-const ComponentContext = React.createContext(initialState)
+export const ComponentContext = React.createContext(initialState)
 
 export const TurnsProvider = (props) => {
     const [state, dispatch] = useReducer(reducer, initialState)

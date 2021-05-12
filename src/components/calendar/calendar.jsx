@@ -21,6 +21,7 @@ import { MONTHS } from "../../hooks/useDate/Constants"
 import useDate from "../../hooks/useDate/useDate"
 import useLocalStorageState from "../../hooks/useLocalStorageState"
 import { useMediaQuery } from "../../hooks/useMediaQuery"
+import { ComponentContext } from "../../context/turnsContext.jsx"
 
 import scheduleService from "../../services/scheduledTime"
 import { coloredDiv } from "../utils/calendar"
@@ -42,7 +43,9 @@ const Calendar = ({ acceptedShift }) => {
     } = useDate()
 
     const [turns, setTurns] = useLocalStorageState("turns", [])
+    // const {state, dispatch} = React.useContext(ComponentContext)
     const [isEditable, setIsEditable] = React.useState(false)
+    // should isOpen be in Context?
     const [isOpen, setIsOpen] = React.useState(false)
     let isPageWide = useMediaQuery("(min-width: 800px)")
 

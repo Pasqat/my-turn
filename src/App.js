@@ -5,6 +5,7 @@ import { GlobalStyles } from "./GlobalStyles"
 import Header from "./components/header/header"
 import Main from "./components/Main"
 import LoginForm from "./components/loginForm/loginForm"
+import { TurnsProvider } from "./context/turnsContext"
 
 import useLocalStorageState from "./hooks/useLocalStorageState"
 
@@ -32,7 +33,9 @@ const App = () => {
             ) : (
                 <>
                     <Header switchTheme={switchTheme} setUser={setUser} />
-                    <Main />
+                    <TurnsProvider>
+                        <Main />
+                    </TurnsProvider>
                 </>
             )}
         </StyledApp>
