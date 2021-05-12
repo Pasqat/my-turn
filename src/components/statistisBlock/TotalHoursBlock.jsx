@@ -35,7 +35,10 @@ const TotalHoursBlock = ({ acceptedShift }) => {
                     <ShiftName key={shift.shiftName}>
                         <div>
                             <ColoredBlock color={shift.color}>▊</ColoredBlock>
-                            {count} {shift.shiftName}
+                            <span style={{ paddingRight: "4px" }}>
+                                {count}
+                            </span>{" "}
+                            {shift.shiftName}
                         </div>
                         <div>{hours}</div>
                     </ShiftName>
