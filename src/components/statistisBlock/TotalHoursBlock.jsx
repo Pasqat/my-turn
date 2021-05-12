@@ -20,7 +20,7 @@ const TotalHoursBlock = ({ acceptedShift }) => {
         }, 0)
         let hours = acceptedShift.find((element) => element.shiftName === shift)
             .hours
-        return count * hours
+        return { count, hours: count * hours }
     }
 
     if (!acceptedShift) return <div>Loading...</div>
@@ -29,13 +29,13 @@ const TotalHoursBlock = ({ acceptedShift }) => {
         let total = 0
         return [
             acceptedShift.map((shift) => {
-                let hours = totalCount(shift.shiftName, index)
+                let { count, hours } = totalCount(shift.shiftName, index)
                 total = total + hours
                 return (
                     <ShiftName key={shift.shiftName}>
                         <div>
                             <ColoredBlock color={shift.color}>▊</ColoredBlock>
-                            {shift.shiftName}
+                            {count} {shift.shiftName}
                         </div>
                         <div>{hours}</div>
                     </ShiftName>
