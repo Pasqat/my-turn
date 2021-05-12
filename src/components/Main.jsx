@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import SideBar from "./Sidebar"
 import Calendar from "./calendar/calendar"
-import StatisticsBlock from "./statistisBlock/TotalHoursBlock"
+import TotalHoursBlock from "./statistisBlock/TotalHoursBlock"
 
 import teamService from "../services/teams"
 
@@ -44,7 +44,7 @@ const Main = () => {
                     }}
                     acceptedShift={acceptedShift}
                 />
-                <StatisticsBlock acceptedShift={acceptedShift} />
+                <TotalHoursBlock acceptedShift={acceptedShift} />
             </div>
         </StyledMain>
     )

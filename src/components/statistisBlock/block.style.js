@@ -2,11 +2,27 @@ import styled, { css } from "styled-components"
 
 export const Container = styled.div`
     padding: 40px 0;
+    max-width: 100vw;
 `
+export const Title = styled.h3`
+    font-size: 1.6rem;
+    color: var(--color-primary);
+    padding-bottom: 1rem;
+    @media (max-width: 800px) {
+        font-size: 1.4rem;
+        padding-left: 0.5em;
+    }
+`
+
 export const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 0.5em;
+        gap: 10px;
+    }
 `
 export const Card = styled.div`
     padding: 1rem;
@@ -17,6 +33,7 @@ export const Card = styled.div`
 export const Name = styled.div`
     font-size: 1.4rem;
     padding-bottom: 10px;
+    color: var(--color-text);
 `
 
 export const ShiftName = styled.div`
@@ -25,7 +42,10 @@ export const ShiftName = styled.div`
     font-weight: bold;
     font-size: 1.2rem;
     padding-top: 15px;
-    border-bottom: 1px solid var(--color-text);
+    border-bottom: 1px solid var(--color-text-light);
+    @media (max-width: 800px) {
+        font-size: 1rem;
+    }
 `
 
 export const ColoredBlock = styled.span`
@@ -39,7 +59,6 @@ export const ColoredBlock = styled.span`
 
 export const Total = styled(ShiftName)`
     border: none;
-    color: var(--color-secondary);
     marign-left: auto;
     &:before {
         content: "";

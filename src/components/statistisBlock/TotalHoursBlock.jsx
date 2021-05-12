@@ -2,6 +2,7 @@ import React from "react"
 import { ComponentContext } from "../../context/turnsContext"
 import {
     ShiftName,
+    Title,
     ColoredBlock,
     Container,
     Name,
@@ -50,15 +51,7 @@ const TotalHoursBlock = ({ acceptedShift }) => {
 
     return (
         <Container>
-            <h3
-                style={{
-                    fontSize: "1.6rem",
-                    color: "var(--color-primary)",
-                    paddingBottom: "1rem",
-                }}
-            >
-                Total hours
-            </h3>
+            <Title>Total hours</Title>
             <Grid>
                 {state.turns.map((member, index) => {
                     return (
