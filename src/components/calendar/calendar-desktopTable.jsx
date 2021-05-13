@@ -35,7 +35,7 @@ const DesktopTable = ({ isOpen, setIsOpen, putValuesToTable }) => {
         scheduleService.getMonth(year, month).then((data) => {
             dispatch({ type: "SET_TURNS", payload: data })
         })
-    }, [year, month])
+    }, [year, month, dispatch])
 
     return (
         <Frame>

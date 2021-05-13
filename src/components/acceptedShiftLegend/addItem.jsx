@@ -50,7 +50,7 @@ const AddAcceptedShift = ({ isOpen, setIsOpen }) => {
     return (
         <ModalBackground>
             <ModalContainer>
-                <ModalForm onSubmit={handleSubmitNewShift}>
+                <ModalForm onSubmit={handleSubmitNewShift} autoComplete="off">
                     <ModalInput
                         type="text"
                         name="shiftName"
