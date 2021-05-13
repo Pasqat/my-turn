@@ -6,6 +6,7 @@ import Calendar from "./calendar/calendar"
 import TotalHoursBlock from "./statistisBlock/TotalHoursBlock"
 
 import teamService from "../services/teams"
+import { ComponentContext } from "../context/turnsContext"
 
 const StyledMain = styled.div`
     width: 100vw;
@@ -17,19 +18,19 @@ const StyledMain = styled.div`
 
 const Main = () => {
     const [acceptedShift, setAcceptedShift] = React.useState()
+    const { state, dispatch } = React.useContext(ComponentContext)
 
     React.useEffect(() => {
         teamService.getAcceptedShift().then((data) => {
-            return setAcceptedShift(data.acceptedShift)
+            dispatch({ type: "GET_SHIFT", payload: data.acceptedShift })
         })
-    }, [setAcceptedShift])
+    }, [dispatch])
+
+    console.log(state)
 
     return (
         <StyledMain>
-            <SideBar
-                acceptedShift={acceptedShift}
-                setAcceptedShift={setAcceptedShift}
-            />
+            <SideBar />
             <div
                 style={{
                     display: "flex",
@@ -42,9 +43,8 @@ const Main = () => {
                         backgroundColor: "var(--gradient-background)",
                         height: "100%",
                     }}
-                    acceptedShift={acceptedShift}
                 />
-                <TotalHoursBlock acceptedShift={acceptedShift} />
+                <TotalHoursBlock/>
             </div>
         </StyledMain>
     )

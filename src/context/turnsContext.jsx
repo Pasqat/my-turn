@@ -15,12 +15,22 @@ const reducer = (state, action) => {
     case "SET_TURNS":
         return {
             ...state,
-            turns: action.payload
+            turns: action.payload,
         }
     case "ADD_NEW_MEMBER":
         return {
             ...state,
-            turns: [...state.turns, action.payload]
+            turns: [...state.turns, action.payload],
+        }
+    case "GET_SHIFT":
+        return {
+            ...state,
+            acceptedShift: action.payload,
+        }
+    case "UPDATE_SHIFT":
+        return {
+            ...state,
+            acceptedShift: [...action.payload]
         }
     default:
         return state
@@ -30,7 +40,8 @@ const reducer = (state, action) => {
 const initialState = {
     isEditable: false,
     turns: [],
-    notification: null
+    acceptedShift: [],
+    notification: null,
 }
 
 export const ComponentContext = React.createContext(initialState)

@@ -20,7 +20,7 @@ const getAcceptedShift = async () => {
     return response.data
 }
 
-const addAcceptedShift = async (newAcceptedShift) => {
+const updateAcceptedShift = async (newAcceptedShift) => {
     const response = await axios.put(
         `${baseUrl}/accepted-shift/`,
         newAcceptedShift,
@@ -33,5 +33,5 @@ export default {
     getAll,
     register,
     getAcceptedShift,
-    addAcceptedShift,
+    updateAcceptedShift,
 }

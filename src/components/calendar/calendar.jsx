@@ -11,7 +11,7 @@ import { coloredDiv } from "../utils/calendar"
 import DesktopTable from "./calendar-desktopTable.jsx"
 import MobileTable from "./calendar-mobileTable.jsx"
 
-const Calendar = ({ acceptedShift }) => {
+const Calendar = () => {
     const { day, year } = useDate()
 
     const { state, dispatch } = React.useContext(ComponentContext)
@@ -52,7 +52,7 @@ const Calendar = ({ acceptedShift }) => {
                         key={_id + i}
                         onClick={() => cycleThrougShifts(_id, i, days[i])}
                     >
-                        {coloredDiv(days[i], acceptedShift)}
+                        {coloredDiv(days[i], state.acceptedShift)}
                     </TableCell>
                 )
             } else {
@@ -92,7 +92,7 @@ const Calendar = ({ acceptedShift }) => {
                             cycleThrougShifts(worker._id, d, worker.days[d])
                         }
                     >
-                        {coloredDiv(worker.days[d], acceptedShift)}
+                        {coloredDiv(worker.days[d], state.acceptedShift)}
                     </TableCell>
                 )
             } else {
@@ -112,8 +112,8 @@ const Calendar = ({ acceptedShift }) => {
     // need to take the shiftNames array and add an empty string to have the
     // empty cell onto the calendar
     let shiftNames = []
-    if (acceptedShift)
-        shiftNames = acceptedShift.map((shift) => shift.shiftName)
+    if (state.acceptedShift)
+        shiftNames = state.acceptedShift.map((shift) => shift.shiftName)
     shiftNames = shiftNames.concat("")
 
     const cycleThrougShifts = (workerId, scheduleIndex, schedule) => {

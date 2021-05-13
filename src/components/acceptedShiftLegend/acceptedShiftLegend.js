@@ -1,19 +1,11 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { Tooltip, TooltipText } from "../tooltip/tooltip"
-import teamService from "../../services/teams"
-import {
-    ModalForm,
-    ModalInput,
-    ModalButtonAdd,
-    ModalContainer,
-    ModalBackground,
-    ModalButtonClose,
-    ModalSelectInput,
-} from "../modal/modal.styles"
 
 import { useMediaQuery } from "../../hooks/useMediaQuery"
 import { ComponentContext } from "../../context/turnsContext"
+import AddAcceptedShift from "./addItem"
+import RemoveAcceptedShift from "./removeAcceptedShift"
 
 const Legend = styled.div`
     padding: 20px;
@@ -56,49 +48,27 @@ const AddItem = styled.div`
     text-align: center;
     cursor: pointer;
 `
-const AcceptedSchiftLegend = ({ acceptedShift, setAcceptedShift }) => {
-    const [shiftName, setShiftName] = React.useState("")
-    const [color, setColor] = React.useState("--color-blue1")
-    const [hours, setHours] = React.useState("")
+const AcceptedSchiftLegend = () => {
     const [isOpen, setIsOpen] = React.useState(false)
-    const { state } = React.useContext(ComponentContext)
-
+    const { state, dispatch } = React.useContext(ComponentContext)
     let isPageWide = useMediaQuery("(min-width: 800px)")
 
-    const handleSubmitNewShift = async (event) => {
-        event.preventDefault()
+    if (!state.acceptedShift) return <LegendItem>Loading...</LegendItem>
 
-        if (shiftName.length <= 0 || color.length <= 0 || hours === 0)
-            return alert("You need to choose a name a color and a duration")
+    const maxAcceptedShift = state.acceptedShift.length === 8
 
-        if (
-            acceptedShift.findIndex(
-                (element) => element.shiftName === shiftName
-            ) !== -1
+    const removeItem = (shiftName) => {
+        const newAcceptedShifts = state.acceptedShift.filter(
+            (shift) => shift.shiftName !== shiftName
         )
-            return alert("name must be unique")
 
-        const newAcceptedShift = {
-            shiftName,
-            color,
-            hours,
-        }
-
-        const newObject = await teamService.addAcceptedShift([
-            ...acceptedShift,
-            newAcceptedShift,
-        ])
-        setAcceptedShift(newObject.acceptedShift)
-        setIsOpen(!isOpen)
+        dispatch({ type: "UPDATE_SHIFT", payload: newAcceptedShifts })
+        console.log(newAcceptedShifts)
     }
-
-    if (!acceptedShift) return <LegendItem>Loading...</LegendItem>
-
-    const maxAcceptedShift = acceptedShift.length === 8
 
     return (
         <Legend>
-            {acceptedShift.map((element) => {
+            {state.acceptedShift.map((element) => {
                 return (
                     <LegendItem key={element._id}>
                         <ItemDot color={element.color} />
@@ -113,64 +83,21 @@ const AcceptedSchiftLegend = ({ acceptedShift, setAcceptedShift }) => {
                                 </span>
                             )}
                         </Tooltip>
+                        {state.isEditable && (
+                            <RemoveAcceptedShift
+                                shiftName={element.shiftName}
+                            />
+                        )}
                     </LegendItem>
                 )
             })}
             {!maxAcceptedShift && state.isEditable ? (
-                <AddItem style={{}} onClick={() => setIsOpen(!isOpen)}>
-                    +
-                </AddItem>
+                <>
+                    <AddItem onClick={() => setIsOpen(!isOpen)}>+</AddItem>
+                </>
             ) : null}
             {isOpen ? (
-                <ModalBackground>
-                    <ModalContainer>
-                        <ModalForm onSubmit={handleSubmitNewShift}>
-                            <ModalInput
-                                type="text"
-                                name="shiftName"
-                                value={shiftName}
-                                placeholder="shift name"
-                                onChange={({ target }) =>
-                                    setShiftName(target.value)
-                                }
-                            />
-                            <ModalSelectInput
-                                value={color}
-                                onChange={({ target }) =>
-                                    setColor(target.value)
-                                }
-                                required
-                                placeholder="select color"
-                            >
-                                <option value="--color-blue1">Blue</option>
-                                <option value="--color-yellow1">Yellow</option>
-                                <option value="--color-orange1">Orange</option>
-                                <option value="--color-green1">Green</option>
-                            </ModalSelectInput>
-                            <ModalInput
-                                type="number"
-                                name="hours"
-                                min="0"
-                                max="24"
-                                value={hours}
-                                placeholder="duration in hours"
-                                onChange={({ target }) =>
-                                    setHours(target.value)
-                                }
-                            />
-                            <div style={{ display: "flex" }}>
-                                <ModalButtonClose
-                                    onClick={() => setIsOpen(!isOpen)}
-                                >
-                                    close
-                                </ModalButtonClose>
-                                <ModalButtonAdd type="submit">
-                                    add
-                                </ModalButtonAdd>
-                            </div>
-                        </ModalForm>
-                    </ModalContainer>
-                </ModalBackground>
+                <AddAcceptedShift isOpen={isOpen} setIsOpen={setIsOpen} />
             ) : null}
         </Legend>
     )

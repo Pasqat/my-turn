@@ -11,7 +11,7 @@ import {
     Card,
 } from "./block.style"
 
-const TotalHoursBlock = ({ acceptedShift }) => {
+const TotalHoursBlock = () => {
     const { state, dispatch } = React.useContext(ComponentContext)
 
     let totalCount = (shift, i) => {
@@ -19,17 +19,17 @@ const TotalHoursBlock = ({ acceptedShift }) => {
         let count = state.turns[i].days.reduce((counter, shiftPerDay) => {
             return shiftPerDay === shift ? (counter += 1) : counter
         }, 0)
-        let hours = acceptedShift.find((element) => element.shiftName === shift)
+        let hours = state.acceptedShift.find((element) => element.shiftName === shift)
             .hours
         return { count, hours: count * hours }
     }
 
-    if (!acceptedShift) return <div>Loading...</div>
+    if (!state.acceptedShift) return <div>Loading...</div>
 
     const workLikeADonk = (index) => {
         let total = 0
         return [
-            acceptedShift.map((shift) => {
+            state.acceptedShift.map((shift) => {
                 let { count, hours } = totalCount(shift.shiftName, index)
                 total = total + hours
                 return (

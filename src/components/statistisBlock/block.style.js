@@ -18,10 +18,16 @@ export const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
+    @media (min-width: 2100px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
     @media (max-width: 800px) {
         grid-template-columns: 1fr 1fr;
         padding: 0 0.5em;
         gap: 10px;
+    }
+    @media (max-width: 360px) {
+        grid-template-columns: 1fr;
     }
 `
 export const Card = styled.div`
