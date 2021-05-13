@@ -80,6 +80,13 @@ export const ModalButtonClose = styled(ModalButton)`
     }
 `
 
+export const ModalButtonDelete = styled(ModalButton)`
+    color: var(--color-orange1);
+    :hover {
+        color: var(--color-primary);
+    }
+`
+
 export const ModalBackground = styled.div`
     width: 100vw;
     height: 100vh;
