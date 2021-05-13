@@ -19,8 +19,9 @@ const TotalHoursBlock = () => {
         let count = state.turns[i].days.reduce((counter, shiftPerDay) => {
             return shiftPerDay === shift ? (counter += 1) : counter
         }, 0)
-        let hours = state.acceptedShift.find((element) => element.shiftName === shift)
-            .hours
+        let hours = state.acceptedShift.find(
+            (element) => element.shiftName === shift
+        ).hours
         return { count, hours: count * hours }
     }
 

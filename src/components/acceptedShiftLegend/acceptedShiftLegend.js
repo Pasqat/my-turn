@@ -6,6 +6,7 @@ import { useMediaQuery } from "../../hooks/useMediaQuery"
 import { ComponentContext } from "../../context/turnsContext"
 import AddAcceptedShift from "./addItem"
 import RemoveAcceptedShift from "./removeAcceptedShift"
+import UpdateAcceptedShift from "./updateItem"
 
 const Legend = styled.div`
     padding: 20px;
@@ -49,22 +50,15 @@ const AddItem = styled.div`
     cursor: pointer;
 `
 const AcceptedSchiftLegend = () => {
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [isAdding, setIsAdding] = React.useState(false)
+    const [isUpdating, setIsUpdating] = React.useState(false)
+    const [oldAcceptedShidt, setOldAcceptedShift] = React.useState({})
     const { state, dispatch } = React.useContext(ComponentContext)
     let isPageWide = useMediaQuery("(min-width: 800px)")
 
     if (!state.acceptedShift) return <LegendItem>Loading...</LegendItem>
 
     const maxAcceptedShift = state.acceptedShift.length === 8
-
-    const removeItem = (shiftName) => {
-        const newAcceptedShifts = state.acceptedShift.filter(
-            (shift) => shift.shiftName !== shiftName
-        )
-
-        dispatch({ type: "UPDATE_SHIFT", payload: newAcceptedShifts })
-        console.log(newAcceptedShifts)
-    }
 
     return (
         <Legend>
@@ -84,20 +78,52 @@ const AcceptedSchiftLegend = () => {
                             )}
                         </Tooltip>
                         {state.isEditable && (
-                            <RemoveAcceptedShift
-                                shiftName={element.shiftName}
-                            />
+                            <div
+                                style={{
+                                    display: "flex",
+                                    marginLeft: "auto",
+                                    padding: "0 5px",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={() => {
+                                        setOldAcceptedShift({
+                                            shiftName: element.shiftName,
+                                            color: element.color,
+                                            hours: element.hours,
+                                        })
+                                        setIsUpdating(!isUpdating)
+                                    }}
+                                >
+                                    ✏️
+                                </div>
+                                {isUpdating && (
+                                    <UpdateAcceptedShift
+                                        isOpen={isUpdating}
+                                        setIsOpen={setIsUpdating}
+                                        oldShift={oldAcceptedShidt.shiftName}
+                                        oldColor={oldAcceptedShidt.color}
+                                        oldHours={oldAcceptedShidt.hours}
+                                    />
+                                )}
+                                <RemoveAcceptedShift
+                                    shiftName={element.shiftName}
+                                />
+                            </div>
                         )}
                     </LegendItem>
                 )
             })}
             {!maxAcceptedShift && state.isEditable ? (
                 <>
-                    <AddItem onClick={() => setIsOpen(!isOpen)}>+</AddItem>
+                    <AddItem onClick={() => setIsAdding(!isAdding)}>+</AddItem>
                 </>
             ) : null}
-            {isOpen ? (
-                <AddAcceptedShift isOpen={isOpen} setIsOpen={setIsOpen} />
+            {isAdding ? (
+                <AddAcceptedShift isOpen={isAdding} setIsOpen={setIsAdding} />
             ) : null}
         </Legend>
     )

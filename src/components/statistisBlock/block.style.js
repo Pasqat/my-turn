@@ -11,7 +11,7 @@ export const Title = styled.h3`
     @media (max-width: 800px) {
         font-size: 1.4rem;
         padding-left: 0.5em;
-    }
+    } ;
 `
 
 export const Grid = styled.div`
@@ -65,7 +65,7 @@ export const ColoredBlock = styled.span`
 
 export const Total = styled(ShiftName)`
     border: none;
-    marign-left: auto;
+    margin-left: auto;
     &:before {
         content: "";
     }

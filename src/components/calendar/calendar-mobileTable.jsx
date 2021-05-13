@@ -33,7 +33,7 @@ const MobileTable = ({
         scheduleService.getMonth(year, month).then((data) => {
             dispatch({ type: "SET_TURNS", payload: data })
         })
-    }, [year, month])
+    }, [year, month, dispatch])
 
     function renderMobileTable() {
         if (state.turns.length !== 0) {
