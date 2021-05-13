@@ -25,6 +25,10 @@ const UpdateAcceptedShift = ({
     const { state, dispatch } = React.useContext(ComponentContext)
     const { acceptedShift } = state
 
+    const updatingAcceptedShift = acceptedShift.filter(
+        (shift) => shift.shiftName !== oldShift
+    )
+
     const handleSubmitNewShift = async (event) => {
         event.preventDefault()
 
@@ -32,7 +36,7 @@ const UpdateAcceptedShift = ({
             return alert("You need to choose a name a color and a duration")
 
         if (
-            acceptedShift.findIndex(
+            updatingAcceptedShift.findIndex(
                 (element) => element.shiftName === shiftName
             ) !== -1
         )
@@ -43,10 +47,6 @@ const UpdateAcceptedShift = ({
             color,
             hours,
         }
-
-        const updatingAcceptedShift = acceptedShift.filter(
-            (shift) => shift.shiftName !== oldShift
-        )
 
         const updatedAcceptedShift = [
             ...updatingAcceptedShift,
