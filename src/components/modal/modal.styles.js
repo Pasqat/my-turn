@@ -91,3 +91,12 @@ export const ModalBackground = styled.div`
     z-index: 199;
     transition: all 500ms;
 `
+
+export const ModalColorsGroup = styled.div`
+    display: flex;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--color-background);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+`

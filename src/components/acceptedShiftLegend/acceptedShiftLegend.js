@@ -1,6 +1,6 @@
 import React from "react"
-import styled, { css } from "styled-components"
 import { Tooltip, TooltipText } from "../tooltip/tooltip"
+import { Legend, LegendItem, ItemDot, AddItem } from "./legend.style"
 
 import { useMediaQuery } from "../../hooks/useMediaQuery"
 import { ComponentContext } from "../../context/turnsContext"
@@ -8,47 +8,6 @@ import AddAcceptedShift from "./addItem"
 import RemoveAcceptedShift from "./removeAcceptedShift"
 import UpdateAcceptedShift from "./updateItem"
 
-const Legend = styled.div`
-    padding: 20px;
-    @media (max-width: 800px) {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
-        padding-bottom: 0;
-    }
-`
-
-const LegendItem = styled.div`
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    padding-bottom: 1rem;
-`
-
-const ItemDot = styled.div`
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    border-radius: 50%;
-
-    ${(props) => {
-        return css`
-            background-color: var(${props.color});
-        `
-    }}}
-`
-
-const AddItem = styled.div`
-    width: 100%;
-    background: var(--color-selected);
-    padding: 0px 10px;
-    font-weight: bold;
-    font-size: 1.8rem;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-`
 const AcceptedSchiftLegend = () => {
     const [isAdding, setIsAdding] = React.useState(false)
     const [isUpdating, setIsUpdating] = React.useState(false)

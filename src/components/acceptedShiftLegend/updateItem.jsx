@@ -77,10 +77,14 @@ const UpdateAcceptedShift = ({
                         required
                         placeholder="select color"
                     >
-                        <option value="--color-blue1">Blue</option>
                         <option value="--color-yellow1">Yellow</option>
                         <option value="--color-orange1">Orange</option>
                         <option value="--color-green1">Green</option>
+                        <option value="--color-green2">Green2</option>
+                        <option value="--color-blue1">Blue</option>
+                        <option value="--color-blue2">Blue2</option>
+                        <option value="--color-purple1">Purple</option>
+                        <option value="--color-purple2">Purple2</option>
                     </ModalSelectInput>
                     <ModalInput
                         type="number"

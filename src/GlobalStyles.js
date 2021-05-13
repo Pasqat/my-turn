@@ -21,9 +21,13 @@ ${(props) => {
                 --color-primary: #4bbced;
                 --color-secondary: #fcd173;
                 --color-blue1: #4bbced;
-                --color-yellow1: #fcd173;
-                --color-orange1: #eb7b52;
-                --color-green1: #43b34f;
+                --color-blue2: #5a6ff0;
+                --color-yellow1: #ffcb48;
+                --color-orange1: #ffa948;
+                --color-green1: #34b966;
+                --color-green2: #078837;
+                --color-purple1: #653dae;
+                --color-purple2: #be3699;
                 --color-border: 2px solid rgb(240, 246, 247);
                 --color-selected: #e8edff;
             }
