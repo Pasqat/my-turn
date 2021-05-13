@@ -7,9 +7,11 @@ import {
     ModalContainer,
     ModalBackground,
     ModalButtonClose,
-    ModalSelectInput,
+    ModalColorsGroup,
 } from "../modal/modal.styles"
+import { ItemDotSelection } from "./legend.style"
 import teamService from "../../services/teams"
+import colors from "../../constants/color"
 
 const UpdateAcceptedShift = ({
     isOpen,
@@ -71,21 +73,6 @@ const UpdateAcceptedShift = ({
                         placeholder="shift name"
                         onChange={({ target }) => setShiftName(target.value)}
                     />
-                    <ModalSelectInput
-                        value={color}
-                        onChange={({ target }) => setColor(target.value)}
-                        required
-                        placeholder="select color"
-                    >
-                        <option value="--color-yellow1">Yellow</option>
-                        <option value="--color-orange1">Orange</option>
-                        <option value="--color-green1">Green</option>
-                        <option value="--color-green2">Green2</option>
-                        <option value="--color-blue1">Blue</option>
-                        <option value="--color-blue2">Blue2</option>
-                        <option value="--color-purple1">Purple</option>
-                        <option value="--color-purple2">Purple2</option>
-                    </ModalSelectInput>
                     <ModalInput
                         type="number"
                         name="hours"
@@ -95,6 +82,22 @@ const UpdateAcceptedShift = ({
                         placeholder="duration in hours"
                         onChange={({ target }) => setHours(target.value)}
                     />
+                    <ModalColorsGroup style={{ display: "flex" }}>
+                        {colors.map((c) => {
+                            let isSelected = true
+                            c === color
+                                ? (isSelected = true)
+                                : (isSelected = false)
+                            return (
+                                <ItemDotSelection
+                                    key={c}
+                                    color={c}
+                                    isSelected={isSelected}
+                                    onClick={() => setColor(c)}
+                                />
+                            )
+                        })}
+                    </ModalColorsGroup>
                     <div style={{ display: "flex" }}>
                         <ModalButtonClose onClick={() => setIsOpen(!isOpen)}>
                             close

@@ -9,7 +9,7 @@ import {
     ModalButtonClose,
     ModalColorsGroup,
 } from "../modal/modal.styles"
-import { ItemDot, ItemDotSelection } from "./legend.style"
+import { ItemDotSelection } from "./legend.style"
 import teamService from "../../services/teams"
 import colors from "../../constants/color"
 

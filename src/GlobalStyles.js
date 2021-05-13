@@ -48,9 +48,13 @@ ${(props) => {
                 --color-primary: #1099a2;
                 --color-secondary: #b19053;
                 --color-blue1: #1099a2;
+                --color-blue2: #3d5176;
                 --color-yellow1: #b19053;
                 --color-orange1: #b16550;
                 --color-green1: #3c973f;
+                --color-green2: #3a7b5c;
+                --color-purple1: #593d78;
+                --color-purple2: #7b3a73;
                 --color-border: 2px solid #37394e;
                 --color-selected: #3a3a51;
             }
