@@ -22,7 +22,7 @@ const LoginForm = ({ setUser }) => {
     const [email, setEmail] = React.useState("")
     const [notification, setNotification] = React.useState(null)
     const [isLogin, setIsLogin] = React.useState(true)
-
+?
     const validEmailRegex = RegExp(
         // eslint-disable-next-line no-useless-escape
         /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i

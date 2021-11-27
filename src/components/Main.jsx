@@ -17,14 +17,13 @@ const StyledMain = styled.div`
 `
 
 const Main = () => {
-    const [acceptedShift, setAcceptedShift] = React.useState()
     const { state, dispatch } = React.useContext(ComponentContext)
 
     React.useEffect(() => {
         teamService.getAcceptedShift().then((data) => {
             dispatch({ type: "GET_SHIFT", payload: data.acceptedShift })
         })
-    }, [dispatch])
+    }, [])
 
     console.log(state)
 
@@ -44,7 +43,7 @@ const Main = () => {
                         height: "100%",
                     }}
                 />
-                <TotalHoursBlock/>
+                <TotalHoursBlock />
             </div>
         </StyledMain>
     )
